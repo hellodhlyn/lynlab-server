@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block style %}
+{% load staticfiles %}
+<title>Sign in LYnTimeline</title>
+{% endblock %}
+{% block content %}
+    {% if form.errors %}
+    <p>로그인에 실패했습니다.</p>
+    {% endif %}
+    <form class="pure-form pure-form-stacked" method="post" action=".">{% csrf_token %}
+        <legend>Sign in as Admin</legend>
+        <label for="id_username">Username</label>{{ form.username }}
+        <label for="id_password">Password</label>{{ form.password }}
+        <input type="hidden" name="next" value="/" />
+        <input type="submit" value="Sign In" />
+	</form>
+{% endblock %}

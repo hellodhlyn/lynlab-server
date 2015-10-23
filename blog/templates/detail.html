@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block style %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'stylesheet.css' %}">
+<title>LYnTimeline</title>
+{% endblock %}
+{% block content %}
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="header">
+            <a href="{% url 'home' %}"><h1 class="blog-title">LYnTimeline</h1></a>
+            <h2 class="blog-tagline">with Computer Science &amp; Subculture</h2>
+        </div>
+        <div class="footer">
+            <div class="pure-menu pure-menu-horizontal">
+                <ul id="menu-list">
+                    <li class="pure-menu-item"><a href="/about/" class="pure-menu-link">About</a></li>
+                    <li class="pure-menu-item"><a href="http://facebook.com/HelloDHLyn" class="pure-menu-link">Facebook</a></li>
+                    <li class="pure-menu-item"><a href="http://twitter.com/96altair_" class="pure-menu-link">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content pure-u-1 pure-u-md-3-4">
+	    <h1 class="content-subhead">{{ object.category.name }}</h1>
+		<article class="post">
+		    <a href="{% url 'detail' object.id %}">
+		        <h2 class="post-title">
+		            {{ object.title }}
+		        </h2>
+		    </a>
+		    <p class="post-meta">
+		    	{{ object.created }}
+		    	{% if object.is_recent_post %}
+		    		<span class="post-tag post-tag-new">새 글</span>
+		    	{% endif %}
+		    	{% if not object.public_post %}
+		            <span class="post-tag post-tag-unpublished">비공개</span>
+		        {% endif %}
+		    	{% for tag in object.split_tags %}
+		    		<span class="post-tag" style="display: inline-block">{{ tag }}</span>
+				{% endfor %}
+		    </p>
+		    <div class="post-description">
+		    	{% load markup_tags %}
+		    	{{ object.content|apply_markup:"markdown" }}
+			</div>
+			{% include '_disqus.html' %}
+		</article>
+	</div>
+</div>	
+{% endblock %}
