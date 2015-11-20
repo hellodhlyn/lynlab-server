@@ -57,5 +57,5 @@ docs/_build/
 target/
 db.sqlite3
 sftp-config.json
-blog/migrations
+migrations
 blog/static/images

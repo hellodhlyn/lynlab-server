@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block style %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'wiki.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="header">
+        {% include 'wiki/navbar.html' %}
+        <h1>LYnWiki beta</h1>
+    </div>
+    <div class="content">
+        <div class="splash-container">
+            <div class="splash">
+                <form class="pure-form" method="post" action="/v1/wiki/search/">
+                    {% csrf_token %}
+                    <input type="text" class="pure-input-rounded" name="title">
+                    <button type="submit" class="pure-button">찾기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

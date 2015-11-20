@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block style %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'wiki.css' %}">
+{% endblock %}
+{% block content %}
+	<div class="header">
+        {% include 'wiki/navbar.html' %}
+        <h1>{{ article.title }}</h1>
+        <h2>{{ article.subtitle }}</h2>
+    </div>
+    <div class="content">
+    	{% load markup_tags %}
+    	{{ article.content|apply_markup:"markdown" }}
+    </div>
+{% endblock %}

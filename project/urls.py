@@ -21,26 +21,30 @@ from django.views.generic import RedirectView
 from django.http import HttpResponse
 
 from blog.views import PostList, PostDetail, PostCreate
-#from wiki.views import WikiHome, WikiContent
+from wiki.views import WikiHome, WikiContent, find_by_title
+
+import wiki.models as wiki
 
 urlpatterns = patterns('',
-                       # blog:
-                       url(r'^$', RedirectView.as_view(url='blog/')),
-                       url(r'^blog/$', PostList.as_view(), name='home'),
-                       url(r'^blog/(?P<pk>\d+)/$', PostDetail.as_view(), name='detail'),
-                       url(r'^blog/create/$', PostCreate.as_view(), name='create'),
-                       # url(r'^blog/', include('blog.urls')),
-                       
-                       # wiki:
-                       #url(r'^wiki/$', WikiHome.as_view(), name='wiki'),
-                       #url(r'^wiki/view/$', WikiContent.as_view(), name='wikicontent'),
+	# blog:
+	url(r'^$', RedirectView.as_view(url='blog/')),
+	url(r'^blog/$', PostList.as_view(), name='home'),
+	url(r'^blog/(?P<pk>\d+)/$', PostDetail.as_view(), name='detail'),
+	url(r'^blog/create/$', PostCreate.as_view(), name='create'),
+	# url(r'^blog/', include('blog.urls')),
 
-                       # admin:
-                       url(r'^admin/', include(admin.site.urls)),
+	# wiki:
+	url(r'^wiki/$', WikiHome.as_view(), name='wiki'),
+	url(r'^wiki/(?P<pk>[\w|\W]+)/$', find_by_title, name='wikiarticle'),
 
-                       # member:
-                       url(r'^login/$', 'django.contrib.auth.views.login'),
+	# admin:
+	url(r'^admin/', include(admin.site.urls)),
 
-                       # static:
-                       url(r'^robots.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /", mimetype="text/plain")),
-                       )
+	# member:
+	url(r'^login/$', 'django.contrib.auth.views.login'),
+
+	# apis:
+	url(r'^v1/wiki/search/$', wiki.search),
+
+	# static:
+)
