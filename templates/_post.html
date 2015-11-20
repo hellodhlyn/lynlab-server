@@ -15,7 +15,7 @@
         {% endif %}
     	{% for tag in object.split_tags %}
     		<span class="post-tag" style="display: inline-block">{{ tag }}</span>
-	{% endfor %}
+        {% endfor %}
     </p>
     <div class="post-description">
     	{{ object.content|truncatechars:250|linebreaksbr }}
