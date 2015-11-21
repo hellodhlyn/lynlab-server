@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block style %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'wiki.css' %}">
+{% endblock %}
+{% block content %}
+	<div class="header">
+        {% include 'wiki/navbar.html' %}
+        <h1>{{ title }}</h1>
+        <h2>검색 실패</h2>
+    </div>
+    <div class="content">
+    	<p>해당하는 문서가 없습니다. <a href="#">작성하러 가기</a></p>
+    </div>
+{% endblock %}

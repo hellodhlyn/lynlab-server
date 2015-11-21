@@ -25,6 +25,6 @@ def search(request):
     try:
         Article.objects.get(title=req_title)
     except ObjectDoesNotExist:
-        return render(request, 'wiki.html', {'error_id': '404'})
+        return HttpResponseRedirect(reverse('wikiarticle', kwargs={'pk': req_title}))
     else:
         return HttpResponseRedirect(reverse('wikiarticle', kwargs={'pk': req_title}))
