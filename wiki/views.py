@@ -9,12 +9,15 @@ from wiki.models import Article
 
 class WikiHome(ListView):
 	model = Article
-	template_name = 'wiki.html'
+	template_name = 'wiki/home.html'
 
 class WikiContent(DetailView):
     model = Article
-    template_name = 'article.html'
+    template_name = 'wiki/article.html'
 
 def find_by_title(request, pk):
     article = Article.objects.filter(title=pk)
-    return render_to_response('article.html', {'article': article[0]})
+    if article:
+    	return render_to_response('wiki/article.html', {'article': article[0]})
+    else:
+    	return render_to_response('wiki/notfound.html', {'title': pk})
