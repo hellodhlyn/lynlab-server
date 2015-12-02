@@ -17,7 +17,7 @@ Including another URLconf
 """
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 from django.http import HttpResponse
 
 from blog.views import PostList, PostDetail, PostCreate
@@ -26,8 +26,11 @@ from wiki.views import WikiHome, WikiContent, find_by_title
 import wiki.models as wiki
 
 urlpatterns = patterns('',
-	# blog:
+	# global:
 	url(r'^$', RedirectView.as_view(url='blog/')),
+	url(r'^about/$', TemplateView.as_view(template_name='about.html'), name='about'),
+
+	# blog:
 	url(r'^blog/$', PostList.as_view(), name='home'),
 	url(r'^blog/(?P<pk>\d+)/$', PostDetail.as_view(), name='detail'),
 	url(r'^blog/create/$', PostCreate.as_view(), name='create'),
@@ -41,7 +44,7 @@ urlpatterns = patterns('',
 	url(r'^admin/', include(admin.site.urls)),
 
 	# member:
-	url(r'^login/$', 'django.contrib.auth.views.login'),
+	# url(r'^login/$', 'django.contrib.auth.views.login'),
 
 	# apis:
 	url(r'^v1/wiki/search/$', wiki.search),

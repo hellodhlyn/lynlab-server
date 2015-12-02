@@ -24,11 +24,14 @@ class Post(models.Model):
         ordering = ['created']
     
     category = models.ForeignKey(Category, verbose_name=u'category', null=True, blank=True)
-    title = models.CharField(verbose_name=u'title', max_length=256)
+    title = models.CharField(u'title', max_length=256)
+    description = models.TextField(u'description', blank=True, default='')
     content = models.TextField(u'content', blank=True, default='')
     created = models.DateTimeField(auto_now_add=True, verbose_name=u'date')
     tags = models.TextField(max_length=256, default='')
     public_post = models.BooleanField(default=False)
+    # Types (0: general post / 1: notify post)
+    posttype = models.IntegerField(u'posttype', default=0, null=False)
     
     def __unicode__(self):
         return self.title

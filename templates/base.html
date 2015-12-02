@@ -6,10 +6,14 @@
     <meta name="language" content="Korean">
     <meta http-equiv="content-language" content="KO">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load staticfiles %}
+    <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+    <script src="{% static 'semantic/semantic.min.js' %}"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/font-nanum/1.0/nanumbarungothic/nanumbarungothic.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.013/css/hack.min.css">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+    <link rel="stylesheet" href="{% static 'semantic/semantic.min.css' %}">
     <style>
     body { font-family: 'NanumBarunGothicWeb'; }
     </style>
