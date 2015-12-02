@@ -11,7 +11,7 @@ def handler404(request):
 
 class PostList(ListView):
     model = Post
-    template_name = 'home.html'
+    template_name = 'blog/home.html'
 
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data(**kwargs)
@@ -30,7 +30,7 @@ class PostList(ListView):
 
 class PostDetail(DetailView):
     model = Post
-    template_name = 'detail.html'
+    template_name = 'blog/detail.html'
 
 class PostCreate(CreateView):
     model = Post

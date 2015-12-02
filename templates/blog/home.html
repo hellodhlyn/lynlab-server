@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block style %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'stylesheet.css' %}">
+<title>LYnTimeline</title>
+{% endblock %}
+{% block content %}
+<div id="layout" class="pure-g">
+    {% include 'blog/_sidebar.html' %}
+    <div class="content pure-u-1 pure-u-md-3-4 blog-container">
+        <div class="posts">
+            {% for object in object_list reversed %}
+                {% if object.public_post %}
+                    {% include 'blog/_post.html' %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <ul class="category">
+            {% for category in categories %}
+                <li>
+                    <a href="{% url 'home' %}?category={{ category.id }}">
+                        {{ category.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

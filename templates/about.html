@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block style %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/global.css' %}">
+<title>About</title>
+{% endblock %}
+{% block content %}
+<div class="ui text container" id="about-container">
+	{% include '_globalbar.html' %}
+	<h1>결함 찾기</h1>
+</div>
+{% endblock %}
