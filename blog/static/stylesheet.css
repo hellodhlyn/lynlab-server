@@ -223,3 +223,7 @@ ul.share-buttons{
     border-right-style: solid;
     border-right-color: #ff1111;
 }
+
+.comments {
+    color: rgb(78, 143, 34);
+}

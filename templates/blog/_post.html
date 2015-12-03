@@ -12,7 +12,10 @@
         </div>
         <div class="ui divider"></div>
         <p class="post-meta">
+            <i class="wait icon"></i>
             {{ object.created }}
+            <i class="comments icon"></i>
+            <a class="comments" href="{% url 'detail' object.id %}#disqus_thread">댓글 없음</a>
             {% if object.is_recent_post %}
                 <a class="ui mini red tag label">새 글</a>
             {% endif %}
