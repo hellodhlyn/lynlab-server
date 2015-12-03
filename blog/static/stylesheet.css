@@ -227,3 +227,12 @@ ul.share-buttons{
 .comments {
     color: rgb(78, 143, 34);
 }
+
+ul.share-buttons{
+  list-style: none;
+  padding: 0;
+}
+
+ul.share-buttons li{
+  display: inline;
+}
