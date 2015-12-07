@@ -1,18 +1,30 @@
 {% if object.posttype == 0 %}
 <div class="post-container post-general">
     <h1 class="content-subhead">{{ object.category.name }}</h1>
-    <article class="post">
-        <a href="{% url 'detail' object.id %}">
-            <h2 class="post-title">
-                {{ object.title }}
-            </h2>
-        </a>
-        <div class="post-description">
-            {{ object.description|truncatechars:250|linebreaksbr }}
+    <article class="ui items post">
+        <div class="ui item">
+            {% if object.preview %}
+            <div class="image">
+                <img class="ui image" src="{{ object.preview }}">
+            </div>
+            {% endif %}
+            <div class="content">
+                <a href="{% url 'detail' object.id %}">
+                    <h2 class="post-title">
+                        {{ object.title }}
+                    </h2>
+                </a>
+                <div class="post-description">
+                    {{ object.description|truncatechars:250|linebreaksbr }}
+                    </div>
+            </div>
         </div>
         <div class="ui divider"></div>
         <p class="post-meta">
+            <i class="wait icon"></i>
             {{ object.created }}
+            <i class="comments icon"></i>
+            <a class="comments" href="{% url 'detail' object.id %}#disqus_thread">댓글 없음</a>
             {% if object.is_recent_post %}
                 <a class="ui mini red tag label">새 글</a>
             {% endif %}
@@ -30,7 +42,7 @@
 {% if object.posttype == 1 %}
 <div class="post-container post-notice">
     <h1 class="content-subhead">NOTICE</h1>
-    <article class="post">
+    <article class="ui item post">
         <h2 class="post-title">
             {{ object.title }}
         </h2>
