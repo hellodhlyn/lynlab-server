@@ -137,5 +137,9 @@ LOGGING = {
     }
 }
 
-# 환경 변수
+# Environment variables
 ACCOUNT_ACTIVATION_DAYS = 2
+DEFAULT_FROM_EMAIL = 'admin@lynlab.co.kr'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

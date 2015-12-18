@@ -30,6 +30,7 @@ urlpatterns = patterns('',
 
 	# member:
 	#url(r'^accounts/', include('django.contrib.auth.urls')),
+	url(r'^accounts/profile/$', RedirectView.as_view(url='/wiki/')),
 	url(r'^accounts/', include('registration.backends.hmac.urls')),
 
 	# apis:
