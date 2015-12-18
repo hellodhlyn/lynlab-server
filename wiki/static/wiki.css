@@ -129,3 +129,10 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     }
 }
 
+#login-segment {
+    margin-top: 15%;
+}
+
+#login-error-msg {
+    text-align: left;
+}

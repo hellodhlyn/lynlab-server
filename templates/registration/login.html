@@ -1,17 +1,47 @@
 {% extends 'base.html' %}
 {% block style %}
 {% load staticfiles %}
-<title>Sign in LYnTimeline</title>
+<title>로그인 | LYnLab</title>
+<link rel="stylesheet" href="{% static 'wiki.css' %}">
 {% endblock %}
 {% block content %}
-    {% if form.errors %}
-    <p>로그인에 실패했습니다.</p>
-    {% endif %}
-    <form class="pure-form pure-form-stacked" method="post" action=".">{% csrf_token %}
-        <legend>Sign in as Admin</legend>
-        <label for="id_username">Username</label>{{ form.username }}
-        <label for="id_password">Password</label>{{ form.password }}
-        <input type="hidden" name="next" value="/" />
-        <input type="submit" value="Sign In" />
-	</form>
+    <div class="header">
+        <h1>로그인</h1>
+    </div>
+    <div class="content">
+        <div class="ui text container">
+            <form class="ui large form" method="post" action=".">{% csrf_token %}
+                <div class="ui stacked segment">
+                    {% if form.errors %}
+                    <div class="ui segment">
+                        <h2 class="ui header">
+                            <i class="warning circle icon"></i>
+                            <div class="content" id="login-error-msg">
+                                로그인 실패
+                                <div class="sub header">존재하지 않는 계정이거나 비밀번호가 틀립니다.</div>
+                            </div>
+                        </h2>
+                    </div>
+                    {% endif %}
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            {{ form.username }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            {{ form.password }}
+                        </div>
+                    </div>
+                    <input type="submit" value="로그인" class="ui fluid large teal submit button" />
+                </div>
+            </form>
+
+            <div class="ui message">
+                계정이 없으신가요? <a href="/accounts/register/">회원가입</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
