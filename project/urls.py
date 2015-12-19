@@ -1,27 +1,12 @@
 # -*- coding: utf-8 -*-
 
-"""project URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.8/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Add an import:  from blog import urls as blog_urls
-    2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
-"""
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.views.generic import RedirectView, TemplateView
 from django.http import HttpResponse
 
 from blog.views import PostList, PostDetail, PostCreate
-from wiki.views import WikiHome, WikiContent, find_by_title
+from wiki.views import WikiHome, WikiContent, WikiHistory, find_article, modify_article, show_history
 
 import wiki.models as wiki
 
@@ -38,16 +23,22 @@ urlpatterns = patterns('',
 
 	# wiki:
 	url(r'^wiki/$', WikiHome.as_view(), name='wiki'),
-	url(r'^wiki/(?P<pk>[\w|\W]+)/$', find_by_title, name='wikiarticle'),
+	url(r'^wiki/history/$', WikiHistory.as_view(), name='wikihistory'),
+	url(r'^wiki/(?P<pk>[\w|\W]+)/modify/$', modify_article, name='wikimodify'),
+	url(r'^wiki/(?P<pk>[\w|\W]+)/history/$', show_history, name='wikiarticlehistory'),
+	url(r'^wiki/(?P<pk>[\w|\W]+)/$', find_article, name='wikiarticle'),
 
 	# admin:
 	url(r'^admin/', include(admin.site.urls)),
 
 	# member:
-	# url(r'^login/$', 'django.contrib.auth.views.login'),
+	#url(r'^accounts/', include('django.contrib.auth.urls')),
+	url(r'^accounts/profile/$', RedirectView.as_view(url='/wiki/')),
+	url(r'^accounts/', include('registration.backends.hmac.urls')),
 
 	# apis:
 	url(r'^v1/wiki/search/$', wiki.search),
+	url(r'^v1/wiki/modify/$', wiki.modify),
 
 	# static:
 )

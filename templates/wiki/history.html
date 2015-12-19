@@ -3,7 +3,7 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'wiki.css' %}">
 <link rel="stylesheet" href="{% static 'article.css' %}">
-<title>검색 실패 | LYnWiki</title>
+<title>편집 역사 | LYnWiki</title>
 {% endblock %}
 {% block content %}
     <div class="pusher">
@@ -14,7 +14,8 @@
                         <i class="sidebar icon"></i>
                     </a>
                     <a class="active item" href="/wiki">LYnWiki</a>
-                    <a class="item" href="modify">항목 만들기</a>
+                    <a class="item" href="..">본문 보기</a>
+                    <a class="item" href="../modify">편집</a>
                     <div class="right item wikiform titlebar" style="padding: 0">
                         <form class="ui form" name="wikiForm" method="post" action="/v1/wiki/search/">
                             {% csrf_token %}
@@ -29,10 +30,19 @@
         </div>
     </div>
     <div class="header">
-        <h1>{{ title }}</h1>
-        <h2>검색 실패</h2>
+        <h1>편집 역사</h1>
     </div>
     <div class="content article-description">
-        <p>해당하는 문서가 없습니다. <a href="modify">작성하러 가기</a></p>
+        <div class="ui relaxed divided list">
+            {% for object in object_list reversed %}
+            <div class="item">
+                <i class="large write middle aligned icon"></i>
+                <div class="content">
+                    <a class="header history-title" href="/wiki/{{ object.title }}/">{{ object.title }}</a>
+                    <div class="description">by {{ object.editor }} | {{ object.timestamp }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
