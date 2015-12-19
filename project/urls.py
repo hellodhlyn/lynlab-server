@@ -6,7 +6,7 @@ from django.views.generic import RedirectView, TemplateView
 from django.http import HttpResponse
 
 from blog.views import PostList, PostDetail, PostCreate
-from wiki.views import WikiHome, WikiContent, find_by_title
+from wiki.views import WikiHome, WikiContent, WikiHistory, find_article, modify_article, show_history
 
 import wiki.models as wiki
 
@@ -23,7 +23,10 @@ urlpatterns = patterns('',
 
 	# wiki:
 	url(r'^wiki/$', WikiHome.as_view(), name='wiki'),
-	url(r'^wiki/(?P<pk>[\w|\W]+)/$', find_by_title, name='wikiarticle'),
+	url(r'^wiki/history/$', WikiHistory.as_view(), name='wikihistory'),
+	url(r'^wiki/(?P<pk>[\w|\W]+)/modify/$', modify_article, name='wikimodify'),
+	url(r'^wiki/(?P<pk>[\w|\W]+)/history/$', show_history, name='wikiarticlehistory'),
+	url(r'^wiki/(?P<pk>[\w|\W]+)/$', find_article, name='wikiarticle'),
 
 	# admin:
 	url(r'^admin/', include(admin.site.urls)),
@@ -35,6 +38,7 @@ urlpatterns = patterns('',
 
 	# apis:
 	url(r'^v1/wiki/search/$', wiki.search),
+	url(r'^v1/wiki/modify/$', wiki.modify),
 
 	# static:
 )

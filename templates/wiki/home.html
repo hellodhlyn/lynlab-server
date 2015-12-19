@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block style %}
 {% load staticfiles %}
+<title>메인 | LYnWiki</title>
 <link rel="stylesheet" href="{% static 'wiki.css' %}">
 {% endblock %}
 {% block content %}
@@ -14,18 +15,24 @@
                         <i class="sidebar icon"></i>
                     </a>
                     <a class="active item">LYnWiki</a>
-                    <a class="item" href="/blog">Blog</a>
+                    <a class="item" href="/wiki/history">최근 변경</a>
+                    <a class="item" href="/blog">블로그</a>
                     <div class="right item">
+                        {% if user.is_authenticated %}
+                        <a class="ui inverted button" href="/accounts/logout">로그아웃</a>
+                        {% endif %}
+                        {% if not user.is_authenticated %}
                         <a class="ui inverted button" href="/accounts/login">로그인</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
 
             <div class="ui text container">
                 <h1 class="ui inverted header">
-                    LYnWiki β
+                    LYnWiki α
                 </h1>
-                <h2>컴퓨터, 서브컬처, 모든 잡지식의 집합소</h2>
+                <h2>전 지구상의 잡지식 집합소</h2>
                 <form class="ui form wikiform" name="wikiForm" method="post" action="/v1/wiki/search/">
                     {% csrf_token %}
                     <div class="ui icon input">

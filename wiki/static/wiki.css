@@ -137,6 +137,11 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     margin: 2em 0;
 }
 
+.history-title {
+    padding: 0;
+    text-align: left;
+}
+
 #search-button {
     background-color: transparent;
     background-repeat: no-repeat;

@@ -3,8 +3,9 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 
 class Article(models.Model):
     class Meta:
@@ -20,6 +21,15 @@ class Article(models.Model):
     def __unicode__(self):
         return self.title
 
+class ModifyHistory(models.Model):
+    class Meta:
+        verbose_name = u'wiki_history'
+        ordering = ['timestamp']
+
+    title = models.CharField(verbose_name=u'title', max_length=256)
+    timestamp = models.DateTimeField(auto_now_add=True, verbose_name=u'timestamp')
+    editor = models.CharField(verbose_name=u'editor', max_length=256)
+
 def search(request):
     req_title = request.POST['title']
     try:
@@ -28,3 +38,27 @@ def search(request):
         return HttpResponseRedirect(reverse('wikiarticle', kwargs={'pk': req_title}))
     else:
         return HttpResponseRedirect(reverse('wikiarticle', kwargs={'pk': req_title}))
+
+@login_required(login_url='/accounts/login/')
+def modify(request):
+    if request.user.is_authenticated():
+        username = request.user.username
+    else:
+        return HttpResponse(status=201)
+
+    req_title = request.POST['title']
+    req_content = request.POST['content']
+
+    try:
+        article = Article.objects.get(title=req_title)
+    except ObjectDoesNotExist:
+        new_article = Article(title=req_title, content=req_content)
+        new_article.save()
+    else:
+        article.content = req_content
+        article.save()
+
+    new_history = ModifyHistory(title=req_title, editor=username)
+    new_history.save()
+
+    return HttpResponseRedirect(reverse('wikiarticle', kwargs={'pk': req_title}))
