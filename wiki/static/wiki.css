@@ -133,6 +133,11 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     margin-top: 15%;
 }
 
-#login-error-msg {
+#error-msg {
     text-align: left;
+    padding: 0;
+}
+
+#id-validation {
+    margin-top: 3px;
 }

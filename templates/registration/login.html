@@ -13,14 +13,14 @@
             <form class="ui large form" method="post" action=".">{% csrf_token %}
                 <div class="ui stacked segment">
                     {% if form.errors %}
-                    <div class="ui segment">
-                        <h2 class="ui header">
-                            <i class="warning circle icon"></i>
-                            <div class="content" id="login-error-msg">
+                    <div class="ui icon negative message">
+                        <i class="warning circle icon"></i>
+                        <div class="content">
+                            <div class="header" id="error-msg">
                                 로그인 실패
-                                <div class="sub header">존재하지 않는 계정이거나 비밀번호가 틀립니다.</div>
                             </div>
-                        </h2>
+                            <p>존재하지 않는 계정이거나 비밀번호가 틀립니다.</p>
+                        </div>
                     </div>
                     {% endif %}
                     <div class="field">
