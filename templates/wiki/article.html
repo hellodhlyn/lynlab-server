@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="{% static 'wiki.css' %}">
 {% endblock %}
 {% block content %}
+	{% include 'wiki/navbar.html' %}
 	<div class="header">
-        {% include 'wiki/navbar.html' %}
         <h1>{{ article.title }}</h1>
         <h2>{{ article.subtitle }}</h2>
     </div>

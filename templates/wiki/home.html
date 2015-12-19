@@ -4,19 +4,37 @@
 <link rel="stylesheet" href="{% static 'wiki.css' %}">
 {% endblock %}
 {% block content %}
-    <div class="header">
-        {% include 'wiki/navbar.html' %}
-        <h1>LYnWiki beta</h1>
-    </div>
-    <div class="content">
-        <div class="splash-container">
-            <div class="splash">
-                <form class="pure-form" method="post" action="/v1/wiki/search/">
+<!-- Page Contents -->
+<div id="main">
+    <div class="pusher" id="wiki-main">
+        <div class="ui inverted vertical masthead center aligned segment">
+            <div class="ui container">
+                <div class="ui large secondary inverted pointing menu">
+                    <a class="toc item">
+                        <i class="sidebar icon"></i>
+                    </a>
+                    <a class="active item">LYnWiki</a>
+                    <a class="item" href="/blog">Blog</a>
+                    <div class="right item">
+                        <a class="ui inverted button" href="/accounts/login">로그인</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui text container">
+                <h1 class="ui inverted header">
+                    LYnWiki β
+                </h1>
+                <h2>컴퓨터, 서브컬처, 모든 잡지식의 집합소</h2>
+                <form class="ui form wikiform" name="wikiForm" method="post" action="/v1/wiki/search/">
                     {% csrf_token %}
-                    <input type="text" class="pure-input-rounded" style="margin: auto" name="title">
-                    <button type="submit" class="pure-button">찾기</button>
+                    <div class="ui icon input">
+                        <input type="text" name="title" placeholder="검색어를 입력...">
+                        <i class="inverted circular search link icon" onclick="wikiForm.submit()"></i>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
