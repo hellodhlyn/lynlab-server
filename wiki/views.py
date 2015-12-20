@@ -41,3 +41,8 @@ def find_article(request, pk):
 def show_history(request, pk):
     history = ModifyHistory.objects.filter(title=pk)
     return render_to_response('wiki/history.html', {'object_list': history}, context_instance=RequestContext(request))
+
+def show_history_detail(request, pk):
+    obj = ModifyHistory.objects.filter(code=pk)
+    diff = obj[0].diff.split('\n')
+    return render_to_response('wiki/history_detail.html', {'title': obj[0].title, 'diff': diff}, context_instance=RequestContext(request))
