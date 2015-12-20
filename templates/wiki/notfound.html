@@ -3,27 +3,33 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'wiki.css' %}">
 <link rel="stylesheet" href="{% static 'article.css' %}">
+<script src="{% static 'js/wiki.js' %}"></script>
 <title>검색 실패 | LYnWiki</title>
 {% endblock %}
 {% block content %}
-    <div class="pusher">
-        <div class="ui inverted vertical masthead center aligned segment">
-            <div class="ui container">
-                <div class="ui large secondary inverted pointing menu">
-                    <a class="toc item">
-                        <i class="sidebar icon"></i>
-                    </a>
-                    <a class="active item" href="/wiki">LYnWiki</a>
-                    <a class="item" href="modify">항목 만들기</a>
-                    <div class="right item wikiform titlebar" style="padding: 0">
-                        <form class="ui form" name="wikiForm" method="post" action="/v1/wiki/search/">
-                            {% csrf_token %}
-                            <div class="ui icon input">
-                                <input class="navbar-search" type="text" name="title" placeholder="검색어를 입력...">
-                                <i class="inverted circular search link icon" onclick="wikiForm.submit()"></i>
-                            </div>
-                        </form>
-                    </div>
+<div class="ui left demo vertical inverted sidebar labeled icon menu">
+    <a class="active item"><i class="home icon"></i>LYnWiki</a>
+    <a class="item" href="/wiki/random"><i class="random icon"></i>랜덤</a>
+    <a class="item" href="modify"><i class="write icon"></i>항목 만들기</a>
+</div>
+<div class="pusher">
+    <div class="ui inverted vertical masthead center aligned segment">
+        <div class="ui container">
+            <div class="ui large secondary inverted pointing menu">
+                <a class="toc item">
+                    <i class="sidebar icon" onclick="onClickMenu()"></i>
+                </a>
+                <a class="active item" href="/wiki">LYnWiki</a>
+                <a class="item" href="/wiki/random">랜덤</a>
+                <a class="item" href="modify">항목 만들기</a>
+                <div class="right item wikiform titlebar" style="padding: 0">
+                    <form class="ui form" name="wikiForm" method="post" action="/v1/wiki/search/">
+                        {% csrf_token %}
+                        <div class="ui icon input">
+                            <input class="navbar-search" type="text" name="title" placeholder="검색어를 입력...">
+                            <i class="inverted circular search link icon" onclick="wikiForm.submit()"></i>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -35,4 +41,5 @@
     <div class="content article-description">
         <p>해당하는 문서가 없습니다. <a href="modify">작성하러 가기</a></p>
     </div>
+</div>
 {% endblock %}

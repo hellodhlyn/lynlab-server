@@ -49,12 +49,13 @@ coverage.xml
 
 # Django stuff:
 *.log
-static
 migrations
 settings_var.py
 
-# Databases
+# Static / Databases
 *.sqlite3
+images
+semantic
 
 # Sphinx documentation
 docs/_build/
@@ -64,3 +65,4 @@ target/
 
 # Develop environments
 sftp-config.json
+migrate.sh

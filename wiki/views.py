@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import random
+
+from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, render_to_response
 from django.views.generic import DetailView, ListView
 from django.template import RequestContext
+from django.http import HttpResponseRedirect
 
 from wiki.models import Article, ModifyHistory
 
@@ -38,6 +42,16 @@ def find_article(request, pk):
     else:
         return render_to_response('wiki/notfound.html', {'title': pk}, context_instance=RequestContext(request))
 
+def show_random(request):
+    random_idx = random.randint(0, Article.objects.count() - 1)
+    random_obj = Article.objects.all()[random_idx]
+    return HttpResponseRedirect(reverse('wikiarticle', kwargs={'pk': random_obj.title}))
+
 def show_history(request, pk):
     history = ModifyHistory.objects.filter(title=pk)
     return render_to_response('wiki/history.html', {'object_list': history}, context_instance=RequestContext(request))
+
+def show_history_detail(request, pk):
+    obj = ModifyHistory.objects.filter(code=pk)
+    diff = obj[0].diff.split('\n')
+    return render_to_response('wiki/history_detail.html', {'title': obj[0].title, 'diff': diff}, context_instance=RequestContext(request))

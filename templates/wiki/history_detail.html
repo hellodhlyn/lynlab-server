@@ -10,8 +10,7 @@
 <div class="ui left demo vertical inverted sidebar labeled icon menu">
     <a class="active item" href="/wiki"><i class="home icon"></i>LYnWiki</a>
     <a class="item" href="/wiki/random"><i class="random icon"></i>랜덤</a>
-    <a class="item" href=".."><i class="align justify icon"></i>본문 보기</a>
-    <a class="item" href="../modify"><i class="write icon"></i>편집</a>
+    <a class="item" href=".."><i class="history icon"></i>편집 역사</a>
 </div>
 <div class="pusher">
     <div class="ui inverted vertical masthead center aligned segment">
@@ -22,8 +21,7 @@
                 </a>
                 <a class="active item" href="/wiki">LYnWiki</a>
                 <a class="item" href="/wiki/random">랜덤</a>
-                <a class="item" href="..">본문 보기</a>
-                <a class="item" href="../modify">편집</a>
+                <a class="item" href="..">편집 역사</a>
                 <div class="right item wikiform titlebar" style="padding: 0">
                     <form class="ui form" name="wikiForm" method="post" action="/v1/wiki/search/">
                         {% csrf_token %}
@@ -37,20 +35,15 @@
         </div>
     </div>
     <div class="header">
-        <h1>편집 역사</h1>
+        <h1>{{ title }}</h1>
+        <h2>변경 내역 보기</h2>
     </div>
     <div class="content article-description">
-        <div class="ui relaxed divided list">
-            {% for object in object_list reversed %}
-            <div class="item">
-                <i class="large write middle aligned icon"></i>
-                <div class="content">
-                    <a class="header history-title" href="/wiki/{{ object.title }}/">{{ object.title }}</a>
-                    <div class="description"><a href="/wiki/history/{{ object.code }}/">편집 내용 보기</a> | by {{ object.editor }} | {{ object.timestamp }}</div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+        {% for line in diff %}
+        <code>
+            {{ line }}
+        </code>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
