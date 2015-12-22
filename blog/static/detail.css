@@ -38,8 +38,9 @@ code {
 .header {
     text-align: center;
     top: auto;
-    margin: 0 auto 0 auto;
-    padding-top: 28px;
+    margin: 0 auto;
+    padding-top: 40px;
+    padding-bottom: 12px;
 }
 
 .sidebar {
@@ -120,7 +121,7 @@ code {
     border-width: 1px;
     max-width: 800px;
     margin: auto;
-    padding: 3em 3.5em;
+    padding: 4.5em;
 }
 
 .post-avatar {
