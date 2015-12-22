@@ -9,11 +9,15 @@
     {% include 'blog/_sidebar.html' %}
     <div class="content pure-u-1 pure-u-md-3-4 blog-container">
         <div class="posts">
-            {% for object in object_list reversed %}
-                {% if object.public_post %}
-                    {% include 'blog/_post.html' %}
-                {% endif %}
-            {% endfor %}
+            <div class="endless_page_template">
+                {% include page_template %}
+            </div>
+
+            {% block js %}
+                {{ block.super }}
+                <script src="{% static 'js/el-pagination.js' %}"></script>
+                <script>$.endlessPaginate({paginateOnScroll: true});</script>
+            {% endblock %}
         </div>
         <ul class="category">
             {% for category in categories %}

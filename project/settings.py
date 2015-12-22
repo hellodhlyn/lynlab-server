@@ -33,6 +33,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_markup',
+    'el_pagination',
     'blog',
     'wiki'
 )
@@ -61,6 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.request',
             ],
         },
     },
@@ -143,3 +145,6 @@ DEFAULT_FROM_EMAIL = 'admin@lynlab.co.kr'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Endless pagination
+EL_PAGINATION_PER_PAGE = 5

@@ -1,37 +1,37 @@
-{% if object.posttype == 0 %}
+{% if post.posttype == 0 %}
 <div class="post-container post-general">
-    <h1 class="content-subhead">{{ object.category.name }}</h1>
+    <h1 class="content-subhead">{{ post.category.name }}</h1>
     <article class="ui items post">
         <div class="ui item">
-            {% if object.preview %}
+            {% if post.preview %}
             <div class="image">
-                <img class="ui image" src="{{ object.preview }}">
+                <img class="ui image" src="{{ post.preview }}">
             </div>
             {% endif %}
             <div class="content">
-                <a href="{% url 'detail' object.id %}">
+                <a href="{% url 'detail' post.id %}">
                     <h2 class="post-title">
-                        {{ object.title }}
+                        {{ post.title }}
                     </h2>
                 </a>
                 <div class="post-description">
-                    {{ object.description|truncatechars:250|linebreaksbr }}
+                    {{ post.description|truncatechars:250|linebreaksbr }}
                     </div>
             </div>
         </div>
         <div class="ui divider"></div>
         <p class="post-meta">
             <i class="wait icon"></i>
-            {{ object.created }}
+            {{ post.created }}
             <i class="comments icon"></i>
-            <a class="comments" href="{% url 'detail' object.id %}#disqus_thread">댓글 없음</a>
-            {% if object.is_recent_post %}
+            <a class="comments" href="{% url 'detail' post.id %}#disqus_thread">댓글 없음</a>
+            {% if post.is_recent_post %}
                 <a class="ui mini red tag label">새 글</a>
             {% endif %}
-            {% if not object.public_post %}
+            {% if not post.public_post %}
                 <a class="ui mini blue tag label">비공개</a>
             {% endif %}
-            {% for tag in object.split_tags %}
+            {% for tag in post.split_tags %}
                 <a class="ui mini tag label">{{ tag }}</a>
             {% endfor %}
         </p>
@@ -39,15 +39,15 @@
 </div>
 {% endif %}
 
-{% if object.posttype == 1 %}
+{% if post.posttype == 1 %}
 <div class="post-container post-notice">
     <h1 class="content-subhead">NOTICE</h1>
     <article class="ui item post">
         <h2 class="post-title">
-            {{ object.title }}
+            {{ post.title }}
         </h2>
         <div class="post-description">
-            {{ object.description|truncatechars:250|linebreaksbr }}
+            {{ post.description|truncatechars:250|linebreaksbr }}
         </div>
     </article>
 </div>
