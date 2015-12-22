@@ -93,10 +93,6 @@ code {
     letter-spacing: 0.1em;
 }
 
-.content {
-    padding: 2em 1em 0;
-}
-
 .post-title {
     font-size: 2.5em;
     color: #222;
@@ -104,34 +100,10 @@ code {
     padding-bottom: 0.5em;
 }
 
-.post-detail-title {
-    font-size: 3.2em;
-    color: #222;
-    font-weight: normal;
-}
-
 .post-avatar {
     border-radius: 50px;
     float: right;
     margin-left: 1em;
-}
-
-.post-description {
-    font-size: 110%;
-    font-weight: normal;
-    color: #444;
-    line-height: 1.8em;
-}
-
-.post-description > p {
-    line-height: 1.8em;
-}
-
-.post-description > p > img {
-    display: block;
-    width: 400px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .post-meta {
@@ -171,30 +143,6 @@ code {
     background: none;
 }
 
-@media (min-width: 48em) {
-    .content {
-        padding: 2em 3em 0;
-        margin-left: 25%;
-    }
-
-    .header {
-        margin: 80% 2em 0;
-        text-align: right;
-    }
-
-    .sidebar {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-    }
-}
-
-@media (max-width: 360px) {
-    img {
-        width: 300px;
-    }
-}
-
 #menu-list {
     padding-left: 0;
 }
@@ -211,16 +159,28 @@ ul.share-buttons{
 .post-container {
     background-color: #fcfcfc;
     margin: 8px 8px 24px 8px;
-    padding: 24px;
+    padding: 2em;
 }
 
 .post-general {
-    border-right-style: solid;
+    border-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-color: #eaeaea;
+    border-bottom-color: #eaeaea;
+    border-left-color: #eaeaea;
     border-right-color: #505050;
 }
 
 .post-notice {
-    border-right-style: solid;
+    border-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-color: #eaeaea;
+    border-bottom-color: #eaeaea;
+    border-left-color: #eaeaea;
     border-right-color: #ff1111;
 }
 
@@ -235,4 +195,39 @@ ul.share-buttons{
 
 ul.share-buttons li{
   display: inline;
+}
+
+.post-meta {
+    margin: 0.3em 0;
+}
+
+@media (min-width: 700px) {
+    .content {
+        padding: 2em 3em 0;
+        margin-left: 25%;
+    }
+
+    .header {
+        margin: 80% 2em 0;
+        text-align: right;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+    }
+
+    .footer {
+        text-align: right;
+    }
+}
+
+/* for mobile */
+@media (max-width: 400px) {
+    .post-container {
+        background-color: #fcfcfc;
+        margin: 1em;
+        padding: 1.4em;
+    }
 }

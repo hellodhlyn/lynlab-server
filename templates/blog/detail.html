@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block style %}
 {% load staticfiles %}
-<link rel="stylesheet" href="{% static 'stylesheet.css' %}">
+<link rel="stylesheet" href="{% static 'detail.css' %}">
 <title>{{ object.title }} | LYnTimeline</title>
 {% endblock %}
 {% block content %}
-<div id="layout" class="pure-g">
-    {% include 'blog/_sidebar.html' %}
-    <div class="content pure-u-1 pure-u-md-3-4 blog-container">
+{% include 'blog/_sidebar_hide.html' %}
+<div class="pusher post-detail-pusher">
+    <div class="post-detail-container">
         <h1 class="content-subhead">{{ object.category.name }}</h1>
         <article class="post">
             <a href="{% url 'detail' object.id %}">
@@ -15,13 +15,8 @@
                     {{ object.title }}
                 </h2>
             </a>
-            <div class="ui divider"></div>
-            <div class="post-description">
-                {% load markup_tags %}
-                {{ object.content|apply_markup:"markdown" }}
-            </div>
             <p class="post-meta">
-                {{ object.created }}
+                <i class="wait icon"></i> {{ object.created }}
                 {% if object.is_recent_post %}
                     <span class="ui mini red tag label">새 글</span>
                 {% endif %}
@@ -32,6 +27,11 @@
                     <span class="ui mini tag label">{{ tag }}</span>
                 {% endfor %}
             </p>
+            <div class="ui divider"></div>
+            <div class="post-description">
+                {% load markup_tags %}
+                {{ object.content|apply_markup:"markdown" }}
+            </div>
             {% include 'blog/_share.html' %}
             {% include 'blog/_disqus.html' %}
         </article>

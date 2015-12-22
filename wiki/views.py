@@ -21,10 +21,6 @@ class WikiContent(DetailView):
     model = Article
     template_name = 'wiki/article.html'
 
-class WikiHistory(ListView):
-    model = ModifyHistory
-    template_name = 'wiki/history.html'
-
 @login_required(login_url='/accounts/login/')
 def modify_article(request, pk):
     article = Article.objects.filter(title=pk)
@@ -47,9 +43,33 @@ def show_random(request):
     random_obj = Article.objects.all()[random_idx]
     return HttpResponseRedirect(reverse('wikiarticle', kwargs={'pk': random_obj.title}))
 
+def show_history_all(request):
+    template_name = 'wiki/history.html'
+    paged_template_name = 'wiki/history_paged.html'
+
+    context = {
+        'object_list': ModifyHistory.objects.all().order_by('-timestamp'),
+        'page_template': paged_template_name
+    }
+
+    if request.is_ajax():
+        template_name = paged_template_name
+
+    return render_to_response(template_name, context, context_instance=RequestContext(request))
+
 def show_history(request, pk):
-    history = ModifyHistory.objects.filter(title=pk)
-    return render_to_response('wiki/history.html', {'object_list': history}, context_instance=RequestContext(request))
+    template_name = 'wiki/history.html'
+    paged_template_name = 'wiki/history_paged.html'
+
+    context = {
+        'object_list': ModifyHistory.objects.filter(title=pk),
+        'page_template': paged_template_name
+    }
+
+    if request.is_ajax():
+        template_name = paged_template_name
+
+    return render_to_response(template_name, context, context_instance=RequestContext(request))
 
 def show_history_detail(request, pk):
     obj = ModifyHistory.objects.filter(code=pk)
