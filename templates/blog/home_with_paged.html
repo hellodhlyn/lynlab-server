@@ -1,7 +1,7 @@
 {% load el_pagination_tags %}
 
 {% paginate posts %}
-{% for post in posts reversed %}
+{% for post in posts %}
     {% if post.public_post %}
         {% include 'blog/_post.html' %}
     {% endif %}

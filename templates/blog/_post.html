@@ -3,11 +3,6 @@
     <h1 class="content-subhead">{{ post.category.name }}</h1>
     <article class="ui items post">
         <div class="ui item">
-            {% if post.preview %}
-            <div class="image">
-                <img class="ui image" src="{{ post.preview }}">
-            </div>
-            {% endif %}
             <div class="content">
                 <a href="{% url 'detail' post.id %}">
                     <h2 class="post-title">
@@ -18,6 +13,11 @@
                     {{ post.description|truncatechars:250|linebreaksbr }}
                     </div>
             </div>
+            {% if post.preview %}
+            <div class="image">
+                <img class="ui image" src="{{ post.preview }}">
+            </div>
+            {% endif %}
         </div>
         <div class="ui divider"></div>
         <p class="post-meta">
