@@ -42,6 +42,14 @@
     </div>
     <div class="content article-description">
         {% load markup_tags %}
+        {% if redirect_origin %}
+        <div class="ui icon info message">
+            <i class="share icon"></i>
+            <div class="content">
+                <p>{{ redirect_origin }} 문서에서 넘어왔습니다. [<a href="/wiki/{{ redirect_origin }}/modify">넘겨주기 편집</a>]</p>
+            </div>
+        </div>
+        {% endif %}
         {{ article.content|apply_markup:"markdown" }}
     </div>
 </div>

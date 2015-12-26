@@ -48,6 +48,10 @@
                 <label>본문</label>
                 <textarea name="content" rows="15">{{ content }}</textarea>
             </div>
+            <div class="ui checkbox">
+                <input type="checkbox" name="redirect" {% if code == 303 %}checked{% endif %}></input>
+                <label>넘겨주기 문서</label>
+            </div>
             <div class="field">
                 <input type="submit" value="수정 완료!" class="ui fluid large blue submit button" />
             </div>

@@ -39,8 +39,8 @@ urlpatterns = patterns('',
 	url(r'^accounts/', include('registration.backends.hmac.urls')),
 
 	# apis:
-	url(r'^v1/wiki/search/$', wiki.search),
-	url(r'^v1/wiki/modify/$', wiki.modify),
+	url(r'^v1/wiki/search/$', wiki.search, name='api1_wikisearch'),
+	url(r'^v1/wiki/modify/$', wiki.modify, name="api1_wikimodify"),
 
 	# static:
 )
