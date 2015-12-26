@@ -68,7 +68,7 @@ def show_history(request, pk):
     paged_template_name = 'wiki/history_paged.html'
 
     context = {
-        'object_list': ModifyHistory.objects.filter(title=pk),
+        'object_list': ModifyHistory.objects.filter(title=pk).order_by('-timestamp'),
         'page_template': paged_template_name
     }
 
