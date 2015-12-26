@@ -1,12 +1,140 @@
 {% extends 'base.html' %}
 {% block style %}
 {% load staticfiles %}
-<link rel="stylesheet" href="{% static 'css/global.css' %}">
-<title>About</title>
+<link rel="stylesheet" href="{% static 'wiki.css' %}">
+<link rel="stylesheet" href="{% static 'article.css' %}">
+<script src="{% static 'js/wiki.js' %}"></script>
+<title>About | LYnLab</title>
 {% endblock %}
 {% block content %}
-<div class="ui text container" id="about-container">
-	{% include '_globalbar.html' %}
-	<h1>결함 찾기</h1>
+<div class="ui left demo vertical inverted sidebar labeled icon menu">
+    <a class="active item" href="/"><i class="home icon"></i>LYnLab</a>
+    <a class="item" href="/blog"><i class="coffee icon"></i>블로그</a>
+</div>
+<div class="pusher">
+    <div class="ui inverted vertical masthead center aligned segment">
+        <div class="ui container">
+            <div class="ui large secondary inverted pointing menu">
+                <a class="toc item">
+                    <i class="sidebar icon" onclick="onClickMenu()"></i>
+                </a>
+                <a class="active item" href="/">LYnLab</a>
+                <a class="item" href="/blog">블로그</a>
+                <div class="right item wikiform titlebar" style="padding: 0">
+                    <form class="ui form" name="wikiForm" method="post" action="/v1/wiki/search/">
+                        {% csrf_token %}
+                        <div class="ui icon input">
+                            <input class="navbar-search" type="text" name="title" placeholder="검색어를 입력...">
+                            <i class="inverted circular search link icon" onclick="wikiForm.submit()"></i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content article-description">
+        <h1><a class="reverse-link" name="profile">프로필</a></h1>
+        <h2>소속</h2>
+        <table class="inline-profile">
+            <tr>
+                <td>• 2015</td>
+                <td>미래창조과학부 <a href="http://swmaestro.kr/">SW 마에스트로 과정</a> 6기 연수생</td>
+            </tr>
+            <tr>
+                <td>• 2014 ~ 現</td>
+                <td>연세대학교 컴퓨터과학과 (재학)</td>
+            </tr>
+            <tr>
+                <td>• 2012 ~ 2014</td>
+                <td>경남과학고등학교 (조기졸업)</td>
+            </tr>
+        </table>
+        <h2>수상 경력 / 자격</h2>
+        <table class="inline-profile">
+            <tr>
+                <td>• 2015</td>
+                <td>국가기술자격 정보처리기능사</td>
+            </tr>
+            <tr>
+                <td>• 2014</td>
+                <td>특허출원 (10-2014-0192784)</td>
+            </tr>
+            <tr>
+                <td>• 2014</td>
+                <td>제20회 삼성휴먼테크논문대상 고교부문 수학/전산분야 <strong>금상</strong></td>
+            </tr>
+            <tr>
+                <td>• 2009 ~ 2013</td>
+                <td>한국정보올림피아드 동, 은, 금상(지역), 장려상(전국)</td>
+            </tr>
+        </table>
+        <div class="ui divider"></div>
+        <h1><a class="reverse-link" name="portfolio">포트폴리오</a></h1>
+        <h2>기술</h2>
+        <h3>지능형 할 일 관리 서비스를 위한 기술 개발</h3>
+        <table class="inline-profile">
+            <tr>
+                <td>• 개요</td>
+                <td>사용자 개인의 생활 패턴, 할 일의 소요 시간을 파악 및 예측하여 시간표 형태로 제공. 등록된 할 일과 관련된 글, 개인 문서 등을 추천.</td>
+            </tr>
+            <tr>
+                <td>• 진행 일시</td>
+                <td>2015년 9월 ~ 11월 (3개월)</td>
+            </tr>
+            <tr>
+                <td>• 담당 부분</td>
+                <td>할 일 추천 및 시간표 제작 알고리즘 설계, 개발</td>
+            </tr>
+            <tr>
+                <td>• 관련 분야</td>
+                <td>머신 러닝, 인공지능, 추천 알고리즘, 검색 알고리즘</td>
+            </tr>
+        </table>
+        <div class="embed">
+            <iframe src="//www.slideshare.net/slideshow/embed_code/key/yZ2sZUlZPx9Amb" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/DoHoerin/ss-55262148" title="지능형 할 일 관리 서비스를 위한 기술 개발" target="_blank">지능형 할 일 관리 서비스를 위한 기술 개발</a> </strong> from <strong><a href="//www.slideshare.net/DoHoerin" target="_blank">Do Hoerin</a></strong> </div>
+        </div>
+        <h2>애플리케이션 / 게임</h2>
+        <h3>Shibuya (모바일 게임)</h3>
+        <table class="inline-profile">
+            <tr>
+                <td>• 개요</td>
+                <td>충돌형 슈팅 게임.</td>
+            </tr>
+            <tr>
+                <td>• 진행 일시</td>
+                <td>2015년 7월 ~ 8월 (2개월)</td>
+            </tr>
+            <tr>
+                <td>• 담당 부분</td>
+                <td>기획, 스테이지 작성, 밸런싱</td>
+            </tr>
+            <tr>
+                <td>• 관련 분야</td>
+                <td>Unity 3d, 기획</td>
+            </tr>
+        </table>
+        <div class="embed">
+            <iframe width="420" height="315" src="https://www.youtube.com/embed/2AfGEGtOiHM" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <h3>결함 찾기 (안드로이드 애플리케이션)</h3>
+        <table class="inline-profile">
+            <tr>
+                <td>• 개요</td>
+                <td>스마트폰의 센서, 배터리, 디스플레이 등의 문제점을 찾아 진단, 서비스 센터에 연계해주는 안드로이드 애플리케이션 서비스.</td>
+            </tr>
+            <tr>
+                <td>• 진행 일시</td>
+                <td>2011년 3월 ~ 현재</td>
+            </tr>
+            <tr>
+                <td>• 담당 부분</td>
+                <td><strong>전체</strong> (기획, 개발, 디자인)</td>
+            </tr>
+            <tr>
+                <td>• 관련 분야</td>
+                <td>안드로이드 애플리케이션</td>
+            </tr>
+        </table>
+    </div>
 </div>
 {% endblock %}
