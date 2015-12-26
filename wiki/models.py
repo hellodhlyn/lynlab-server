@@ -23,6 +23,9 @@ class Article(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name=u'date')
     last_modified = models.DateTimeField(auto_now_add=True, null=True, verbose_name=u'modified')
 
+    # state code 200: normal, 303: see other
+    code = models.IntegerField(u'code', default=200)
+
     def __unicode__(self):
         return self.title
 
@@ -55,13 +58,17 @@ def modify(request):
     else:
         return HttpResponse(status=201)
 
-    req_title = request.POST['title']
-    req_content = filter_words(request.POST['content'])
+    req_title = request.POST.get('title', False)
+    req_content = filter_words(request.POST.get('content', False))
+
+    res_code = 200
+    if request.POST.get('redirect', False):
+        res_code = 303
 
     try:
         article = Article.objects.get(title=req_title)
     except ObjectDoesNotExist:
-        new_article = Article(title=req_title, content=req_content)
+        new_article = Article(title=req_title, content=req_content, code=res_code)
         new_article.save()
         diff = req_content
     else:
@@ -70,6 +77,7 @@ def modify(request):
         diff = '\n'.join(diff_list)
 
         article.content = req_content
+        article.code = res_code
         article.save()
 
     new_history = ModifyHistory(title=req_title, editor=username, diff=diff, code=gen_code())

@@ -26,15 +26,21 @@ def modify_article(request, pk):
     article = Article.objects.filter(title=pk)
     if article:
         content = article[0].content
+        code = article[0].code
     else:
         content = ''
+        code = ''
 
-    return render_to_response('wiki/modify.html', {'title': pk, 'content': content}, context_instance=RequestContext(request))
+    return render_to_response('wiki/modify.html', {'title': pk, 'content': content, 'code': code}, context_instance=RequestContext(request))
 
 def find_article(request, pk):
     article = Article.objects.filter(title=pk)
     if article:
-        return render_to_response('wiki/article.html', {'article': article[0]}, context_instance=RequestContext(request))
+        if article[0].code == 303:
+            article = Article.objects.filter(title=article[0].content)
+            return render_to_response('wiki/article.html', {'article': article[0], 'redirect_origin': pk}, context_instance=RequestContext(request))
+        else:
+            return render_to_response('wiki/article.html', {'article': article[0]}, context_instance=RequestContext(request))
     else:
         return render_to_response('wiki/notfound.html', {'title': pk}, context_instance=RequestContext(request))
 

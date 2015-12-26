@@ -1,3 +1,11 @@
+code {
+    font-size: 95%;
+    font-family: Hack, monospace;
+    background-color: #f0f0f0;
+    display: block;
+    padding: 10px;
+}
+
 .article-description {
     margin-top: 2em;
     font-size: 110%;
@@ -17,10 +25,24 @@
     margin-right: auto;
 }
 
-code {
-    font-size: 95%;
-    font-family: Hack, monospace;
-    background-color: #f0f0f0;
-    display: block;
-    padding: 10px;
+.reverse-link {
+    color: black;
+}
+
+.inline-profile {
+    margin-left: 1em;
+}
+
+.inline-profile > tbody > tr > td {
+    padding: 0 0.3em;
+}
+
+.inline-profile > tbody > tr > td:first-child {
+    min-width: 90px;
+    font-weight: bold;
+}
+
+.embed {
+    margin: 2em 0;
+    text-align: center;
 }
