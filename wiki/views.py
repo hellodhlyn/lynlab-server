@@ -3,7 +3,7 @@
 import random
 
 from django.core.urlresolvers import reverse
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, render_to_response
 from django.views.generic import DetailView, ListView
@@ -27,6 +27,9 @@ def modify_article(request, pk):
     if article:
         content = article[0].content
         code = article[0].code
+
+        if code == 403:
+            raise PermissionDenied
     else:
         content = ''
         code = ''

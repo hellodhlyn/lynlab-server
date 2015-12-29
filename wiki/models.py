@@ -59,7 +59,7 @@ def modify(request):
         return HttpResponse(status=201)
 
     req_title = request.POST.get('title', False)
-    req_content = filter_words(request.POST.get('content', False))
+    req_content = request.POST.get('content', False)
 
     res_code = 200
     if request.POST.get('redirect', False):
@@ -84,16 +84,6 @@ def modify(request):
     new_history.save()
 
     return HttpResponseRedirect(reverse('wikiarticle', kwargs={'pk': req_title}))
-
-filter_keywords = ['<script>', '</script>', '<h1>', '</h1>', '<h2>', '</h2>', '<h3>', '</h3>', '<h4>', '</h4>', '<h5>', '</h5>', '<h6>', '</h6>', 
-                   '<a', '</a>', '<code>', '</code>', '<iframe>', '</iframe>', '<div>', '</div>', '<input>', '<textarea>', '</textarea>', '<style>', '</style>',
-                   '<br>', '<br/>', '<br />', '<img', '</img>', '<strong>', '</strong>', '<b>', '</b>', '<i>', '</i>', '<u>', '</u>']
-
-def filter_words(content):
-    for keyword in filter_keywords: 
-        content = content.replace(keyword, '')
-
-    return content
 
 def gen_code():
     return binascii.hexlify(os.urandom(16))
