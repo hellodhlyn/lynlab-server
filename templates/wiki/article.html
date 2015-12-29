@@ -50,7 +50,7 @@
             </div>
         </div>
         {% endif %}
-        {{ article.content|apply_markup:"markdown" }}
+        {{ article.content|striptags|apply_markup:"markdown" }}
     </div>
 </div>
 {% endblock %}
