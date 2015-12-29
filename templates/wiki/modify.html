@@ -40,7 +40,18 @@
         <h1>{{ title }}</h1>
     </div>
     <div class="content article-description">
-        <p><a href="/wiki/LYnWiki:문법/">이 문서</a>를 통해 사용되는 문법을 확인하실 수 있습니다. (작성중)</p>
+        <div class="ui info message">
+            <div class="header" id="error-msg">
+                모두를 위해 규칙을 지켜주세요.
+            </div>
+            문서는 <a href="/wiki/LYnWiki:문법/">표준 문법</a>에 맞게 작성해주시기 바랍니다. <a href="http://lynlab.co.kr/wiki/LYnWiki:규칙/">규칙</a>에 위배되는 행동시 차단이 이루어질 수 있습니다.
+        </div>
+        <div class="ui info message">
+            <div class="header" id="error-msg">
+                취소선 문법 변경
+            </div>
+            취소선의 문법이 물결표 2개로 변경되었습니다. (예: ~~취소선 내용~~)
+        </div>
         <form class="ui form" action="/v1/wiki/modify/" method="post">
             {% csrf_token %}
             <input type="hidden" name="title" value={{ title }}>

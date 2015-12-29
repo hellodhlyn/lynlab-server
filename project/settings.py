@@ -32,7 +32,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_markup',
+    'django_multimarkup',
     'el_pagination',
     'blog',
     'wiki'
