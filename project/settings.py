@@ -35,7 +35,8 @@ INSTALLED_APPS = (
     'django_multimarkup',
     'el_pagination',
     'blog',
-    'wiki'
+    'wiki',
+    'media'
 )
 
 MIDDLEWARE_CLASSES = (
