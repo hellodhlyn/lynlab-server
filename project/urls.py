@@ -8,8 +8,10 @@ from django.http import HttpResponse
 from blog.views import PostDetail, PostCreate, show_posts
 from wiki.views import WikiHome, WikiContent, find_article, modify_article, \
 	show_history_all, show_history, show_random, show_history_detail
+from media.views import upload_view, show_media
 
 import wiki.models as wiki
+import media.models as media
 
 urlpatterns = patterns('',
 	# global:
@@ -30,6 +32,10 @@ urlpatterns = patterns('',
 	url(r'^wiki/(?P<pk>[\w|\W]+)/history/$', show_history, name='wikiarticlehistory'),
 	url(r'^wiki/(?P<pk>[\w|\W]+)/$', find_article, name='wikiarticle'),
 
+	# media: 
+	url(r'^media/upload/$', upload_view, name='mediaupload'),
+	url(r'^media/(?P<pk>[\w|\W]+)/$', show_media, name='mediashow'),
+
 	# admin:
 	url(r'^admin/', include(admin.site.urls)),
 
@@ -40,7 +46,8 @@ urlpatterns = patterns('',
 
 	# apis:
 	url(r'^v1/wiki/search/$', wiki.search, name='api1_wikisearch'),
-	url(r'^v1/wiki/modify/$', wiki.modify, name="api1_wikimodify"),
+	url(r'^v1/wiki/modify/$', wiki.modify, name='api1_wikimodify'),
+	url(r'^v1/media/upload/$', media.upload, name='api1_mediaupload'),
 
 	# static:
 )

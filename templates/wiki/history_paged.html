@@ -1,7 +1,7 @@
 {% load el_pagination_tags %}
 
 {% lazy_paginate 30,30 object_list %}
-{% for object in object_list reversed %}
+{% for object in object_list %}
 <div class="item">
     <i class="large write middle aligned icon"></i>
     <div class="content">

@@ -59,9 +59,15 @@
                 <label>본문</label>
                 <textarea name="content" rows="15">{{ content }}</textarea>
             </div>
-            <div class="ui checkbox">
-                <input type="checkbox" name="redirect" {% if code == 303 %}checked{% endif %}></input>
-                <label>넘겨주기 문서</label>
+            <div class="field">
+                <button type="button" onclick="window.open('/media/upload/')" class="ui button">
+                    <i class="photo icon"></i>
+                    사진 올리기
+                </button>
+                <div class="ui checkbox">
+                    <input type="checkbox" name="redirect" {% if code == 303 %}checked{% endif %}></input>
+                    <label>넘겨주기 문서</label>
+                </div>
             </div>
             <div class="field">
                 <input type="submit" value="수정 완료!" class="ui fluid large blue submit button" />
