@@ -19,8 +19,9 @@ def show_media(request, pk):
     if not res_file:
         raise Resolver404
     else:
-        with open('media/storage/'+res_file[0].title, "rb") as f:
+        req_directory = u'media/storage/' + res_file[0].title
+        req_directory = req_directory.encode('utf8', 'replace')
+        with open(req_directory, "rb") as f:
             response = HttpResponse(f.read(), content_type="image")
-        #response = FileResponse(open(res_file[0].media.path))
 
     return response

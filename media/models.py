@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+# -*- coding: utf-8 -*-
 
 from django.db import models
 from django.core.files import File
@@ -7,7 +7,6 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 
-from .forms import UploadForm
 
 class Media(models.Model):
     class Meta:
@@ -25,10 +24,12 @@ def upload(request):
             print request.FILES['file']
 
             req_title = request.POST.get('title', False)
+            req_directory = u'media/storage/' + req_title
+            req_directory = req_directory.encode('utf8', 'replace')
 
-            with open('media/storage/'+req_title, 'wb') as f:
+            with open(req_directory, 'wb') as f:
                 f.write(request.FILES['file'].read())
-            django_file = File(open('media/storage/'+req_title, 'rb'))
+            django_file = File(io.open(req_directory, 'rb'))
 
             instance = Media(title=req_title, uploader=request.user.username)
             instance.save()
