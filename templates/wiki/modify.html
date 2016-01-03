@@ -54,7 +54,7 @@
         </div>
         <form class="ui form" action="/v1/wiki/modify/" method="post">
             {% csrf_token %}
-            <input type="hidden" name="title" value={{ title }}>
+            <input type="hidden" name="title" value="{{ title }}">
             <div class="field">
                 <label>본문</label>
                 <textarea name="content" rows="15">{{ content }}</textarea>
