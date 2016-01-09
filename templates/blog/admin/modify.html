@@ -12,7 +12,7 @@
 {% include 'blog/admin/_mobilebar.html' %}
 <div class="pusher">
     {% include 'blog/admin/_desktopbar.html' %}
-    <div class="content article-description">
+    <div class="contents article-description">
         <h1>포스트 편집</h1>
         <form class="ui form" action="{% url 'api_blogcreate' %}" method="post">
             {% csrf_token %}
@@ -20,6 +20,10 @@
             <div class="field">
                 <label>제목</label>
                 <input type="text" name="title" value="{{ post.title }}"></input>
+            </div>
+            <div class="field">
+                <label>유형</label>
+                <input type="text" name="posttype" value="{{ post.posttype }}"></input>
             </div>
             <div class="field">
                 <label>본문</label>

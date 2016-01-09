@@ -69,36 +69,26 @@ class Post(models.Model):
 @staff_member_required
 def create(request):
     req_posttype = request.POST.get('posttype')
+    req_id = request.POST.get('id')
+    req_title = request.POST.get('title')
+    req_content = request.POST.get('content')
+    req_description = request.POST.get('description')
+    req_tags = request.POST.get('tags')
+    req_preview = request.POST.get('preview')
+    req_public_post = request.POST.get('public_post')
 
-    if req_posttype == 'tweet':
-        req_description = request.POST.get('description')
-        req_id = request.POST.get('id')
-        req_created = request.POST.get('created')
-
-        new_post = Post(posttype=req_posttype, created=req_created, description=req_description, tags=req_id)
-        new_post.save()
-    else:
-        req_posttype = '0'
-        req_id = request.POST.get('id')
-        req_title = request.POST.get('title')
-        req_content = request.POST.get('content')
-        req_description = request.POST.get('description')
-        req_tags = request.POST.get('tags')
-        req_preview = request.POST.get('preview')
-        req_public_post = request.POST.get('public_post')
-
-        try:
-            post = Post.objects.get(id=req_id)
-        except ValueError:
-            post = Post()
-        
-        post.posttype = req_posttype
-        post.title = req_title
-        post.content = req_content
-        post.description = req_description
-        post.tags = req_tags
-        post.preview = req_preview
-        post.public_post = req_public_post
-        post.save()
+    try:
+        post = Post.objects.get(id=req_id)
+    except ValueError:
+        post = Post()
+    
+    post.posttype = req_posttype
+    post.title = req_title
+    post.content = req_content
+    post.description = req_description
+    post.tags = req_tags
+    post.preview = req_preview
+    post.public_post = req_public_post
+    post.save()
 
     return HttpResponseRedirect(reverse('blogadmin'))

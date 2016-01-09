@@ -40,6 +40,8 @@ def create_tweet(request):
         'tags': tweet.id,
     }
 
+    print tweet
+
     template_name = 'blog/admin/create_tweet.html'
     context = {
         'post': post,
@@ -50,7 +52,7 @@ def create_tweet(request):
 @staff_member_required
 def create_post(request):
     template_name = 'blog/admin/modify.html'
-    
+
     return render_to_response(template_name, None, context_instance=RequestContext(request))
 
 @staff_member_required

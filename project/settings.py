@@ -158,6 +158,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Social OAuth backends
 
+TWITTER_ACCOUNT = settings_var.TWITTER_ACCOUNT
+
 TWITTER_KEY = settings_var.TWITTER_KEY
 
 TWITTER_SECRET = settings_var.TWITTER_SECRET
