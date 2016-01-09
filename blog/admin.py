@@ -47,5 +47,18 @@ def create_tweet(request):
 
     return render_to_response(template_name, context, context_instance=RequestContext(request))
 
-def new_post(request):
-    return None
+@staff_member_required
+def create_post(request):
+    template_name = 'blog/admin/modify.html'
+    
+    return render_to_response(template_name, None, context_instance=RequestContext(request))
+
+@staff_member_required
+def modify_post(request, pk):
+    template_name = 'blog/admin/modify.html'
+    post = Post.objects.filter(id=pk)
+    context = {
+        'post': post[0]
+    }
+
+    return render_to_response(template_name, context, context_instance=RequestContext(request))

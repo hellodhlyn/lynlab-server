@@ -13,7 +13,7 @@
     {% include 'blog/admin/_desktopbar.html' %}
     <div class="content article-description">
         <h1>포스트 관리</h1>
-        <button class="ui compact labeled blue icon button">
+        <button class="ui compact labeled blue icon button" onclick="location.href='{% url 'blogadmincreatepost' %}'">
             <i class="add icon"></i>
             새 글 쓰기
         </button>
@@ -56,7 +56,9 @@
                     <td>{{ post.title }}</td>
                     <td>{{ post.created }}</td>
                     <td class="center aligned">
-                        <button class="ui compact circular icon tiny button"><i class="edit icon"></i></button>
+                        <button type="button" class="ui compact circular icon tiny button" onclick="location.href='modify/{{ post.id }}'">
+                            <i class="edit icon"></i>
+                        </button>
                         <button class="ui compact circular icon tiny button"><i class="lock icon"></i></button>
                     </td>
                 </tr>

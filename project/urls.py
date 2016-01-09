@@ -25,7 +25,8 @@ urlpatterns = [
 	url(r'^blog/$', BlogView.show_posts, name='home'),
 	url(r'^blog/myadmin/$', BlogAdmin.admin, name='blogadmin'),
 	url(r'^blog/myadmin/create/tweet/$', BlogAdmin.create_tweet, name='blogadmincreatetweet'),
-	# url(r'^blog/myadmin/modify/(?P<pk>\d+)$', BlogView.admin_modify, name='blogadmin'),
+	url(r'^blog/myadmin/modify/$', BlogAdmin.create_post, name='blogadmincreatepost'),
+	url(r'^blog/myadmin/modify/(?P<pk>\d+)$', BlogAdmin.modify_post, name='blogadminmodifypost'),
 	url(r'^blog/(?P<pk>\d+)/$', BlogView.PostDetail.as_view(), name='detail'),
 	# url(r'^blog/', include('blog.urls')),
 
