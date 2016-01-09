@@ -32,8 +32,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_ajax',
     'django_multimarkup',
     'twython_django_oauth',
+    'templatetags',
     'el_pagination',
     'blog',
     'wiki',
@@ -159,6 +161,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 TWITTER_KEY = settings_var.TWITTER_KEY
 
 TWITTER_SECRET = settings_var.TWITTER_SECRET
+
+TWITTER_ACCESS_KEY = settings_var.TWITTER_ACCESS_KEY
+
+TWITTER_ACCESS_SECRET = settings_var.TWITTER_ACCESS_SECRET
 
 LOGIN_URL = '/oauth/twitter/login'
 

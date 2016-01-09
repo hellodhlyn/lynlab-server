@@ -5,11 +5,14 @@ from django.contrib import admin
 from django.views.generic import RedirectView, TemplateView
 from django.http import HttpResponse
 
-from blog.views import PostDetail, PostCreate, show_posts
 from wiki.views import WikiHome, WikiContent, find_article, modify_article, \
 	show_history_all, show_history, show_random, show_history_detail
 from media.views import upload_view, show_media
 
+import blog.views as BlogView
+import blog.admin as BlogAdmin
+
+import blog.models as blog
 import wiki.models as wiki
 import media.models as media
 
@@ -19,8 +22,11 @@ urlpatterns = [
 	url(r'^about/$', TemplateView.as_view(template_name='about.html'), name='about'),
 
 	# blog:
-	url(r'^blog/$', show_posts, name='home'),
-	url(r'^blog/(?P<pk>\d+)/$', PostDetail.as_view(), name='detail'),
+	url(r'^blog/$', BlogView.show_posts, name='home'),
+	url(r'^blog/myadmin/$', BlogAdmin.admin, name='blogadmin'),
+	url(r'^blog/myadmin/create/tweet/$', BlogAdmin.create_tweet, name='blogadmincreatetweet'),
+	# url(r'^blog/myadmin/modify/(?P<pk>\d+)$', BlogView.admin_modify, name='blogadmin'),
+	url(r'^blog/(?P<pk>\d+)/$', BlogView.PostDetail.as_view(), name='detail'),
 	# url(r'^blog/', include('blog.urls')),
 
 	# wiki:
@@ -45,9 +51,10 @@ urlpatterns = [
 	url(r'^accounts/', include('registration.backends.hmac.urls')),
 
 	# apis:
-	url(r'^v1/wiki/search/$', wiki.search, name='api1_wikisearch'),
-	url(r'^v1/wiki/modify/$', wiki.modify, name='api1_wikimodify'),
-	url(r'^v1/media/upload/$', media.upload, name='api1_mediaupload'),
+	url(r'^v1/blog/create/$', blog.create, name='api_blogcreate'),
+	url(r'^v1/wiki/search/$', wiki.search, name='api_wikisearch'),
+	url(r'^v1/wiki/modify/$', wiki.modify, name='api_wikimodify'),
+	url(r'^v1/media/upload/$', media.upload, name='api_mediaupload'),
 
 	url(r'^oauth/twitter/', include('twython_django_oauth.urls')),
 

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext

@@ -3,8 +3,12 @@
 import datetime
 
 from django.core.urlresolvers import reverse
+from django.contrib import admin
+from django.contrib.admin.views.decorators import staff_member_required
 from django.db import models
 from django.utils.timezone import utc
+from django.http import HttpResponseRedirect
+
 from django_markup.filter import MarkupFilter
 
 class Category(models.Model):
@@ -38,7 +42,7 @@ class Post(models.Model):
     public_post = models.BooleanField(default=False)
 
     # Types (0: general post / 1: notify post)
-    posttype = models.IntegerField(u'posttype', default=0, null=False)
+    posttype = models.CharField(u'posttype', null=False, max_length=20)
     
     def __unicode__(self):
         return self.title
@@ -60,3 +64,19 @@ class Post(models.Model):
             return [u'태그 없음']
         else:
             return self.tags.split(',')
+
+@staff_member_required
+def create(request):
+    req_posttype = request.POST.get('posttype')
+
+    if req_posttype == 'tweet':
+        req_description = request.POST.get('description')
+        req_id = request.POST.get('id')
+        req_created = request.POST.get('created')
+
+        new_post = Post(posttype=req_posttype, created=req_created, description=req_description, tags=req_id)
+        new_post.save()
+    else:
+        return HttpResponseRedirect(reverse('blogadmin'))
+
+    return HttpResponseRedirect(reverse('blogadmin'))

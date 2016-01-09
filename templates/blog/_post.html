@@ -1,4 +1,4 @@
-{% if post.posttype == 0 %}
+{% if post.posttype == '0' %}
 <div class="post-container post-general">
     <h1 class="content-subhead">{{ post.category.name }}</h1>
     <article class="ui items post">
@@ -39,7 +39,7 @@
 </div>
 {% endif %}
 
-{% if post.posttype == 1 %}
+{% if post.posttype == '1' %}
 <div class="post-container post-notice">
     <h1 class="content-subhead">NOTICE</h1>
     <article class="ui item post">
@@ -51,4 +51,32 @@
         </div>
     </article>
 </div>
+{% endif %}
+
+{% if post.posttype == 'tweet' %}
+<div class="post-container post-tweet">
+    <h1 class="content-subhead"><i class="twitter icon"></i>TWEET</h1>
+    <article class="ui item post">
+        <div class="post-description">
+            {{ post.description|linebreaksbr }}
+        </div>
+    </article>
+    <div class="ui divider"></div>
+    <p class="post-meta">
+        <i class="wait icon"></i>
+        {{ post.created }} | 
+        <a href="https://twitter.com/intent/tweet?in_reply_to={{ post.tags }}" style="color: #999">
+            <i class="reply icon"></i>
+        </a>
+        <a href="https://twitter.com/intent/retweet?tweet_id={{ post.tags }}" style="color: #999">
+            <i class="retweet icon"></i>
+        </a>
+        <a href="https://twitter.com/intent/like?tweet_id={{ post.tags }}" style="color: #999">
+            <i class="heart icon"></i>
+        </a>
+    </p>
+    <p><a class="twitter-follow-button" href="https://twitter.com/HelloDHLyn"></a></p>
+</div>
+
+<script>loadTwitterApi();</script>
 {% endif %}

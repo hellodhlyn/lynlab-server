@@ -184,6 +184,22 @@ ul.share-buttons{
     border-right-color: #ff1111;
 }
 
+.post-tweet {
+    border-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-color: #eaeaea;
+    border-bottom-color: #eaeaea;
+    border-left-color: #eaeaea;
+    border-right-color: #00aced;
+}
+
+.post-description {
+    font-size: 115%;
+    line-height: 1.5em;
+}
+
 .comments {
     color: rgb(78, 143, 34);
 }
