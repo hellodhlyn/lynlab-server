@@ -13,7 +13,7 @@ from media.views import upload_view, show_media
 import wiki.models as wiki
 import media.models as media
 
-urlpatterns = patterns('',
+urlpatterns = [
 	# global:
 	url(r'^$', RedirectView.as_view(url='blog/')),
 	url(r'^about/$', TemplateView.as_view(template_name='about.html'), name='about'),
@@ -49,5 +49,7 @@ urlpatterns = patterns('',
 	url(r'^v1/wiki/modify/$', wiki.modify, name='api1_wikimodify'),
 	url(r'^v1/media/upload/$', media.upload, name='api1_mediaupload'),
 
+	url(r'^oauth/twitter/', include('twython_django_oauth.urls')),
+
 	# static:
-)
+]

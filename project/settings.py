@@ -33,6 +33,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_multimarkup',
+    'twython_django_oauth',
     'el_pagination',
     'blog',
     'wiki',
@@ -140,12 +141,34 @@ LOGGING = {
     }
 }
 
-# Environment variables
+# Email backends
+
 ACCOUNT_ACTIVATION_DAYS = 2
+
 DEFAULT_FROM_EMAIL = 'admin@lynlab.co.kr'
+
 EMAIL_HOST = 'localhost'
+
 EMAIL_PORT = 25
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+
+# Social OAuth backends
+
+TWITTER_KEY = settings_var.TWITTER_KEY
+
+TWITTER_SECRET = settings_var.TWITTER_SECRET
+
+LOGIN_URL = '/oauth/twitter/login'
+
+LOGOUT_URL = '/oauth/twitter/logout'
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = '/'
+
+
 # Endless pagination
+
 EL_PAGINATION_PER_PAGE = 5
