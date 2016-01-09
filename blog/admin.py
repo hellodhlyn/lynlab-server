@@ -35,7 +35,7 @@ def create_tweet(request):
     post = {
         'posttype': 'tweet',
         'created': tweet_time,
-        'description': tweet.text,
+        'content': tweet.text,
         'tags': tweet.id,
     }
 

@@ -75,19 +75,22 @@ def create(request):
     req_description = request.POST.get('description')
     req_tags = request.POST.get('tags')
     req_preview = request.POST.get('preview')
-    req_public_post = request.POST.get('public_post')
+    req_public_post = request.POST.get('public_post', False)
 
     try:
         post = Post.objects.get(id=req_id)
     except ValueError:
         post = Post()
+    except ObjectDoesNotExist:
+        post = Post()
+
     
     post.posttype = req_posttype
-    post.title = req_title
-    post.content = req_content
-    post.description = req_description
-    post.tags = req_tags
-    post.preview = req_preview
+    post.title = req_title or '제목이 없습니다'
+    post.content = req_content or None
+    post.description = req_description or '설명이 없습니다'
+    post.tags = req_tags or None
+    post.preview = req_preview or None
     post.public_post = req_public_post
     post.save()
 
