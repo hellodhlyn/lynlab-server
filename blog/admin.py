@@ -6,7 +6,6 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from dateutil import parser
-from django_ajax.decorators import ajax
 
 from blog.models import Post, Category
 
