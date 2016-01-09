@@ -57,7 +57,5 @@ urlpatterns = [
 	url(r'^v1/wiki/modify/$', wiki.modify, name='api_wikimodify'),
 	url(r'^v1/media/upload/$', media.upload, name='api_mediaupload'),
 
-	url(r'^oauth/twitter/', include('twython_django_oauth.urls')),
-
 	# static:
 ]
