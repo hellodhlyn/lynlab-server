@@ -1,22 +1,66 @@
-from django.contrib import admin
+# -*- coding: utf-8 -*-
 
-from blog.models import Category, Post
+from django.contrib.admin.views.decorators import staff_member_required
+from django.conf import settings
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
+from dateutil import parser
+from django_ajax.decorators import ajax
 
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name']
-    list_editable = ['name']
-    search_fields = ['name']
-    ordering = ['name']
+from blog.models import Post, Category
 
+import twitter
 
-class PostAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'created', 'tags']
-    list_filter = ['category']
-    list_display_links = ['id', 'title']
-    search_fields = ['title', 'content', ]
-    ordering = ['-created']
+@staff_member_required
+def admin(request):
+    template_name = 'blog/admin/admin.html'
 
+    context = { 
+        'posts': Post.objects.all().order_by('-created'),
+    }
 
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(Post, PostAdmin)
+    return render_to_response(template_name, context, context_instance=RequestContext(request))
+
+@staff_member_required
+def create_tweet(request):
+    api = twitter.Api(consumer_key=settings.TWITTER_KEY,
+                      consumer_secret=settings.TWITTER_SECRET,
+                      access_token_key=settings.TWITTER_ACCESS_KEY,
+                      access_token_secret=settings.TWITTER_ACCESS_SECRET)
+
+    tweet_id = request.POST.get('tweet_id')
+    tweet = api.GetStatus(tweet_id)
+    tweet_time = parser.parse(tweet.created_at).strftime('%Y년 %m월 %d일 %I:%M %p')
+
+    post = {
+        'posttype': 'tweet',
+        'created': tweet_time,
+        'description': tweet.text,
+        'tags': tweet.id,
+    }
+
+    print tweet
+
+    template_name = 'blog/admin/create_tweet.html'
+    context = {
+        'post': post,
+    }
+
+    return render_to_response(template_name, context, context_instance=RequestContext(request))
+
+@staff_member_required
+def create_post(request):
+    template_name = 'blog/admin/modify.html'
+
+    return render_to_response(template_name, None, context_instance=RequestContext(request))
+
+@staff_member_required
+def modify_post(request, pk):
+    template_name = 'blog/admin/modify.html'
+    post = Post.objects.filter(id=pk)
+    context = {
+        'post': post[0]
+    }
+
+    return render_to_response(template_name, context, context_instance=RequestContext(request))

@@ -88,6 +88,7 @@ code {
     color: #aaa;
     border-bottom: 1px solid #eee;
     padding: 0.4em 0;
+    margin-bottom: 20px;
     font-size: 80%;
     font-weight: 500;
     letter-spacing: 0.1em;
@@ -184,6 +185,22 @@ ul.share-buttons{
     border-right-color: #ff1111;
 }
 
+.post-tweet {
+    border-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-color: #eaeaea;
+    border-bottom-color: #eaeaea;
+    border-left-color: #eaeaea;
+    border-right-color: #00aced;
+}
+
+.post-description {
+    font-size: 115%;
+    line-height: 1.8em;
+}
+
 .comments {
     color: rgb(78, 143, 34);
 }
@@ -202,7 +219,7 @@ ul.share-buttons li{
 }
 
 @media (min-width: 700px) {
-    .content {
+    .contents {
         padding: 2em 3em 0;
         margin-left: 25%;
     }

@@ -214,6 +214,11 @@ ul.share-buttons{
     border-right-color: #ff1111;
 }
 
+.post-tweet {
+    border-right-style: solid;
+    border-right-color: #00aced;
+}
+
 .comments {
     color: rgb(78, 143, 34);
 }
