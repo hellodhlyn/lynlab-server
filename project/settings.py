@@ -33,11 +33,12 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_multimarkup',
+    'django_ajax',
     'templatetags',
     'el_pagination',
+    'simple-wiki',
     'blog',
-    'wiki',
-    'media'
+    'media',
 )
 
 MIDDLEWARE_CLASSES = (
