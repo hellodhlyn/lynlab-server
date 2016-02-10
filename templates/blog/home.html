@@ -10,25 +10,39 @@
     {% include 'blog/_sidebar.html' %}
     <div class="contents pure-u-1 pure-u-md-3-4 blog-container">
         <div class="posts">
-            <div class="endless_page_template">
-                {% include page_template %}
-            </div>
-
-            {% block js %}
-                {{ block.super }}
-                <script src="{% static 'js/el-pagination.js' %}"></script>
-                <script>$.endlessPaginate({paginateOnScroll: true});</script>
-            {% endblock %}
+            
         </div>
-        <ul class="category">
-            {% for category in categories %}
-                <li>
-                    <a href="{% url 'home' %}?category={{ category.id }}">
-                        {{ category.name }}
-                    </a>
-                </li>
+    </div>
+</div>
+<div class="ui basic modal" id="filter-modal">
+    <i class="close icon"></i>
+    <div class="ui icon header">
+        <i class="filter icon"></i>
+        거름망 설정하기
+    </div>
+    <div class="content">
+        <div class="description">
+            <p>보고 싶지 않은 글의 종류를 꺼서 걸러내세요.<br/>
+                (하얀색의 분류에 하나라도 해당하는 글은 모두 걸러집니다.)</p>
+            <div class="posttypes">
+            {% for type in types %}
+                <button class="ui inverted compact labeled {% if type.default %}blue{% endif %} icon filter button" onclick="toggleFilterButton({{ type.id }})" id="filter{{ type.id }}">
+                    <i class="{{ type.icon }} icon"></i>
+                    {{ type.name }}
+                </button>
             {% endfor %}
-        </ul>
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <button class="ui red basic inverted deny button">
+            <i class="remove icon"></i>
+            취소
+        </button>
+        <button class="ui green basic inverted approve button">
+            <i class="checkmark icon"></i>
+            완료
+        </button>
     </div>
 </div>
 <script id="dsq-count-scr" src="//lynlab.disqus.com/count.js" async></script>

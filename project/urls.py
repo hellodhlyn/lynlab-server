@@ -9,8 +9,9 @@ from wiki.views import WikiHome, WikiContent, find_article, modify_article, \
 	show_history_all, show_history, show_random, show_history_detail
 from media.views import upload_view, show_media
 
-import blog.views as BlogView
 import blog.admin as BlogAdmin
+import blog.controllers as BlogControl
+import blog.views as BlogView
 
 import blog.models as blog
 import wiki.models as wiki
@@ -22,7 +23,7 @@ urlpatterns = [
 	url(r'^about/$', TemplateView.as_view(template_name='about.html'), name='about'),
 
 	# blog:
-	url(r'^blog/$', BlogView.show_posts, name='home'),
+	url(r'^blog/$', BlogView.main, name='home'),
 	url(r'^blog/myadmin/$', BlogAdmin.admin, name='blogadmin'),
 	url(r'^blog/myadmin/create/tweet/$', BlogAdmin.create_tweet, name='blogadmincreatetweet'),
 	url(r'^blog/myadmin/modify/$', BlogAdmin.create_post, name='blogadmincreatepost'),
@@ -52,7 +53,8 @@ urlpatterns = [
 	url(r'^accounts/', include('registration.backends.hmac.urls')),
 
 	# apis:
-	url(r'^v1/blog/create/$', blog.create, name='api_blogcreate'),
+	url(r'^v1/blog/create/$', BlogControl.create, name='api_blogcreate'),
+	url(r'^api/blog/posts/$', BlogControl.load_posts, name='api-blog-posts'),
 	url(r'^v1/wiki/search/$', wiki.search, name='api_wikisearch'),
 	url(r'^v1/wiki/modify/$', wiki.modify, name='api_wikimodify'),
 	url(r'^v1/media/upload/$', media.upload, name='api_mediaupload'),
