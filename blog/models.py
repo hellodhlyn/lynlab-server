@@ -23,7 +23,6 @@ class Category(models.Model):
         return self.name
 
 class PostType(models.Model):
-    uid = models.IntegerField(unique=True, default=-1)
     name = models.CharField(max_length=50)
     icon = models.CharField(max_length=50)
     default = models.BooleanField(default=True)

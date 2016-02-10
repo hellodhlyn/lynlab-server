@@ -26,7 +26,7 @@
                 (하얀색의 분류에 하나라도 해당하는 글은 모두 걸러집니다.)</p>
             <div class="posttypes">
             {% for type in types %}
-                <button class="ui inverted compact labeled {% if type.default %}blue{% endif %} icon filter button" onclick="toggleFilterButton({{ type.uid }})" id="filter{{ type.uid }}">
+                <button class="ui inverted compact labeled {% if type.default %}blue{% endif %} icon filter button" onclick="toggleFilterButton({{ type.id }})" id="filter{{ type.id }}">
                     <i class="{{ type.icon }} icon"></i>
                     {{ type.name }}
                 </button>
