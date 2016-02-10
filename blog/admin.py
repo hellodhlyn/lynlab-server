@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.contrib import admin as djangoadmin
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
 from django.shortcuts import render_to_response
@@ -7,7 +8,7 @@ from django.template import RequestContext
 
 from dateutil import parser
 
-from blog.models import Post, Category
+from .models import Post, Category, PostType, PostTypeRelation
 
 import twitter
 
@@ -63,3 +64,17 @@ def modify_post(request, pk):
     }
 
     return render_to_response(template_name, context, context_instance=RequestContext(request))
+
+class PostTypeAdmin(djangoadmin.ModelAdmin):
+    list_display = ['uid', 'name', 'icon', 'default']
+    list_editable = ['name', 'default']
+    search_fields = ['name']
+    ordering = ['name']
+
+class PostTypeRelationAdmin(djangoadmin.ModelAdmin):
+    list_display = ['post_id', 'type_id']
+    list_editable = ['post_id', 'type_id']
+    ordering = ['post_id']
+
+djangoadmin.site.register(PostType, PostTypeAdmin)
+djangoadmin.site.register(PostTypeRelation, PostTypeRelationAdmin)

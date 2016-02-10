@@ -22,6 +22,11 @@ class Category(models.Model):
     def __unicode__(self):
         return self.name
 
+class PostType(models.Model):
+    uid = models.IntegerField(unique=True, default=-1)
+    name = models.CharField(max_length=50)
+    icon = models.CharField(max_length=50)
+    default = models.BooleanField(default=True)
 
 class Post(models.Model):
     class Meta:
@@ -66,32 +71,6 @@ class Post(models.Model):
         else:
             return self.tags.split(',')
 
-@staff_member_required
-def create(request):
-    req_posttype = request.POST.get('posttype')
-    req_id = request.POST.get('id')
-    req_title = request.POST.get('title')
-    req_content = request.POST.get('content')
-    req_description = request.POST.get('description')
-    req_tags = request.POST.get('tags')
-    req_preview = request.POST.get('preview')
-    req_public_post = request.POST.get('public_post', False)
-
-    try:
-        post = Post.objects.get(id=req_id)
-    except ValueError:
-        post = Post()
-    except ObjectDoesNotExist:
-        post = Post()
-
-    
-    post.posttype = req_posttype
-    post.title = req_title or '제목이 없습니다'
-    post.content = req_content or None
-    post.description = req_description or '설명이 없습니다'
-    post.tags = req_tags or None
-    post.preview = req_preview or None
-    post.public_post = req_public_post
-    post.save()
-
-    return HttpResponseRedirect(reverse('blogadmin'))
+class PostTypeRelation(models.Model):
+    post_id = models.IntegerField()
+    type_id = models.IntegerField()

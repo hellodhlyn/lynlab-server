@@ -148,6 +148,10 @@ code {
     padding-left: 0;
 }
 
+#filter-modal {
+    text-align: center !important;
+}
+
 ul.share-buttons{
     list-style: none;
     padding: 0;
@@ -220,19 +224,19 @@ ul.share-buttons li{
 
 @media (min-width: 700px) {
     .contents {
-        padding: 2em 3em 0;
+        padding: 2em 3em;
         margin-left: 25%;
-    }
-
-    .header {
-        margin: 80% 2em 0;
-        text-align: right;
     }
 
     .sidebar {
         position: fixed;
         top: 0;
         bottom: 0;
+    }
+
+    .sidebar > .header {
+        margin: 80% 2em 0;
+        text-align: right;
     }
 
     .footer {

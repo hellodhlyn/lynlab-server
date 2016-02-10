@@ -1,0 +1,5 @@
+{% for post in posts %}
+    {% if post.public_post %}
+        {% include 'blog/_post.html' %}
+    {% endif %}
+{% endfor %}
