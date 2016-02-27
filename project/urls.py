@@ -19,11 +19,11 @@ import media.models as media
 
 urlpatterns = [
 	# global:
-	url(r'^$', RedirectView.as_view(url='blog/')),
+	url(r'^$', TemplateView.as_view(template_name='welcome.html'), name='home'),
 	url(r'^about/$', TemplateView.as_view(template_name='about.html'), name='about'),
 
 	# blog:
-	url(r'^blog/$', BlogView.main, name='home'),
+	url(r'^blog/$', BlogView.main, name='blog'),
 	url(r'^blog/myadmin/$', BlogAdmin.admin, name='blogadmin'),
 	url(r'^blog/myadmin/create/tweet/$', BlogAdmin.create_tweet, name='blogadmincreatetweet'),
 	url(r'^blog/myadmin/modify/$', BlogAdmin.create_post, name='blogadmincreatepost'),
