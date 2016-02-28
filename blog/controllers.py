@@ -20,17 +20,6 @@ def create(request):
     req_preview = request.POST.get('preview')
     req_public_post = request.POST.get('public_post', False)
 
-    for t in PostType.objects.all():
-        req_type = request.POST.get('type'+str(t.id))
-        if req_type:
-            related = PostTypeRelation.objects.filter(post_id=req_id, type_id=t.id)
-            if len(related) == 0:
-                PostTypeRelation(post_id=req_id, type_id=t.id).save()
-        else:
-            related = PostTypeRelation.objects.filter(post_id=req_id, type_id=t.id)
-            if len(related) != 0:
-                related[0].delete()
-
     try:
         post = Post.objects.get(id=req_id)
     except ValueError:
@@ -45,6 +34,17 @@ def create(request):
     post.preview = req_preview or None
     post.public_post = req_public_post
     post.save()
+
+    for t in PostType.objects.all():
+        req_type = request.POST.get('type'+str(t.id))
+        if req_type:
+            related = PostTypeRelation.objects.filter(post_id=post.id, type_id=t.id)
+            if len(related) == 0:
+                PostTypeRelation(post_id=post.id, type_id=t.id).save()
+        else:
+            related = PostTypeRelation.objects.filter(post_id=post.id, type_id=t.id)
+            if len(related) != 0:
+                related[0].delete()
 
     return HttpResponseRedirect(reverse('blogadmin'))
 
