@@ -53,8 +53,11 @@ def create_tweet(request):
 def create_post(request):
     template_name = 'blog/admin/modify.html'
 
+    all_types = PostType.objects.all()
+    post_types = [False] * len(all_types)
+
     context = {
-        'types': PostType.objects.all(),
+        'types': zip(all_types, post_types),
     }
 
     return render_to_response(template_name, context, context_instance=RequestContext(request))
