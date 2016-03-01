@@ -46,8 +46,6 @@ urlpatterns = [
 	# apis:
 	url(r'^v1/blog/create/$', BlogControl.create, name='api_blogcreate'),
 	url(r'^api/blog/posts/$', BlogControl.load_posts, name='api-blog-posts'),
-	url(r'^v1/wiki/search/$', wiki.search, name='api_wikisearch'),
-	url(r'^v1/wiki/modify/$', wiki.modify, name='api_wikimodify'),
 	url(r'^v1/media/upload/$', media.upload, name='api_mediaupload'),
 
 	# static:
