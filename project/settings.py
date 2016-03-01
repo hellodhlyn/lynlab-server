@@ -16,6 +16,8 @@ SECRET_KEY = settings_var.SECRET_KEY
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'localhost',
+    'localhost.',
     '.lynlab.co.kr',
     '.lynlab.co.kr.',
     '128.199.104.189',
