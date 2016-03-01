@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.contrib import admin as djangoadmin
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
 from django.shortcuts import render_to_response
@@ -7,7 +8,7 @@ from django.template import RequestContext
 
 from dateutil import parser
 
-from blog.models import Post, Category
+from .models import Post, Category, PostType, PostTypeRelation
 
 import twitter
 
@@ -52,14 +53,39 @@ def create_tweet(request):
 def create_post(request):
     template_name = 'blog/admin/modify.html'
 
-    return render_to_response(template_name, None, context_instance=RequestContext(request))
+    all_types = PostType.objects.all()
+    post_types = [False] * len(all_types)
+
+    context = {
+        'types': zip(all_types, post_types),
+    }
+
+    return render_to_response(template_name, context, context_instance=RequestContext(request))
 
 @staff_member_required
 def modify_post(request, pk):
     template_name = 'blog/admin/modify.html'
     post = Post.objects.filter(id=pk)
+
+    all_types = PostType.objects.all()
+    post_types = []
+    for t in all_types:
+        if PostTypeRelation.objects.filter(post_id=pk, type_id=t.id).count() == 0:
+            post_types.append(False)
+        else:
+            post_types.append(True)
+
     context = {
-        'post': post[0]
+        'post': post[0],
+        'types': zip(all_types, post_types),
     }
 
     return render_to_response(template_name, context, context_instance=RequestContext(request))
+
+class PostTypeAdmin(djangoadmin.ModelAdmin):
+    list_display = ['id', 'name', 'icon', 'default']
+    list_editable = ['name', 'default']
+    search_fields = ['name']
+    ordering = ['name']
+
+djangoadmin.site.register(PostType, PostTypeAdmin)

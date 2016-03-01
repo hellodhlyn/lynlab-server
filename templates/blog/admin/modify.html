@@ -21,9 +21,15 @@
                 <label>제목</label>
                 <input type="text" name="title" value="{{ post.title }}"></input>
             </div>
-            <div class="field">
-                <label>유형</label>
-                <input type="text" name="posttype" value="{{ post.posttype }}"></input>
+            <div class="inline fields">
+                {% for type, post in types %}
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="type{{ type.id }}" {% if post %}checked{% endif %}>
+                        <label>{{ type.name }}</label>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
             <div class="field">
                 <label>본문</label>
@@ -36,6 +42,10 @@
             <div class="field">
                 <label>태그</label>
                 <input type="text" name="tags" value="{{ post.tags }}"></input>
+            </div>
+            <div class="field">
+                <label>유형</label>
+                <input type="text" name="posttype" value="{{ post.posttype }}"></input>
             </div>
             <div class="field">
                 <label>미리보기 이미지</label>
