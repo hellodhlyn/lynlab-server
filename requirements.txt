@@ -1,0 +1,7 @@
+twitter
+django
+djangoajax
+django-markup
+django-el-pagination
+django-registration
+python-dateutil
