@@ -6,11 +6,6 @@ from django.template import RequestContext
 
 from .models import Post, PostType, Category
 
-def handler404(request):
-    response = render_to_response('404.html', {},
-                                  context_instance=RequestContext(request))
-    response.status_code = 404
-    return response
 
 class PostDetail(DetailView):
     model = Post

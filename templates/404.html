@@ -1,19 +1,36 @@
 {% extends 'base.html' %}
 {% block style %}
 {% load staticfiles %}
-<link rel="stylesheet" href="{% static 'error.css' %}">
-<title>Error</title>
+<style>
+body > .grid {
+	height: 100%;
+}
+
+.column {
+	max-width: 450px;
+}
+
+.sub.header {
+	line-height: 1.4em !important;
+}
+</style>
 {% endblock %}
 {% block content %}
-<div class="splash-container">
-    <div class="splash">
-        <h1 class="splash-head">404 NOT FOUND</h1>
-        <p class="splash-subhead">
-            페이지가 존재하지 않거나 삭제되었습니다.
-        </p>
-        <p>
-            <a href="javascript:history.back()" class="pure-button pure-button-primary">이전으로 돌아가기</a>
-        </p>
-    </div>
+<div class="ui middle aligned center aligned grid">
+	<div class="column">
+		<h2 class="ui center aligned icon header">
+		<i class="warning sign icon"></i>
+		<div class="content">
+			페이지를 찾을 수 없음
+			<div class="sub header">
+				<p>요청하신 페이지를 찾을 수 없습니다.</p>
+				오류가 지속적으로 나타나면 관리자에게 문의해주세요.<br/>
+				문의 : <a href="mailto:lyn@lynlab.co.kr">lyn@lynlab.co.kr</a>
+			</div>
+			<div class="ui divider"></div>
+			<a class="ui blue button" href="javascript:history.back()">이전으로 돌아가기</a>
+		</div>
+		</h2>
+	</div>
 </div>
 {% endblock %}
