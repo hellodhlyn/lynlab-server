@@ -2,17 +2,34 @@
 
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.contrib.sitemaps import GenericSitemap
+from django.contrib.sitemaps.views import sitemap
 from django.views.generic import RedirectView, TemplateView
 from django.http import HttpResponse
 
 from media.views import upload_view, show_media
 
 import blog.admin as BlogAdmin
-import blog.controllers as BlogControl
-import blog.views as BlogView
-
 import blog.models as blog
+import blog.views as BlogView
+import blog.controllers as BlogControl
+
 import media.models as media
+
+import simple_wiki.models as WikiModel
+
+sitemaps = {
+	'sitemaps': {
+		'blog': GenericSitemap({
+			'queryset': blog.Post.objects.all(),
+			'date_field': 'created',
+		}, changefreq='monthly'),
+		'wiki': GenericSitemap({
+			'queryset': WikiModel.Article.objects.all(),
+			'date_field': 'created',
+		}, changefreq='weekly'),
+	},
+}
 
 urlpatterns = [
 	# global:
@@ -29,7 +46,7 @@ urlpatterns = [
 	# url(r'^blog/', include('blog.urls')),
 
 	# wiki:
-	url(r'^wiki/', include('simple-wiki.urls')),
+	url(r'^wiki/', include('simple_wiki.urls')),
 
 	# media: 
 	url(r'^media/upload/$', upload_view, name='mediaupload'),
@@ -50,4 +67,5 @@ urlpatterns = [
 
 	# static:
 	url(r'^robots.txt/$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'), name='robots'),
+	url(r'^sitemap\.xml$', sitemap, sitemaps, name='django.contrib.sitemaps.views.sitemap'),
 ]
