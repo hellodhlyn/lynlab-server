@@ -2,6 +2,8 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+
+    word-wrap: break-word;
 }
 
 a {
@@ -23,6 +25,20 @@ code {
     background-color: #f0f0f0;
     display: block;
     padding: 10px;
+}
+
+img {
+    display: block;
+    max-width: 512px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+li > img {
+    position: relative;
+    right: 20px;
 }
 
 /* LAYOUT CSS */
@@ -141,13 +157,6 @@ code {
     line-height: 1.8em;
 }
 
-.post-description > p > img {
-    display: block;
-    width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .post-meta {
     color: #999;
     font-size: 90%;
@@ -236,15 +245,30 @@ ul.share-buttons li{
     margin: 0.5em 0;
 }
 
-@media (max-width: 700px) {
-    .post-description > p > img {
+/* for tablet */
+@media (min-width: 415px) and (max-width: 768px) {
+    img {
         position: relative;
-        max-width: 320px;
+        max-width: 400px;
     }
 }
 
 /* for mobile */
-@media (max-width: 400px) {
+@media (max-width: 414px) {
+    ol {
+        padding-left: 24px;
+    }
+
+    li > img {
+        position: relative;
+        right: 12px;
+    }
+
+    img {
+        position: relative;
+        max-width: 280px;
+    }
+
     .post-detail-pusher {
         width: 100%;
         padding: 0.8em;
