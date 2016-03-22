@@ -27,7 +27,7 @@ code {
     padding: 10px;
 }
 
-img {
+img:not(.share-button) {
     display: block;
     max-width: 512px;
     margin-left: auto;
@@ -36,7 +36,7 @@ img {
     padding-bottom: 20px;
 }
 
-li > img {
+li > img:not(.share-button) {
     position: relative;
     right: 20px;
 }
@@ -259,12 +259,12 @@ ul.share-buttons li{
         padding-left: 24px;
     }
 
-    li > img {
+    li > img:not(.share-button) {
         position: relative;
         right: 12px;
     }
 
-    img {
+    img:not(.share-button) {
         position: relative;
         max-width: 280px;
     }
