@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'el_pagination',
     'simple_wiki',
     'blog',
+    'dashboard',
     'media',
 )
 

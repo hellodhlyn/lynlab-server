@@ -14,6 +14,8 @@ import blog.models as blog
 import blog.views as BlogView
 import blog.controllers as BlogControl
 
+import dashboard.views as DashboardView
+
 import media.models as media
 
 import simple_wiki.models as WikiModel
@@ -44,6 +46,10 @@ urlpatterns = [
 	url(r'^blog/myadmin/modify/(?P<pk>\d+)$', BlogAdmin.modify_post, name='blogadminmodifypost'),
 	url(r'^blog/(?P<pk>\d+)/$', BlogView.PostDetail.as_view(), name='detail'),
 	# url(r'^blog/', include('blog.urls')),
+
+	# dashboard:
+	url(r'^dashboard/$', DashboardView.dashboard, name='dashboard'),
+	url(r'^dashboard/bus$', DashboardView.bus, name='dashboard-bus'),
 
 	# wiki:
 	url(r'^wiki/', include('simple_wiki.urls')),

@@ -1,7 +1,8 @@
 twitter
-django
+django==1.9.4
 djangoajax
 django-markup
 django-el-pagination
 django-registration
 python-dateutil
+xmltodict==0.10.1

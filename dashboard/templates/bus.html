@@ -1,0 +1,25 @@
+{% for line in lines %}
+<h2>{{ line.bus_number }}번 ({{ line.terminus }} 행)</h2>
+<div class="ui small four steps">
+	{% for station in line.stations|slice:"0:4" %}
+	<div class="{% if station.active %}active{% endif %} step">
+		{% if station.active %}<i class="bus icon"></i>{% endif %}
+		<div class="content">
+			<div class="title">{{ station.name }}</div>
+			{% if station.active %}<div class="description">{{ station.left_time }} ({{ station.people }}명)</div>{% endif %}
+		</div>
+	</div>
+	{% endfor %}
+</div>
+<div class="ui small four steps">
+	{% for station in line.stations|slice:"4:8" %}
+	<div class="{% if station.active %}active{% endif %} step">
+		{% if station.active %}<i class="bus icon"></i>{% endif %}
+		<div class="content">
+			<div class="title">{{ station.name }}</div>
+			{% if station.active %}<div class="description">{{ station.left_time }} ({{ station.people }}명)</div>{% endif %}
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% endfor %}
