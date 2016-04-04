@@ -2,6 +2,7 @@
 {% block style %}
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'detail.css' %}">
+<meta name="description" content="{{ object.description|addslashes }}" />
 <title>{{ object.title }} | LYnTimeline</title>
 {% endblock %}
 {% block content %}
