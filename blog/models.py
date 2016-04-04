@@ -18,6 +18,7 @@ class Category(models.Model):
         ordering = ['name']
     
     name = models.CharField(verbose_name=u'name', max_length=50)
+    url = models.CharField(max_length=32, default='')
     
     def __unicode__(self):
         return self.name
