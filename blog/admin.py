@@ -58,6 +58,7 @@ def create_post(request):
 
     context = {
         'types': zip(all_types, post_types),
+        'categories': Category.objects.all(),
     }
 
     return render_to_response(template_name, context, context_instance=RequestContext(request))

@@ -20,9 +20,20 @@
         <form class="ui form" action="{% url 'api_blogcreate' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="id" value="{{ post.id }}"></input>
-            <div class="field">
-                <label>제목</label>
-                <input type="text" name="title" value="{{ post.title }}"></input>
+            <div class="fields">
+                <div class="four wide field">
+                    <label>카테고리</label>
+                    <select class="ui fluid dropdown" name="category">
+                        <option value="">카테고리</option>
+                        {% for category in categories %}
+                        <option value="{{ category.url }}" {% if category == post.category %}selected{% endif %}>{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="twelve wide field">
+                    <label>제목</label>
+                    <input type="text" name="title" value="{{ post.title }}"></input>
+                </div>
             </div>
             <div class="inline fields">
                 {% for type, post in types %}

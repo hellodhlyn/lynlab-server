@@ -20,8 +20,29 @@ h3 {
     font-weight: 100;
 }
 
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
+blockquote p {
+  display: inline;
+}
+
 code {
     font-family: Hack, monospace;
+    font-size: 85%;
     background-color: #f0f0f0;
     display: block;
     padding: 10px;
@@ -103,6 +124,7 @@ li > img:not(.share-button) {
 
 .content-subhead {
     text-transform: uppercase;
+    text-align: center;
     color: #aaa;
     border-bottom: 1px solid #eee;
     padding: 0.4em 0;
@@ -119,6 +141,7 @@ li > img:not(.share-button) {
 }
 
 .post-detail-title {
+    text-align: center;
     font-size: 2.8em;
     color: #222;
     font-weight: normal;
@@ -158,13 +181,13 @@ li > img:not(.share-button) {
 }
 
 .post-meta {
+    text-align: center;
     color: #999;
     font-size: 90%;
-    margin: 0;
 }
 
 .post-tag {
-    margin: 0 0.1em;
+    margin: 0 0.5em;
     padding: 0.3em 1em;
     color: #fff;
     background: #999;
