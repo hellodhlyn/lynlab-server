@@ -42,7 +42,7 @@ urlpatterns = [
 	url(r'^blog/myadmin/create/tweet/$', BlogAdmin.create_tweet, name='blogadmincreatetweet'),
 	url(r'^blog/myadmin/modify/$', BlogAdmin.create_post, name='blogadmincreatepost'),
 	url(r'^blog/myadmin/modify/(?P<pk>\d+)$', BlogAdmin.modify_post, name='blogadminmodifypost'),
-	url(r'^blog/(?P<pk>\d+)/$', BlogView.PostDetail.as_view(), name='detail'),
+	url(r'^blog/(?P<pk>\d+)/$', BlogView.post_detail, name='detail'),
 	# url(r'^blog/', include('blog.urls')),
 
 	# wiki:

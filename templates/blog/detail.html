@@ -2,38 +2,38 @@
 {% block style %}
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'detail.css' %}">
-<meta name="description" content="{{ object.description|addslashes }}" />
-<title>{{ object.title }} | LYnTimeline</title>
+<meta name="description" content="{{ post.description|addslashes }}" />
+<title>{{ post.title }} | LYnTimeline</title>
 {% endblock %}
 {% block content %}
 {% include 'blog/_sidebar_hide.html' %}
 <div class="pusher post-detail-pusher">
     <div class="post-detail-container">
-        <h1 class="content-subhead">{{ object.category.name }}</h1>
+        <h1 class="content-subhead">{{ post.category.name }}</h1>
         <article class="post">
-            <a href="{% url 'detail' object.id %}">
+            <a href="{% url 'detail' post.id %}">
                 <h2 class="post-detail-title">
-                    {{ object.title }}
+                    {{ post.title }}
                 </h2>
             </a>
             <p class="post-meta">
-                <i class="wait icon"></i> {{ object.created }}
+                <i class="wait icon"></i> {{ post.created }}
             </p>
             <p class="post-meta">
-                {% if object.is_recent_post %}
+                {% if post.is_recent_post %}
                     <span class="ui mini red tag label">새 글</span>
                 {% endif %}
-                {% if not object.public_post %}
+                {% if not post.public_post %}
                     <span class="ui mini blue tag label">비공개</span>
                 {% endif %}
-                {% for tag in object.split_tags %}
+                {% for tag in post.split_tags %}
                     <span class="ui mini tag label">{{ tag }}</span>
                 {% endfor %}
             </p>
             <div class="ui divider"></div>
             <div class="post-description">
                 {% load markup_tags %}
-                {{ object.content|apply_markup:"markdown" }}
+                {{ post.content|apply_markup:"markdown" }}
             </div>
             {% include 'blog/_share.html' %}
             {% include 'blog/_disqus.html' %}

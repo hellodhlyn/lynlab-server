@@ -38,6 +38,7 @@ class Post(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name=u'date')
     preview = models.CharField(verbose_name=u'preview', null=True, blank=True, max_length=256)
     tags = models.TextField(max_length=256, default='')
+    hitcount = models.IntegerField(default=0)
     
     # Detail infos
     title = models.CharField(u'title', max_length=256)
@@ -74,3 +75,8 @@ class Post(models.Model):
 class PostTypeRelation(models.Model):
     post_id = models.IntegerField()
     type_id = models.IntegerField()
+
+class PostHitAddress(models.Model):
+    post = models.ForeignKey(Post)
+    address = models.TextField(max_length=16, default='')
+    timestamp = models.DateTimeField(auto_now_add=True)
