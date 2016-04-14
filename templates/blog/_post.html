@@ -60,8 +60,13 @@
         <p class="post-meta">
             <i class="wait icon"></i>
             {{ post.created }}
+            &nbsp;|&nbsp;
+            <i class="users icon"></i>
+            {{ post.hitcount }}
+            &nbsp;|&nbsp;
             <i class="comments icon"></i>
-            <a class="comments" href="{% url 'detail' post.id %}#disqus_thread">댓글 없음</a>
+            <a class="comments" href="{% url 'detail' post.id %}#disqus_thread">0</a>
+            &nbsp;
             {% if post.is_recent_post %}
                 <a class="ui mini red tag label">새 글</a>
             {% endif %}

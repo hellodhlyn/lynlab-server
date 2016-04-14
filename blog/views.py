@@ -21,8 +21,28 @@ def main(request):
 	return render_to_response(template_name, context, context_instance=RequestContext(request))
 
 def post_detail(request, pk):
+	def get_client_ip(request):
+		x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+		if x_forwarded_for:
+			ip = x_forwarded_for.split(',')[0]
+		else:
+			ip = request.META.get('REMOTE_ADDR')
+		return ip
+	
+	post = Post.objects.get(id=pk)
+	ip = get_client_ip(request)
+
+	# Increase the hit count
+	if len(PostHitAddress.objects.filter(post=post, address=ip)) == 0:
+		post.hitcount = post.hitcount + 1
+		post.save()
+
+		hit_instance = PostHitAddress(post=post, address=ip)
+		hit_instance.save()
+
+	# Get the content and make context
 	context = {
-		'post': Post.objects.get(id=pk)
+		'post': post,
 	}
 
 	return render(request, 'blog/detail.html', context, context_instance=RequestContext(request))

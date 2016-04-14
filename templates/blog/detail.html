@@ -17,7 +17,8 @@
                 </h2>
             </a>
             <p class="post-meta">
-                <i class="wait icon"></i> {{ post.created }}
+                <i class="wait icon"></i> {{ post.created }}&nbsp;&nbsp;|&nbsp;
+                <i class="users icon"></i> {{ post.hitcount }}
             </p>
             <p class="post-meta">
                 {% if post.is_recent_post %}
