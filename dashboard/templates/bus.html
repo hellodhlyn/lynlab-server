@@ -23,4 +23,9 @@
 	</div>
 	{% endfor %}
 </div>
+{% if line.notification %}
+<script>
+	doNotification('{{line.notification.bus_id}}', '{{line.bus_number}}', '{{line.notification.left_time}}', '{{line.notification.people}}');
+</script>
+{% endif %}
 {% endfor %}
