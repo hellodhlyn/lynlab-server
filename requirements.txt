@@ -6,3 +6,4 @@ django-registration
 django-simeple-wiki==0.0.3
 twitter
 python-dateutil
+xmltodict==0.10.1
