@@ -70,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.core.context_processors.request',
+                'simple_wiki.context_processors.wiki',
             ],
         },
     },
@@ -157,6 +158,13 @@ EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+# Wiki
+
+WIKI_NAME = "LYnWiki α"
+
+WIKI_SLOGAN = "전 지구상의 잡지식 집합소"
 
 
 # Social OAuth backends
