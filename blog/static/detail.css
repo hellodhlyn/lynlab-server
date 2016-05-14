@@ -2,6 +2,8 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+
+    word-wrap: break-word;
 }
 
 a {
@@ -18,11 +20,46 @@ h3 {
     font-weight: 100;
 }
 
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
+blockquote p {
+  display: inline;
+}
+
 code {
     font-family: Hack, monospace;
+    font-size: 85%;
     background-color: #f0f0f0;
     display: block;
     padding: 10px;
+}
+
+img:not(.share-button) {
+    display: block;
+    max-width: 512px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+li > img:not(.share-button) {
+    position: relative;
+    right: 20px;
 }
 
 /* LAYOUT CSS */
@@ -87,6 +124,7 @@ code {
 
 .content-subhead {
     text-transform: uppercase;
+    text-align: center;
     color: #aaa;
     border-bottom: 1px solid #eee;
     padding: 0.4em 0;
@@ -103,6 +141,7 @@ code {
 }
 
 .post-detail-title {
+    text-align: center;
     font-size: 2.8em;
     color: #222;
     font-weight: normal;
@@ -141,21 +180,14 @@ code {
     line-height: 1.8em;
 }
 
-.post-description > p > img {
-    display: block;
-    width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .post-meta {
+    text-align: center;
     color: #999;
     font-size: 90%;
-    margin: 0;
 }
 
 .post-tag {
-    margin: 0 0.1em;
+    margin: 0 0.5em;
     padding: 0.3em 1em;
     color: #fff;
     background: #999;
@@ -236,15 +268,30 @@ ul.share-buttons li{
     margin: 0.5em 0;
 }
 
-@media (max-width: 700px) {
-    .post-description > p > img {
+/* for tablet */
+@media (min-width: 415px) and (max-width: 768px) {
+    img {
         position: relative;
-        max-width: 320px;
+        max-width: 400px;
     }
 }
 
 /* for mobile */
-@media (max-width: 400px) {
+@media (max-width: 414px) {
+    ol {
+        padding-left: 24px;
+    }
+
+    li > img:not(.share-button) {
+        position: relative;
+        right: 12px;
+    }
+
+    img:not(.share-button) {
+        position: relative;
+        max-width: 280px;
+    }
+
     .post-detail-pusher {
         width: 100%;
         padding: 0.8em;

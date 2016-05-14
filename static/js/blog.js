@@ -1,3 +1,17 @@
+var csrftoken = $.cookie('csrftoken');
+
+function csrfSafeMethod(method) {
+	return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+$.ajaxSetup({
+	beforeSend: function(xhr, settings){
+		if(!csrfSafeMethod(settings.type) && !this.crossDomain){
+			xhr.setRequestHeader("X-CSRFToken",csrftoken);
+		}
+	}
+});
+
 function loadTwitterApi() {
 	window.twttr = (function(d, s, id) {
 		var js, fjs = d.getElementsByTagName(s)[0],
@@ -78,20 +92,6 @@ function loadPosts(page) {
 }
 
 $(document).ready(function() {
-	var csrftoken = $.cookie('csrftoken');
-
-	function csrfSafeMethod(method) {
-		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-	}
-
-	$.ajaxSetup({
-		beforeSend: function(xhr, settings){
-			if(!csrfSafeMethod(settings.type) && !this.crossDomain){
-				xhr.setRequestHeader("X-CSRFToken",csrftoken);
-			}
-		}
-	});
-
 	$('.filter.button').each(function(){
 		if ($.cookie($(this).attr('id')) == null) {
 			if (!$('#'+$(this).attr('id')).hasClass('blue')) {

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /wiki/
+Disallow: /static/
+Disallow: /media/

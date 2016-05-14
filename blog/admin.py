@@ -58,6 +58,7 @@ def create_post(request):
 
     context = {
         'types': zip(all_types, post_types),
+        'categories': Category.objects.all(),
     }
 
     return render_to_response(template_name, context, context_instance=RequestContext(request))
@@ -78,6 +79,7 @@ def modify_post(request, pk):
     context = {
         'post': post[0],
         'types': zip(all_types, post_types),
+        'categories': Category.objects.all(),
     }
 
     return render_to_response(template_name, context, context_instance=RequestContext(request))
@@ -88,4 +90,11 @@ class PostTypeAdmin(djangoadmin.ModelAdmin):
     search_fields = ['name']
     ordering = ['name']
 
+class CategoryAdmin(djangoadmin.ModelAdmin):
+    list_display = ['name']
+    list_editable = ['name']
+    search_fields = ['name']
+    ordering = ['name']
+
 djangoadmin.site.register(PostType, PostTypeAdmin)
+djangoadmin.site.register(Category, CategoryAdmin)

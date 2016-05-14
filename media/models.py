@@ -29,7 +29,7 @@ def upload(request):
 
             with open(req_directory, 'wb') as f:
                 f.write(request.FILES['file'].read())
-            django_file = File(io.open(req_directory, 'rb'))
+            django_file = File(open(req_directory, 'rb'))
 
             instance = Media(title=req_title, uploader=request.user.username)
             instance.save()

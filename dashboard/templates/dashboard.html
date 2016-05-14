@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block style %}
+{% load staticfiles %}
+<title>LYnDashboard</title>
+<script type="text/javascript" src="{% static 'js/notify.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard.js' %}"></script>
+<link rel="stylesheet" href="{% static 'dashboard.css' %}">
+{% endblock %}
+{% block content %}
+<div class="ui inverted vertical masthead center aligned segment">
+	<div class="ui container">
+		<div class="ui large secondary inverted pointing menu">
+			<a class="active item" href="/">LYnDashboard</a>
+		</div>
+	</div>
+</div>
+<div class="contents-container">
+	<h1>버스 도착 정보</h1>
+	<p>
+		<i class="clock icon"></i> <span id="reload-time"></span>초 후 새로 고침
+		<span id="btn-pause" class="ui icon button"><i class="pause icon"></i></span>
+	</p>
+	<div class="dashboard-buses"></div>
+</div>
+{% endblock %}

@@ -5,10 +5,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
 from django_ajax.decorators import ajax
 
-from .models import Post, PostType, PostTypeRelation
+from .models import Post, Category, PostType, PostTypeRelation
 
 @staff_member_required
 def create(request):
@@ -16,7 +17,9 @@ def create(request):
     req_title = request.POST.get('title')
     req_content = request.POST.get('content')
     req_description = request.POST.get('description')
+    req_category = request.POST.get('category')
     req_tags = request.POST.get('tags')
+    req_posttype = request.POST.get('posttype')
     req_preview = request.POST.get('preview')
     req_public_post = request.POST.get('public_post', False)
 
@@ -28,10 +31,12 @@ def create(request):
         post = Post()
 
     post.title = req_title or '제목이 없습니다'
-    post.content = req_content or None
+    post.content = req_content or ''
     post.description = req_description or '설명이 없습니다'
-    post.tags = req_tags or None
-    post.preview = req_preview or None
+    post.category = Category.objects.get(url=req_category)
+    post.tags = req_tags or ''
+    post.posttype = req_posttype or '0'
+    post.preview = req_preview or ''
     post.public_post = req_public_post
     post.save()
 
@@ -48,6 +53,7 @@ def create(request):
 
     return HttpResponseRedirect(reverse('blogadmin'))
 
+@csrf_exempt
 def load_posts(request):
     page = int(request.POST.get('page'))
     filters = request.POST.get('filters').split(',')[:-1]

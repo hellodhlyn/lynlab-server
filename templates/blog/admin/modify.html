@@ -4,8 +4,11 @@
 <link rel="stylesheet" href="{% static 'detail.css' %}">
 <link rel="stylesheet" href="{% static 'wiki.css' %}">
 <link rel="stylesheet" href="{% static 'article.css' %}">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 <script src="{% static 'js/blog.js' %}"></script>
 <script src="{% static 'js/wiki.js' %}"></script>
+<script src="{% static 'js/editor.js' %}"></script>
 <title>관리자 페이지 | LYnTimeline</title>
 {% endblock %}
 {% block content %}
@@ -17,9 +20,20 @@
         <form class="ui form" action="{% url 'api_blogcreate' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="id" value="{{ post.id }}"></input>
-            <div class="field">
-                <label>제목</label>
-                <input type="text" name="title" value="{{ post.title }}"></input>
+            <div class="fields">
+                <div class="four wide field">
+                    <label>카테고리</label>
+                    <select class="ui fluid dropdown" name="category">
+                        <option value="">카테고리</option>
+                        {% for category in categories %}
+                        <option value="{{ category.url }}" {% if category == post.category %}selected{% endif %}>{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="twelve wide field">
+                    <label>제목</label>
+                    <input type="text" name="title" value="{{ post.title }}"></input>
+                </div>
             </div>
             <div class="inline fields">
                 {% for type, post in types %}
@@ -33,7 +47,7 @@
             </div>
             <div class="field">
                 <label>본문</label>
-                <textarea name="content" rows="15">{{ post.content }}</textarea>
+                <textarea id="field-content" name="content" rows="15">{{ post.content }}</textarea>
             </div>
             <div class="field">
                 <label>요약</label>

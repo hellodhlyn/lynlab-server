@@ -1,0 +1,9 @@
+django==1.9.4
+djangoajax
+django-el-pagination
+django-markup
+django-registration
+django-simeple-wiki==0.0.3
+twitter
+python-dateutil
+xmltodict==0.10.1
