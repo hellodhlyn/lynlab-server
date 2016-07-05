@@ -4,6 +4,7 @@ var notified_bus = [];
 
 var isPaused = true;
 
+/*
 // For notifactions
 function onShowNotification () {
 	console.log('notification is shown!');
@@ -41,6 +42,7 @@ function doNotification (id, busNum, leftTime, people) {
 	});
 	myNotification.show();
 }
+*/
 
 $(document).ready(function() {
 	function request() {
@@ -52,6 +54,7 @@ $(document).ready(function() {
 	}
 
 	// Notification auth
+	/*
 	$('body').append('<button id="permission-request-button"></button>');
 	$('#permission-request-button').click(function() {
 		if (Notify.needsPermission && Notify.isSupported()) {
@@ -59,6 +62,7 @@ $(document).ready(function() {
         }
 	});
 	$('#permission-request-button').click();
+	*/
 
 	// Set timers
 	var reload_timer = setInterval(function() {
