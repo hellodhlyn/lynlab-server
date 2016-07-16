@@ -8,37 +8,61 @@
 {% block content %}
 {% include 'blog/_sidebar_hide.html' %}
 <div class="pusher post-detail-pusher">
-    <div class="post-detail-container">
-        <h1 class="content-subhead">{{ post.category.name }}</h1>
-        <article class="post">
-            <a href="{% url 'detail' post.id %}">
-                <h2 class="post-detail-title">
-                    {{ post.title }}
-                </h2>
-            </a>
-            <p class="post-meta">
-                <i class="wait icon"></i> {{ post.created }}&nbsp;&nbsp;|&nbsp;
-                <i class="users icon"></i> {{ post.hitcount }}
-            </p>
-            <p class="post-meta">
-                {% if post.is_recent_post %}
-                    <span class="ui mini red tag label">새 글</span>
-                {% endif %}
-                {% if not post.public_post %}
-                    <span class="ui mini blue tag label">비공개</span>
-                {% endif %}
-                {% for tag in post.split_tags %}
-                    <span class="ui mini tag label">{{ tag }}</span>
-                {% endfor %}
-            </p>
-            <div class="ui divider"></div>
-            <div class="post-description">
-                {% load markup_tags %}
-                {{ post.content|apply_markup:"markdown" }}
-            </div>
-            {% include 'blog/_share.html' %}
-            {% include 'blog/_disqus.html' %}
-        </article>
+
+  {% if post.series %}
+  <!-- 시리즈 정보 -->
+  <a href="#series">
+    <div class="post-sub-container reverse-link">
+      <h3><i class="list layout icon"></i> <strong>&lt;{{ post.series.name }}&gt;</strong> 시리즈 글입니다.</h3>
     </div>
-</div>  
+  </a>
+  {% endif %}
+
+  <!-- 포스트 본문 -->
+  <div class="post-detail-container">
+    <h1 class="content-subhead">{{ post.category.name }}</h1>
+    <article class="post">
+      <a href="{% url 'detail' post.id %}">
+        <h2 class="post-detail-title">
+          {{ post.title }}
+        </h2>
+      </a>
+      <p class="post-meta">
+        <i class="wait icon"></i> {{ post.created }}&nbsp;&nbsp;|&nbsp;
+        <i class="users icon"></i> {{ post.hitcount }}
+      </p>
+      <p class="post-meta">
+        {% if post.is_recent_post %}
+        <span class="ui mini red tag label">새 글</span>
+        {% endif %}
+        {% if not post.public_post %}
+        <span class="ui mini blue tag label">비공개</span>
+        {% endif %}
+        {% for tag in post.split_tags %}
+        <span class="ui mini tag label">{{ tag }}</span>
+        {% endfor %}
+      </p>
+      <div class="ui divider"></div>
+      <div class="post-description">
+        {% load markup_tags %}
+        {{ post.content|apply_markup:"markdown" }}
+      </div>
+      {% include 'blog/_share.html' %}
+      {% include 'blog/_disqus.html' %}
+    </article>
+  </div>
+
+  {% if post.series %}
+  <!-- 다른 시리즈 목록 -->
+  <a name="series"></a>
+  <div class="post-sub-container" name="series">
+    <h3>시리즈 &lt;{{ post.series.name }}&gt;의 목록</h3>
+    <div class="ui bulleted list">
+      {% for series_post in post.series.get_posts %}
+        <div class="item"><a href="{% url 'detail' series_post.id %}">{{ series_post.title }}</a></div>
+      {% endfor %}
+    </dic>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}

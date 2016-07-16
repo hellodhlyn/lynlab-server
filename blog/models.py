@@ -34,6 +34,9 @@ class PostType(models.Model):
 class Series(models.Model):
     name = models.CharField(max_length=30, default='')
 
+    def get_posts(self):
+        return Post.objects.filter(series=self).order_by('-created')
+
     def post_num(self):
         return Post.objects.filter(series=self).count()
 

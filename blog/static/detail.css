@@ -159,8 +159,18 @@ li > img:not(.share-button) {
     border-color: #e0e0e0;
     border-width: 1px;
     max-width: 800px;
-    margin: auto;
+    margin: 0 auto 1em auto;
     padding: 4.5em;
+}
+
+.post-sub-container {
+    background-color: #fcfcfc;
+    border-style: solid;
+    border-color: #e0e0e0;
+    border-width: 1px;
+    max-width: 800px;
+    margin: 0 auto 1em auto;
+    padding: 2em 4.5em 2em 4.5em;
 }
 
 .post-avatar {
@@ -210,11 +220,15 @@ li > img:not(.share-button) {
 }
 .footer a {
     color: #ccc;
-    font-size: 80%; 
+    font-size: 80%;
 }
 .footer .pure-menu a:hover,
 .footer .pure-menu a:focus {
     background: none;
+}
+
+.reverse-link {
+    color: black;
 }
 
 #menu-list {
@@ -297,8 +311,13 @@ ul.share-buttons li{
         padding: 0.8em;
     }
 
+    .post-sub-container {
+        margin: 0 auto 0.5em 0;
+        padding: 2em 1.2em;
+    }
+
     .post-detail-container {
-        margin: auto;
+        margin: 0 auto 0.5em auto;
         padding: 2em 1.2em;
     }
 
