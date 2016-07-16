@@ -26,7 +26,7 @@
 
     <!-- 포스트 관리 영역 -->
     <h1>포스트 관리</h1>
-    <button class="ui compact labeled blue icon button" onclick="location.href='{% url 'blogadmincreatepost' %}'">
+    <button class="ui compact labeled blue icon button" onclick="location.href='{% url 'blog-admin-create-post' %}'">
       <i class="add icon"></i>
       새 글 쓰기
     </button>
@@ -36,7 +36,7 @@
     </div>
     <div class="ui custom popup transition hidden" id="create_tweet_popup">
       <h2>추가할 트윗</h2>
-      <form class="ui form" method="post" action="{% url "blogadmincreatetweet" %}">
+      <form class="ui form" method="post" action="{% url "blog-admin-create-tweet" %}">
         {% csrf_token %}
         <div class="ui field">
           <input type="text" placeholder="Tweet ID" name="tweet_id">

@@ -11,47 +11,6 @@ from django_ajax.decorators import ajax
 
 from .models import Post, Category, PostType, PostTypeRelation
 
-@staff_member_required
-def create(request):
-    req_id = request.POST.get('id')
-    req_title = request.POST.get('title')
-    req_content = request.POST.get('content')
-    req_description = request.POST.get('description')
-    req_category = request.POST.get('category')
-    req_tags = request.POST.get('tags')
-    req_posttype = request.POST.get('posttype')
-    req_preview = request.POST.get('preview')
-    req_public_post = request.POST.get('public_post', False)
-
-    try:
-        post = Post.objects.get(id=req_id)
-    except ValueError:
-        post = Post()
-    except ObjectDoesNotExist:
-        post = Post()
-
-    post.title = req_title or '제목이 없습니다'
-    post.content = req_content or ''
-    post.description = req_description or '설명이 없습니다'
-    post.category = Category.objects.get(url=req_category)
-    post.tags = req_tags or ''
-    post.posttype = req_posttype or '0'
-    post.preview = req_preview or ''
-    post.public_post = req_public_post
-    post.save()
-
-    for t in PostType.objects.all():
-        req_type = request.POST.get('type'+str(t.id))
-        if req_type:
-            related = PostTypeRelation.objects.filter(post_id=post.id, type_id=t.id)
-            if len(related) == 0:
-                PostTypeRelation(post_id=post.id, type_id=t.id).save()
-        else:
-            related = PostTypeRelation.objects.filter(post_id=post.id, type_id=t.id)
-            if len(related) != 0:
-                related[0].delete()
-
-    return HttpResponseRedirect(reverse('blogadmin'))
 
 @csrf_exempt
 def load_posts(request):
