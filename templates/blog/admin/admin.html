@@ -1,70 +1,129 @@
 {% extends 'base.html' %}
 {% block style %}
 {% load staticfiles %}
-<link rel="stylesheet" href="{% static 'detail.css' %}">
-<link rel="stylesheet" href="{% static 'wiki.css' %}">
-<link rel="stylesheet" href="{% static 'article.css' %}">
-<script src="{% static 'js/wiki.js' %}"></script>
+<link rel="stylesheet" href="{% static 'admin.css' %}">
 <title>관리자 페이지 | LYnTimeline</title>
 {% endblock %}
 {% block content %}
 {% include 'blog/admin/_mobilebar.html' %}
 <div class="pusher">
-    {% include 'blog/admin/_desktopbar.html' %}
-    <div class="content article-description">
-        <h1>포스트 관리</h1>
-        <button class="ui compact labeled blue icon button" onclick="location.href='{% url 'blogadmincreatepost' %}'">
-            <i class="add icon"></i>
-            새 글 쓰기
-        </button>
-        <div class="ui compact labeled twitter icon button" id="create_tweet">
-            <i class="twitter icon"></i>
-            트윗 가져오기
-        </div>
-        <div class="ui custom popup transition hidden">
-            <h2>추가할 트윗</h2>
-            <form class="ui form" method="post" action="{% url "blogadmincreatetweet" %}">
-                {% csrf_token %}
-                <div class="ui field">
-                    <input type="text" placeholder="Tweet ID" name="tweet_id">
-                </div>
-                <div class="ui field">
-                    <button class="ui fluid green button">추가</button>
-                </div>
-            </form>
-        </div>
+  {% include 'blog/admin/_desktopbar.html' %}
+  <div class="content article-description">
 
-        <script>
-            $('#create_tweet').popup({
-                popup    : $('.custom.popup'),
-                position : 'bottom left',
-                on       : 'click'
-            });
-        </script>
+    {% if messages %}
+      {% for message in messages %}
+      <div class="ui {{ message.tags }} message">
+        <div class="header">
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            작업에 성공했습니다.
+          {% endif %}
+        </div>
+        <i class="close icon"></i>
+        <p>{{ message }}</p>
+      </div>
+      {% endfor %}
+    {% endif %}
 
-        <table class="ui celled striped table">
-            <thead>
-                <tr>
-                    <th>제목</th>
-                    <th>작성일</th>
-                    <th>동작</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for post in posts %}
-                <tr>
-                    <td>{{ post.title }}</td>
-                    <td>{{ post.created }}</td>
-                    <td class="center aligned">
-                        <button type="button" class="ui compact circular icon tiny button" onclick="location.href='modify/{{ post.id }}'">
-                            <i class="edit icon"></i>
-                        </button>
-                        <button class="ui compact circular icon tiny button"><i class="lock icon"></i></button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <!-- 포스트 관리 영역 -->
+    <h1>포스트 관리</h1>
+    <button class="ui compact labeled blue icon button" onclick="location.href='{% url 'blogadmincreatepost' %}'">
+      <i class="add icon"></i>
+      새 글 쓰기
+    </button>
+    <div class="ui compact labeled twitter icon button" id="create_tweet">
+      <i class="twitter icon"></i>
+      트윗 가져오기
     </div>
+    <div class="ui custom popup transition hidden" id="create_tweet_popup">
+      <h2>추가할 트윗</h2>
+      <form class="ui form" method="post" action="{% url "blogadmincreatetweet" %}">
+        {% csrf_token %}
+        <div class="ui field">
+          <input type="text" placeholder="Tweet ID" name="tweet_id">
+        </div>
+        <div class="ui field">
+          <button class="ui fluid green button">추가</button>
+        </div>
+      </form>
+    </div>
+
+    <table class="ui celled striped table">
+      <thead>
+        <tr>
+          <th>제목</th>
+          <th>작성일</th>
+          <th>동작</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+        <tr>
+          <td>{{ post.title }}</td>
+          <td>{{ post.created }}</td>
+          <td class="center aligned">
+            <button type="button" class="ui compact circular icon tiny button" onclick="location.href='modify/{{ post.id }}'">
+              <i class="edit icon"></i>
+            </button>
+            <button class="ui compact circular icon tiny button"><i class="lock icon"></i></button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <!-- 포스트 관리 영역의 마지막 -->
+
+    <!-- 시리즈 관리 영역 -->
+    <h1>시리즈 관리</h1>
+    <button class="ui compact labeled blue icon button" id="create_series">
+      <i class="add icon"></i>
+      시리즈 만들기
+    </button>
+    <div class="ui custom popup transition hidden" id="create_series_popup">
+      <h2>추가할 시리즈</h2>
+      <form class="ui form" method="post" action="{% url "blog-admin-create-series" %}">
+        {% csrf_token %}
+        <div class="ui field">
+          <input type="text" placeholder="이름" name="name">
+        </div>
+        <div class="ui field">
+          <button class="ui fluid green button">추가</button>
+        </div>
+      </form>
+    </div>
+
+    <table class="ui celled striped table">
+      <thead>
+        <tr>
+          <th>이름</th>
+          <th>해당 포스트 수</th>
+          <th>동작</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for series in series_list %}
+        <tr>
+          <td>{{ series.name }}</td>
+          <td>{{ series.post_num }}</td>
+          <td></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <!-- 시리즈 관리 영역의 마지막 -->
+
+    <script>
+    $('#create_tweet').popup({
+      popup    : $('#create_tweet_popup'),
+      position : 'bottom left',
+      on       : 'click'
+    });
+
+    $('#create_series').popup({
+      popup    : $('#create_series_popup'),
+      position : 'bottom left',
+      on       : 'click'
+    });
+    </script>
+  </div>
 </div>
 {% endblock %}

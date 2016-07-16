@@ -44,6 +44,8 @@ urlpatterns = [
 	url(r'^blog/myadmin/create/tweet/$', BlogAdmin.create_tweet, name='blogadmincreatetweet'),
 	url(r'^blog/myadmin/modify/$', BlogAdmin.create_post, name='blogadmincreatepost'),
 	url(r'^blog/myadmin/modify/(?P<pk>\d+)$', BlogAdmin.modify_post, name='blogadminmodifypost'),
+    url(r'^blog/myadmin/series/$', BlogAdmin.series, name='blog-admin-create-series'),
+    url(r'^blog/myadmin/series/modify/(?P<id>\d+)/$', BlogAdmin.modify_series, name='blog-admin-modify-series'),
 	url(r'^blog/(?P<pk>\d+)/$', BlogView.post_detail, name='detail'),
 	# url(r'^blog/', include('blog.urls')),
 
@@ -54,7 +56,7 @@ urlpatterns = [
 	# wiki:
 	url(r'^wiki/', include('simple_wiki.urls')),
 
-	# media: 
+	# media:
 	url(r'^media/upload/$', upload_view, name='mediaupload'),
 	url(r'^media/(?P<pk>[\w|\W]+)/$', show_media, name='mediashow'),
 

@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin as djangoadmin
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 
 from dateutil import parser
 
-from .models import Post, Category, PostType, PostTypeRelation
+from .models import *
 
 import twitter
 
@@ -16,8 +17,9 @@ import twitter
 def admin(request):
     template_name = 'blog/admin/admin.html'
 
-    context = { 
+    context = {
         'posts': Post.objects.all().order_by('-created'),
+        'series_list': Series.objects.all(),
     }
 
     return render_to_response(template_name, context, context_instance=RequestContext(request))
@@ -83,6 +85,25 @@ def modify_post(request, pk):
     }
 
     return render_to_response(template_name, context, context_instance=RequestContext(request))
+
+@staff_member_required
+def series(request):
+    # 시리즈를 생성한다
+    if request.method == 'POST':
+        name = request.POST.get('name')
+
+        series = Series(name=name)
+        series.save()
+
+        message_body = u'시리즈\' ' + name + u'\'이(가) 성공적으로 생성되었습니다.'
+        messages.add_message(request, messages.SUCCESS, message_body)
+
+    return redirect(reverse('blogadmin'))
+
+@staff_member_required
+def modify_series(request, id):
+    return None
+
 
 class PostTypeAdmin(djangoadmin.ModelAdmin):
     list_display = ['id', 'name', 'icon', 'default']
