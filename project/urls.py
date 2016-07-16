@@ -41,9 +41,11 @@ urlpatterns = [
 	# blog:
 	url(r'^blog/$', BlogView.main, name='blog'),
 	url(r'^blog/myadmin/$', BlogAdmin.admin, name='blogadmin'),
-	url(r'^blog/myadmin/create/tweet/$', BlogAdmin.create_tweet, name='blogadmincreatetweet'),
-	url(r'^blog/myadmin/modify/$', BlogAdmin.create_post, name='blogadmincreatepost'),
-	url(r'^blog/myadmin/modify/(?P<pk>\d+)$', BlogAdmin.modify_post, name='blogadminmodifypost'),
+	url(r'^blog/myadmin/create/tweet/$', BlogAdmin.create_tweet, name='blog-admin-create-tweet'),
+	url(r'^blog/myadmin/modify/$', BlogAdmin.create_post, name='blog-admin-create-post'),
+	url(r'^blog/myadmin/modify/(?P<pk>\d+)$', BlogAdmin.modify_post, name='blog-admin-modify-post'),
+    url(r'^blog/myadmin/series/$', BlogAdmin.series, name='blog-admin-create-series'),
+    url(r'^blog/myadmin/series/modify/(?P<id>\d+)/$', BlogAdmin.modify_series, name='blog-admin-modify-series'),
 	url(r'^blog/(?P<pk>\d+)/$', BlogView.post_detail, name='detail'),
 	# url(r'^blog/', include('blog.urls')),
 
@@ -54,7 +56,7 @@ urlpatterns = [
 	# wiki:
 	url(r'^wiki/', include('simple_wiki.urls')),
 
-	# media: 
+	# media:
 	url(r'^media/upload/$', upload_view, name='mediaupload'),
 	url(r'^media/(?P<pk>[\w|\W]+)/$', show_media, name='mediashow'),
 
@@ -67,7 +69,6 @@ urlpatterns = [
 	url(r'^accounts/', include('registration.backends.hmac.urls')),
 
 	# apis:
-	url(r'^v1/blog/create/$', BlogControl.create, name='api_blogcreate'),
 	url(r'^api/blog/posts/$', BlogControl.load_posts, name='api-blog-posts'),
 	url(r'^v1/media/upload/$', media.upload, name='api_mediaupload'),
 

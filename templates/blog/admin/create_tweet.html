@@ -16,7 +16,7 @@
         <h1>트윗 추가하기</h1>
         {% include 'blog/_post.html' %}
         <p>이 트윗을 추가할까요?</p>
-        <form class="ui form" method="post" action="{% url "api_blogcreate" %}">
+        <form class="ui form" method="post" action="{% url 'blog-admin-create-post' %}">
             {% csrf_token %}
             <input type="hidden" name="posttype" value="tweet"></input>
             <input type="hidden" name="content" value="{{ post.content }}"></input>
