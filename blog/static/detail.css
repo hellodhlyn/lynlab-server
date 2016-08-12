@@ -282,6 +282,13 @@ ul.share-buttons li{
     margin: 0.5em 0;
 }
 
+.floating {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    cursor: pointer;
+}
+
 /* for tablet */
 @media (min-width: 415px) and (max-width: 768px) {
     img {

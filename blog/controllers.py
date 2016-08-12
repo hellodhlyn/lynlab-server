@@ -9,8 +9,16 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django_ajax.decorators import ajax
 
-from .models import Post, Category, PostType, PostTypeRelation
+from .models import *
 
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
 @csrf_exempt
 def load_posts(request):
@@ -35,3 +43,34 @@ def load_posts(request):
     }
 
     return render(request, 'blog/posts.html', context)
+
+@ajax
+def like_post(request, id):
+    post = Post.objects.get(id=int(id))
+    address = get_client_ip(request)
+
+    if len(PostLikeAddress.objects.filter(post=post, address=address)) > 0:
+      return post.like_count
+
+    like_instance = PostLikeAddress(post=post, address=address)
+    like_instance.save()
+
+    post.like_count = post.like_count + 1
+    post.save()
+
+    return post.like_count
+
+@ajax
+def unlike_post(request, id):
+    post = Post.objects.get(id=int(id))
+    address = get_client_ip(request)
+
+    if len(PostLikeAddress.objects.filter(post=post, address=address)) == 0:
+      return post.like_count
+
+    like_instance = PostLikeAddress.objects.filter(post=post, address=address).delete()
+
+    post.like_count = post.like_count - 1
+    post.save()
+
+    return post.like_count

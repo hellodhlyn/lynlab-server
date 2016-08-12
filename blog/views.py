@@ -5,6 +5,7 @@ from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 
 from .models import *
+from .controllers import get_client_ip
 
 
 class PostCreate(CreateView):
@@ -21,14 +22,6 @@ def main(request):
 	return render_to_response(template_name, context, context_instance=RequestContext(request))
 
 def post_detail(request, pk):
-	def get_client_ip(request):
-		x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-		if x_forwarded_for:
-			ip = x_forwarded_for.split(',')[0]
-		else:
-			ip = request.META.get('REMOTE_ADDR')
-		return ip
-	
 	post = Post.objects.get(id=pk)
 	ip = get_client_ip(request)
 
@@ -40,9 +33,12 @@ def post_detail(request, pk):
 		hit_instance = PostHitAddress(post=post, address=ip)
 		hit_instance.save()
 
+	liked = len(PostLikeAddress.objects.filter(post=post, address=ip)) > 0
+
 	# Get the content and make context
 	context = {
 		'post': post,
+		'liked': liked,
 	}
 
 	return render(request, 'blog/detail.html', context, context_instance=RequestContext(request))

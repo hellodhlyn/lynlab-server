@@ -66,6 +66,9 @@
             &nbsp;|&nbsp;
             <i class="comments icon"></i>
             <a class="comments" href="{% url 'detail' post.id %}#disqus_thread">0</a>
+            &nbsp;|&nbsp;
+            <i class="thumbs up icon"></i>
+            {{ post.like_count }}
             &nbsp;
             {% if post.is_recent_post %}
                 <a class="ui mini red tag label">새 글</a>

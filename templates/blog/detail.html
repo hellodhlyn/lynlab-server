@@ -2,6 +2,29 @@
 {% block style %}
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'detail.css' %}">
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#like-button').on('click', function() {
+      if (!$('#like-button').hasClass('facebook')) {
+        $.get('/api/blog/like/{{ post.id }}/', function(response) {
+          console.log(response)
+          if (response.status == 200) {
+            $('#like-count').html(response.content);
+            $('#like-button').addClass('facebook');
+          }
+        });
+      } else {
+        $.get('/api/blog/unlike/{{ post.id }}/', function(response) {
+          console.log(response)
+          if (response.status == 200) {
+            $('#like-count').html(response.content);
+            $('#like-button').removeClass('facebook');
+          }
+        });
+      }
+    });
+  });
+</script>
 <meta name="description" content="{{ post.description|addslashes }}" />
 <title>{{ post.title }} | LYnTimeline</title>
 {% endblock %}
@@ -29,7 +52,8 @@
       </a>
       <p class="post-meta">
         <i class="wait icon"></i> {{ post.created }}&nbsp;&nbsp;|&nbsp;
-        <i class="users icon"></i> {{ post.hitcount }}
+        <i class="users icon"></i> {{ post.hitcount }}&nbsp;&nbsp;|
+        <i class="thumbs up icon"></i> <span id="like-count">{{ post.like_count }}</span>
       </p>
       <p class="post-meta">
         {% if post.is_recent_post %}
@@ -64,5 +88,9 @@
     </dic>
   </div>
   {% endif %}
+
+  <div class="ui circular floating massive {% if liked %}facebook{% endif %} icon button" id="like-button">
+    <i class="thumbs outline up icon"></i>
+  </div>
 </div>
 {% endblock %}

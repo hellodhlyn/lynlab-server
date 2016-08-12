@@ -52,6 +52,7 @@ class Post(models.Model):
     preview = models.CharField(verbose_name=u'preview', null=True, blank=True, max_length=256)
     tags = models.TextField(max_length=256, default='')
     hitcount = models.IntegerField(default=0)
+    like_count = models.IntegerField(default=0)
     series = models.ForeignKey(Series, related_name='posts', null=True)
 
     # Detail infos
@@ -93,6 +94,12 @@ class PostTypeRelation(models.Model):
 
 # 포스트 조회수.
 class PostHitAddress(models.Model):
+    post = models.ForeignKey(Post)
+    address = models.TextField(max_length=16, default='')
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+# 포스트 좋아요 주소.
+class PostLikeAddress(models.Model):
     post = models.ForeignKey(Post)
     address = models.TextField(max_length=16, default='')
     timestamp = models.DateTimeField(auto_now_add=True)
