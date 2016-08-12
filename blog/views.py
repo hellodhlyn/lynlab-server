@@ -5,6 +5,7 @@ from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 
 from .models import *
+from .controllers import get_client_ip, is_recent_visitor
 
 
 class PostCreate(CreateView):
@@ -21,28 +22,26 @@ def main(request):
 	return render_to_response(template_name, context, context_instance=RequestContext(request))
 
 def post_detail(request, pk):
-	def get_client_ip(request):
-		x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-		if x_forwarded_for:
-			ip = x_forwarded_for.split(',')[0]
-		else:
-			ip = request.META.get('REMOTE_ADDR')
-		return ip
-	
 	post = Post.objects.get(id=pk)
-	ip = get_client_ip(request)
+	address = get_client_ip(request)
 
 	# Increase the hit count
-	if len(PostHitAddress.objects.filter(post=post, address=ip)) == 0:
+	hits = sorted(PostHitAddress.objects.filter(post=post, address=address), key=lambda hit: hit.timestamp, reverse=True)
+	if len(hits) == 0 or not is_recent_visitor(hits[0].timestamp):
 		post.hitcount = post.hitcount + 1
 		post.save()
 
-		hit_instance = PostHitAddress(post=post, address=ip)
+		hit_instance = PostHitAddress(post=post, address=address)
 		hit_instance.save()
+
+	# Get liked info
+	likes = sorted(PostLikeAddress.objects.filter(post=post, address=address), key=lambda like: like.timestamp, reverse=True)
+	liked = len(likes) > 0 and is_recent_visitor(likes[0].timestamp)
 
 	# Get the content and make context
 	context = {
 		'post': post,
+		'liked': liked,
 	}
 
 	return render(request, 'blog/detail.html', context, context_instance=RequestContext(request))

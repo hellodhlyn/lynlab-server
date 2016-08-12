@@ -94,7 +94,7 @@ def __modify_post(request):
     post.description = req_description or '설명이 없습니다'
     post.category = Category.objects.get(url=req_category)
     post.tags = req_tags or ''
-    post.series_id = None if int(req_series_id) == -1 else Series.objects.get(id=req_series_id)
+    post.series_id = None if int(req_series_id) == -1 else int(req_series_id)
     post.posttype = req_posttype or '0'
     post.preview = req_preview or ''
     post.public_post = req_public_post

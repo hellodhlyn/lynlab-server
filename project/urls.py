@@ -70,6 +70,8 @@ urlpatterns = [
 
 	# apis:
 	url(r'^api/blog/posts/$', BlogControl.load_posts, name='api-blog-posts'),
+	url(r'^api/blog/like/(?P<id>\d+)/$', BlogControl.like_post, name='api-blog-like-post'),
+	url(r'^api/blog/unlike/(?P<id>\d+)/$', BlogControl.unlike_post, name='api-blog-unlike-post'),
 	url(r'^v1/media/upload/$', media.upload, name='api_mediaupload'),
 
 	# static:
