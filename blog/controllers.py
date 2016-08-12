@@ -20,6 +20,14 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 
+def is_recent_visitor(timestamp):
+    now = datetime.datetime.utcnow().replace(tzinfo=utc)
+    timediff = now - timestamp
+    if timediff.total_seconds() < (60 * 60 * 24) * 7:
+        return True
+    else:
+        return False
+
 @csrf_exempt
 def load_posts(request):
     page = int(request.POST.get('page'))
@@ -49,8 +57,9 @@ def like_post(request, id):
     post = Post.objects.get(id=int(id))
     address = get_client_ip(request)
 
-    if len(PostLikeAddress.objects.filter(post=post, address=address)) > 0:
-      return post.like_count
+    likes = sorted(PostLikeAddress.objects.filter(post=post, address=address), key=lambda like: like.timestamp, reverse=True)
+    if len(likes) > 0 and not is_recent_visitor(likes[0].timestamp):
+        return post.like_count
 
     like_instance = PostLikeAddress(post=post, address=address)
     like_instance.save()
@@ -66,9 +75,9 @@ def unlike_post(request, id):
     address = get_client_ip(request)
 
     if len(PostLikeAddress.objects.filter(post=post, address=address)) == 0:
-      return post.like_count
+        return post.like_count
 
-    like_instance = PostLikeAddress.objects.filter(post=post, address=address).delete()
+    PostLikeAddress.objects.filter(post=post, address=address).delete()
 
     post.like_count = post.like_count - 1
     post.save()
