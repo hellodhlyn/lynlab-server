@@ -112,8 +112,11 @@ def __modify_post(request):
                 related[0].delete()
 
     messages.add_message(request, messages.SUCCESS, u'포스트가 성공적으로 추가/수정되었습니다.')
-    return redirect(reverse('blogadmin'))
 
+    if 'submit_save' in request.POST:
+        return redirect(reverse('blog-admin-modify-post', kwargs={'pk': post.id}))
+    elif 'submit_complete' in request.POST:
+        return redirect(reverse('blogadmin'))
 
 @staff_member_required
 def create_tweet(request):
@@ -151,7 +154,7 @@ def series(request):
         series = Series(name=name)
         series.save()
 
-        message_body = u'시리즈\' ' + name + u'\'이(가) 성공적으로 생성되었습니다.'
+        message_body = u'시리즈 \' ' + name + u'\'이(가) 성공적으로 생성되었습니다.'
         messages.add_message(request, messages.SUCCESS, message_body)
 
     return redirect(reverse('blogadmin'))

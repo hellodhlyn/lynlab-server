@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404
 from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
@@ -22,7 +24,14 @@ def main(request):
 	return render_to_response(template_name, context, context_instance=RequestContext(request))
 
 def post_detail(request, pk):
-	post = Post.objects.get(id=pk)
+	post = None 
+	try:
+		post = Post.objects.get(id=pk)
+		if post.public_post is False:
+			raise Http404
+	except ObjectDoesNotExist:
+		raise Http404
+
 	address = get_client_ip(request)
 
 	# Increase the hit count
