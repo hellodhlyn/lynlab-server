@@ -222,6 +222,17 @@ ul.share-buttons li{
     margin: 0.3em 0;
 }
 
+#search-filter {
+    padding: 0.7em 0 0.7em 0;
+    text-align: center;
+    font-weight: 200;
+}
+
+#search-filter > :first-child {
+    margin-bottom: 0.1em;
+    font-size: 200%;
+}
+
 @media (min-width: 700px) {
     .contents {
         padding: 2em 3em;

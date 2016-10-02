@@ -5,6 +5,7 @@ from django.http import Http404
 from django.views.generic import ListView, DetailView, CreateView
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
+from django.utils import translation
 
 from .models import *
 from .controllers import get_client_ip, is_recent_visitor
@@ -18,6 +19,16 @@ def main(request):
 	template_name = 'blog/home.html'
 
 	context = {
+		'types': PostType.objects.all(),
+	}
+
+	return render_to_response(template_name, context, context_instance=RequestContext(request))
+
+def by_tag(request, tag):
+	template_name = 'blog/home.html'
+
+	context = {
+		'search_tag': tag,
 		'types': PostType.objects.all(),
 	}
 

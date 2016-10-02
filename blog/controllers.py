@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import operator
+
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.admin.views.decorators import staff_member_required
@@ -33,7 +35,21 @@ def load_posts(request):
     page = int(request.POST.get('page'))
     filters = request.POST.get('filters').split(',')[:-1]
 
-    posts = Post.objects.order_by('-created')
+    key = request.POST.get('key')
+    value = request.POST.get('value')
+
+    try:
+        if key and value and len(key) > 0 and len(value) > 0:
+            if key == 'tag':
+                posts = sorted(map(lambda x: x.post, PostTagRelation.objects.filter(tag=Tag.objects.get(url=value))), key=lambda y: y.id)
+            else:
+                raise Exception()
+        else:
+            raise Exception()
+    except ObjectDoesNotExist:
+        posts = []
+    except:
+        posts = Post.objects.filter().filter(public_post=True).order_by('-created')
 
     start = (page-1)*10
     end = min(page*10, len(posts))

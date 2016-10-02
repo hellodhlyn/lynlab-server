@@ -76,8 +76,8 @@
             {% if not post.public_post %}
                 <a class="ui mini blue tag label">비공개</a>
             {% endif %}
-            {% for tag in post.split_tags %}
-                <a class="ui mini tag label">{{ tag }}</a>
+            {% for tag in post.get_tags %}
+                <a class="ui mini tag label" href="{% url 'blog-tag' tag.url %}">{{ tag.get_name }}</a>
             {% endfor %}
         </p>
     </article>

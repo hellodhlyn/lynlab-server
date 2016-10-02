@@ -91,6 +91,27 @@ function loadPosts(page) {
 	});
 }
 
+function loadPosts(page, key, value) {
+	$('#more-button').remove();
+	var filters = getFilter();
+
+	$.ajax({
+		url: '/api/blog/posts/',
+		method: 'post',
+		data: {
+			'key': key,
+			'value': value,
+			'page': page,
+			'filters': filters,
+		},
+		dataType:'html',
+		success : function(data){
+			$('.posts').append(data);
+			$('.posts').append('<button class="ui basic fluid button" id="more-button" onclick="loadPosts('+(page+1)+');">더 보기</button>');
+		}
+	});
+}
+
 $(document).ready(function() {
 	$('.filter.button').each(function(){
 		if ($.cookie($(this).attr('id')) == null) {
@@ -110,6 +131,4 @@ $(document).ready(function() {
 			}
 		}
 	})
-
-	loadPosts(1);
 });

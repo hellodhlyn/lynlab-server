@@ -8,6 +8,7 @@ from django.contrib import admin
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db import models
 from django.utils.timezone import utc
+from django.utils import translation
 from django.http import HttpResponseRedirect
 
 from django_markup.filter import MarkupFilter
@@ -40,6 +41,27 @@ class Series(models.Model):
     def post_num(self):
         return Post.objects.filter(series=self).count()
 
+# 포스트의 태그.
+class Tag(models.Model):
+    url = models.CharField(max_length=20, null=False, default='')
+
+    def get_name(self):
+        try:
+            return TagTranslations.objects.get(tag=self, language=translation.get_language())
+        except:
+            return self.url
+
+    def __unicode__(self):
+        return self.url
+
+class TagTranslations(models.Model):
+    tag = models.ForeignKey(Tag)
+    name = models.CharField(max_length=20, null=False, default='')
+    language = models.CharField(max_length=8, null=False)
+
+    def __unicode__(self):
+        return self.name
+
 # 포스트.
 class Post(models.Model):
     class Meta:
@@ -50,6 +72,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category, verbose_name=u'category', null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name=u'date')
     preview = models.CharField(verbose_name=u'preview', null=True, blank=True, max_length=256)
+    ##### DEPRECATED : Use PostTagRelation table instead
     tags = models.TextField(max_length=256, default='')
     hitcount = models.IntegerField(default=0)
     like_count = models.IntegerField(default=0)
@@ -87,10 +110,22 @@ class Post(models.Model):
         else:
             return self.tags.split(',')
 
+    def get_tags(self):
+        return map(lambda x: x.tag, PostTagRelation.objects.filter(post=self))
+
+    def get_tags_url(self):
+        relations = PostTagRelation.objects.filter(post=self)
+        return ','.join(map(str, map(lambda x: x.url, map(lambda y: y.tag, relations))))
+
 # 포스트의 종류의 다대다 관계 테이블.
 class PostTypeRelation(models.Model):
     post_id = models.IntegerField()
     type_id = models.IntegerField()
+
+# 포스트와 태그의 다대다 관계 테이블
+class PostTagRelation(models.Model):
+    tag = models.ForeignKey(Tag)
+    post = models.ForeignKey(Post)
 
 # 포스트 조회수.
 class PostHitAddress(models.Model):
