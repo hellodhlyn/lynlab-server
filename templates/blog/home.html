@@ -14,6 +14,11 @@
       <p><strong>태그:{{ search_tag }}</strong>로 검색된 결과입니다.</p>
       <p><a href="{% url 'blog' %}">전체 목록으로 돌아가기</a></p>
     </div>
+    {% elif search_category %}
+    <div id="search-filter">
+      <p><strong>카테고리:{{ search_category }}</strong>로 검색된 결과입니다.</p>
+      <p><a href="{% url 'blog' %}">전체 목록으로 돌아가기</a></p>
+    </div>
     {% endif %}
     <div class="posts">
       
@@ -55,6 +60,8 @@
 
 {% if search_tag %}
 <script type="text/javascript">loadPosts(1, 'tag', '{{ search_tag }}');</script>
+{% elif search_category %}
+<script type="text/javascript">loadPosts(1, 'category', '{{ search_category }}');</script>
 {% else %}
 <script type="text/javascript">loadPosts(1);</script>
 {% endif %}

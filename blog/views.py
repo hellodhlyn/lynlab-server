@@ -34,6 +34,16 @@ def by_tag(request, tag):
 
 	return render_to_response(template_name, context, context_instance=RequestContext(request))
 
+def by_category(request, category):
+	template_name = 'blog/home.html'
+
+	context = {
+		'search_category': category,
+		'types': PostType.objects.all(),
+	}
+
+	return render_to_response(template_name, context, context_instance=RequestContext(request))
+
 def post_detail(request, pk):
 	post = None 
 	try:

@@ -42,6 +42,8 @@ def load_posts(request):
         if key and value and len(key) > 0 and len(value) > 0:
             if key == 'tag':
                 posts = sorted(map(lambda x: x.post, PostTagRelation.objects.filter(tag=Tag.objects.get(url=value))), key=lambda y: y.id)
+            elif key == 'category':
+                posts = Post.objects.filter(category=Category.objects.get(url=value)).order_by('-created')
             else:
                 raise Exception()
         else:
@@ -49,7 +51,7 @@ def load_posts(request):
     except ObjectDoesNotExist:
         posts = []
     except:
-        posts = Post.objects.filter().filter(public_post=True).order_by('-created')
+        posts = Post.objects.filter(public_post=True).order_by('-created')
 
     start = (page-1)*10
     end = min(page*10, len(posts))

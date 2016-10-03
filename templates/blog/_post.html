@@ -37,7 +37,7 @@
 <script>loadTwitterApi();</script>
 {% else %}
 <div class="post-container post-general">
-    <h1 class="content-subhead">{{ post.category.name }}</h1>
+    <a href="{% url 'blog-category' post.category.url %}"><h1 class="content-subhead">{{ post.category.name }}</h1></a>
     <article class="ui items post">
         <div class="ui item">
             <div class="content">

@@ -41,6 +41,7 @@ urlpatterns = [
     # blog:
     url(r'^blog/$', BlogView.main, name='blog'),
     url(r'^blog/tag/(?P<tag>[\w|\W]+)/$', BlogView.by_tag, name='blog-tag'),
+    url(r'^blog/category/(?P<category>[\w|\W]+)/$', BlogView.by_category, name='blog-category'),
     url(r'^blog/myadmin/$', BlogAdmin.admin, name='blogadmin'),
     url(r'^blog/myadmin/create/tweet/$', BlogAdmin.create_tweet, name='blog-admin-create-tweet'),
     url(r'^blog/myadmin/modify/$', BlogAdmin.create_post, name='blog-admin-create-post'),
