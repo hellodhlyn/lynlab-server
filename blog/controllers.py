@@ -59,13 +59,13 @@ def load_posts(request):
     start = (page-1)*10
     end = min(page*10, len(posts))
 
-    response_posts = []
-    for p in posts[start:end]:
-        filter_num = 0
-        for f in filters:
-            filter_num += PostTypeRelation.objects.filter(type_id=f, post_id=p.id).count()
-        if filter_num == 0:
-            response_posts.append(p)
+    response_posts = posts[start:end]
+    # for p in posts[start:end]:
+    #     filter_num = 0
+    #     for f in filters:
+    #         filter_num += PostTypeRelation.objects.filter(type_id=f, post_id=p.id).count()
+    #     if filter_num == 0:
+    #         response_posts.append(p)
 
     context = {
         'posts': response_posts,
