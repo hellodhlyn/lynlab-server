@@ -107,7 +107,7 @@ function loadPosts(page, key, value) {
 		dataType:'html',
 		success : function(data){
 			$('.posts').append(data);
-			$('.posts').append('<button class="ui basic fluid button" id="more-button" onclick="loadPosts('+(page+1)+');">더 보기</button>');
+			$('.posts').append('<button class="ui basic fluid button" id="more-button" onclick="loadPosts('+(page+1)+', \''+key+'\', \''+value+'\');">더 보기</button>');
 		}
 	});
 }
