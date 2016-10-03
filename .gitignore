@@ -57,6 +57,7 @@ settings_var.py
 *.sqlite3
 images
 semantic
+media/*
 
 # Sphinx documentation
 docs/_build/
