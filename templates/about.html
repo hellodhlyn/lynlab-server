@@ -8,189 +8,211 @@
 {% endblock %}
 {% block content %}
 <div class="ui left demo vertical inverted sidebar labeled icon menu">
-    <a class="active item" href="/"><i class="home icon"></i>LYnLab</a>
-    <a class="item" href="/blog"><i class="coffee icon"></i>블로그</a>
+  <a class="active item" href="/"><i class="home icon"></i>LYnLab</a>
+  <a class="item" href="/blog"><i class="coffee icon"></i>블로그</a>
 </div>
 <div class="pusher">
-    <div class="ui inverted vertical masthead center aligned segment">
-        <div class="ui container">
-            <div class="ui large secondary inverted pointing menu">
-                <a class="toc item">
-                    <i class="sidebar icon" onclick="onClickMenu()"></i>
-                </a>
-                <a class="active item" href="/">LYnLab</a>
-                <a class="item" href="/blog">블로그</a>
-                <div class="right item wikiform titlebar" style="padding: 0">
-                    <form class="ui form" name="wikiForm" method="post" action="/v1/wiki/search/">
-                        {% csrf_token %}
-                        <div class="ui icon input">
-                            <input class="navbar-search" type="text" name="title" placeholder="검색어를 입력...">
-                            <i class="inverted circular search link icon" onclick="wikiForm.submit()"></i>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+  <div class="ui inverted vertical masthead center aligned segment">
+    <div class="ui container">
+      <div class="ui large secondary inverted pointing menu">
+        <a class="toc item">
+          <i class="sidebar icon" onclick="onClickMenu()"></i>
+        </a>
+        <a class="active item" href="/">LYnLab</a>
+        <a class="item" href="/blog">블로그</a>
+      </div>
     </div>
-    <div class="content article-description">
-        <h1><a class="reverse-link" name="profile">프로필</a></h1>
-        <h2>소속</h2>
-        <table class="inline-profile">
-            <tr>
-                <td>• 2016 ~ 現</td>
-                <td>두나무 주식회사 (소프트웨어 엔지니어)</td>
-            </tr>
-            <tr>
-                <td>• 2015 ~ 現</td>
-                <td>연세대학교 프로그래밍 동아리 PoolC 대표</td>
-            </tr>
-            <tr>
-                <td>• 2014 ~ 現</td>
-                <td>연세대학교 컴퓨터과학과 (재학)</td>
-            </tr>
-            <tr>
-                <td>• 2016</td>
-                <td>연세대학교 Computational Intelligence & Photography 연구실학부생 인턴</td>
-            </tr>
-            <tr>
-                <td>• 2015</td>
-                <td>미래창조과학부 <a href="http://swmaestro.kr/">SW 마에스트로 과정</a> 6기 연수생</td>
-            </tr>
-            <tr>
-                <td>• 2012 ~ 2014</td>
-                <td>경남과학고등학교 (조기졸업)</td>
-            </tr>
-        </table>
-        <h2>수상 경력 / 자격</h2>
-        <table class="inline-profile">
-            <tr>
-                <td>• 2016</td>
-                <td>국가기술자격 정보처리산업기사</td>
-            </tr>
-            <tr>
-                <td>• 2015</td>
-                <td>JLPT 일본어능력시험 N2</td>
-            </tr>
-            <tr>
-                <td>• 2014</td>
-                <td>특허출원 (10-2014-0192784)</td>
-            </tr>
-            <tr>
-                <td>• 2014</td>
-                <td>제20회 삼성휴먼테크논문대상 고교부문 수학/전산분야 <strong>금상</strong></td>
-            </tr>
-            <tr>
-                <td>• 2009 ~ 2013</td>
-                <td>한국정보올림피아드 <strong>동, 은, 금상</strong>(지역), <strong>장려상</strong>(전국)</td>
-            </tr>
-        </table>
-        <div class="ui divider"></div>
-        <h1><a class="reverse-link" name="portfolio">프로젝트</a></h1>
-        <h2>기술</h2>
-        <h3>지능형 할 일 관리 서비스를 위한 기술 개발</h3>
-        <table class="inline-profile">
-            <tr>
-                <td>• 개요</td>
-                <td>사용자 개인의 생활 패턴, 할 일의 소요 시간을 파악 및 예측하여 시간표 형태로 제공. 등록된 할 일과 관련된 글, 개인 문서 등을 추천.<br/>(SW 마에스트로 과정 1단계 2차 프로젝트)</td>
-            </tr>
-            <tr>
-                <td>• 진행 일시</td>
-                <td>2015년 9월 ~ 11월 (3개월)</td>
-            </tr>
-            <tr>
-                <td>• 담당 부분</td>
-                <td>할 일 추천 및 시간표 제작 알고리즘 설계, 개발</td>
-            </tr>
-            <tr>
-                <td>• 관련 분야</td>
-                <td>머신 러닝, 인공지능, 추천 알고리즘, 검색 알고리즘</td>
-            </tr>
-        </table>
-        <div class="embed">
-            <iframe src="//www.slideshare.net/slideshow/embed_code/key/yZ2sZUlZPx9Amb" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/DoHoerin/ss-55262148" title="지능형 할 일 관리 서비스를 위한 기술 개발" target="_blank">지능형 할 일 관리 서비스를 위한 기술 개발</a> </strong> from <strong><a href="//www.slideshare.net/DoHoerin" target="_blank">Do Hoerin</a></strong> </div>
-        </div>
-        <h3>기계학습을 이용한 숫자인식기 제작</h3>
-        <table class="inline-profile">
-            <tr>
-                <td>• 개요</td>
-                <td>기계학습을 이용한 숫자인식기 제작.<br/>(SW 마에스트로 과정 1단계 1차 프로젝트)</td>
-            </tr>
-            <tr>
-                <td>• 진행 일시</td>
-                <td>2015년 7월 ~ 8월 (2개월)</td>
-            </tr>
-            <tr>
-                <td>• 관련 분야</td>
-                <td>머신 러닝, 딥 러닝</td>
-            </tr>
-        </table>
-        <div class="embed">
-            <iframe src="//www.slideshare.net/slideshow/embed_code/key/mLJhdy0F1ciDW3" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/DoHoerin/ss-55157355" title="기계학습을 이용한 숫자인식기 제작" target="_blank">기계학습을 이용한 숫자인식기 제작</a> </strong> from <strong><a href="//www.slideshare.net/DoHoerin" target="_blank">Do Hoerin</a></strong> </div>
-        </div>
-        <h3>굴곡면에 비춰지는 영상의 평면화 프로그램 개발에 대한 연구</h3>
-        <table class="inline-profile">
-            <tr>
-                <td>• 개요</td>
-                <td>빔 프로젝터 등의 광학 기기를 굴곡이 있는 벽에 비추었을 때 화면이 왜곡되는 현상을 보정하는 알고리즘 및 프로그램.<br/>(제20회 삼성휴먼테크논문대상 수상, 특허 출원 기술)</td>
-            </tr>
-            <tr>
-                <td>• 진행 일시</td>
-                <td>2014년 10월 ~ 12월 (3개월)</td>
-            </tr>
-            <tr>
-                <td>• 담당 부분</td>
-                <td>SW 개발</td>
-            </tr>
-            <tr>
-                <td>• 관련 분야</td>
-                <td>JavaScript</td>
-            </tr>
-        </table>
-        <div class="embed">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/ZuWPZtTLoyk?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <h2>애플리케이션 / 게임</h2>
-        <h3>결함 찾기 (안드로이드 애플리케이션)</h3>
-        <table class="inline-profile">
-            <tr>
-                <td>• 개요</td>
-                <td>스마트폰의 센서, 배터리, 디스플레이 등의 문제점을 찾아 진단, 서비스 센터에 연계해주는 안드로이드 애플리케이션 서비스.</td>
-            </tr>
-            <tr>
-                <td>• 진행 일시</td>
-                <td>2011년 3월 ~ 현재</td>
-            </tr>
-            <tr>
-                <td>• 담당 부분</td>
-                <td><strong>전체</strong> (기획, 개발, 디자인)</td>
-            </tr>
-            <tr>
-                <td>• 기술 스택</td>
-                <td>안드로이드 애플리케이션</td>
-            </tr>
-        </table>
-        <h3>Shibuya (모바일 게임)</h3>
-        <table class="inline-profile">
-            <tr>
-                <td>• 개요</td>
-                <td>충돌형 슈팅 게임.</td>
-            </tr>
-            <tr>
-                <td>• 진행 일시</td>
-                <td>2015년 7월 ~ 8월 (2개월)</td>
-            </tr>
-            <tr>
-                <td>• 담당 부분</td>
-                <td>기획, 스테이지 작성, 밸런싱</td>
-            </tr>
-            <tr>
-                <td>• 기술 스택</td>
-                <td>Unity 3d, 기획</td>
-            </tr>
-        </table>
-        <div class="embed">
-            <iframe width="420" height="315" src="https://www.youtube.com/embed/2AfGEGtOiHM?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-        </div>
+  </div>
+  <div class="content article-description">
+    <h1><a class="reverse-link" name="profile">프로필</a></h1>
+    <h2>소속</h2>
+    <table class="inline-profile">
+      <tr>
+        <td>• 2016 ~ 現</td>
+        <td>두나무 주식회사 (클라이언트 개발자)</td>
+      </tr>
+      <tr>
+        <td>• 2014 ~ 現</td>
+        <td>연세대학교 컴퓨터과학과 (재학)</td>
+      </tr>
+      <tr>
+        <td>• 2016</td>
+        <td>연세대학교 Computational Intelligence & Photography 연구실 학부생 인턴</td>
+      </tr>
+      <tr>
+        <td>• 2015 ~ 2016</td>
+        <td>연세대학교 프로그래밍 동아리 PoolC 대표</td>
+      </tr>
+      <tr>
+        <td>• 2015</td>
+        <td>미래창조과학부 <a href="http://swmaestro.kr/">SW 마에스트로 과정</a> 6기 연수생</td>
+      </tr>
+      <tr>
+        <td>• 2012 ~ 2014</td>
+        <td>경남과학고등학교 (조기졸업)</td>
+      </tr>
+    </table>
+    <h2>수상 경력 / 자격</h2>
+    <table class="inline-profile">
+      <tr>
+        <td>• 2016</td>
+        <td>국가기술자격 정보처리산업기사</td>
+      </tr>
+      <tr>
+        <td>• 2015</td>
+        <td>JLPT 일본어능력시험 N2</td>
+      </tr>
+      <tr>
+        <td>• 2014</td>
+        <td>특허등록 제1635167호 (<a href="https://goo.gl/7J9tI2">링크</a>)</td>
+      </tr>
+      <tr>
+        <td>• 2014</td>
+        <td>제20회 삼성휴먼테크논문대상 고교부문 수학/전산분야 <strong>금상</strong></td>
+      </tr>
+      <tr>
+        <td>• 2009 ~ 2013</td>
+        <td>한국정보올림피아드 <strong>동, 은, 금상</strong>(지역), <strong>장려상</strong>(전국)</td>
+      </tr>
+    </table>
+    <div class="ui divider"></div>
+    <h1>기술/알고리즘 프로젝트</h1>
+    <h2 class="ui top attached header">지능형 할 일 관리 서비스를 위한 기술 개발</h2>
+    <div class="ui attached segment">
+      <table class="inline-profile">
+        <tr>
+          <td>• 개요</td>
+          <td>사용자 개인의 생활 패턴, 할 일의 소요 시간을 파악 및 예측하여 시간표 형태로 제공. 등록된 할 일과 관련된 글, 개인 문서 등을 추천.<br/>(SW 마에스트로 과정 1단계 2차 프로젝트)</td>
+        </tr>
+        <tr>
+          <td>• 진행 기간</td>
+          <td>2015년 9월 ~ 11월 (3개월)</td>
+        </tr>
+        <tr>
+          <td>• 담당 부분</td>
+          <td>할 일 추천 및 시간표 제작 알고리즘 설계, 개발</td>
+        </tr>
+        <tr>
+          <td>• 기술</td>
+          <td>머신 러닝, 인공지능, 추천 알고리즘, 검색 알고리즘</td>
+        </tr>
+      </table>
+      <div class="embed">
+        <iframe src="//www.slideshare.net/slideshow/embed_code/key/yZ2sZUlZPx9Amb" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/DoHoerin/ss-55262148" title="지능형 할 일 관리 서비스를 위한 기술 개발" target="_blank">지능형 할 일 관리 서비스를 위한 기술 개발</a> </strong> from <strong><a href="//www.slideshare.net/DoHoerin" target="_blank">Do Hoerin</a></strong> </div>
+      </div>
     </div>
+    <h2 class="ui top attached header">기계학습을 이용한 숫자인식기 제작</h2>
+    <div class="ui attached segment">
+      <table class="inline-profile">
+        <tr>
+          <td>• 개요</td>
+          <td>기계학습을 이용한 숫자인식기 제작.<br/>(SW 마에스트로 과정 1단계 1차 프로젝트)</td>
+        </tr>
+        <tr>
+          <td>• 진행 기간</td>
+          <td>2015년 7월 ~ 8월 (2개월)</td>
+        </tr>
+        <tr>
+          <td>• 기술</td>
+          <td>머신 러닝, 딥 러닝</td>
+        </tr>
+      </table>
+      <div class="embed">
+        <iframe src="//www.slideshare.net/slideshow/embed_code/key/mLJhdy0F1ciDW3" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/DoHoerin/ss-55157355" title="기계학습을 이용한 숫자인식기 제작" target="_blank">기계학습을 이용한 숫자인식기 제작</a> </strong> from <strong><a href="//www.slideshare.net/DoHoerin" target="_blank">Do Hoerin</a></strong> </div>
+      </div>
+    </div>
+    <h2 class="ui top attached header">굴곡면에 비춰지는 영상의 평면화 프로그램 개발에 대한 연구</h2>
+    <div class="ui attached segment">
+      <table class="inline-profile">
+        <tr>
+          <td>• 개요</td>
+          <td>빔 프로젝터 등의 광학 기기를 굴곡이 있는 벽에 비추었을 때 화면이 왜곡되는 현상을 보정하는 알고리즘 및 프로그램.<br/>(제20회 삼성휴먼테크논문대상 수상, 특허 출원 기술)</td>
+        </tr>
+        <tr>
+          <td>• 진행 기간</td>
+          <td>2014년 10월 ~ 12월 (3개월)</td>
+        </tr>
+        <tr>
+          <td>• 담당 부분</td>
+          <td>SW 개발</td>
+        </tr>
+        <tr>
+          <td>• 기술</td>
+          <td>알고리즘, JavaScript</td>
+        </tr>
+      </table>
+      <div class="embed">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/ZuWPZtTLoyk?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="ui divider"></div>
+    <h1>애플리케이션/게임 프로젝트</h1>
+    <h2 class="ui top attached header">카카오증권</h2>
+    <div class="ui attached segment">
+      <table class="inline-profile">
+        <tr>
+          <td>• 개요</td>
+          <td>모바일 주식, 증권 서비스 (MTS)</td>
+        </tr>
+        <tr>
+          <td>• 참여 기간</td>
+          <td>2016년 3월 ~ 현재</td>
+        </tr>
+        <tr>
+          <td>• 담당 부분</td>
+          <td>클라이언트 개발</td>
+        </tr>
+        <tr>
+          <td>• 기술</td>
+          <td>안드로이드, RxJava</td>
+        </tr>
+      </table>
+    </div>
+    <h2 class="ui top attached header">결함 찾기 (안드로이드 애플리케이션)</h2>
+    <div class="ui attached segment">
+      <table class="inline-profile">
+        <tr>
+          <td>• 개요</td>
+          <td>스마트폰의 센서, 배터리, 디스플레이 등의 문제점을 찾아 진단, 서비스 센터에 연계해주는 안드로이드 애플리케이션 서비스.</td>
+        </tr>
+        <tr>
+          <td>• 서비스</td>
+          <td>2011년 3월 ~ 2016년 9월 (5년 7개월)</td>
+        </tr>
+        <tr>
+          <td>• 담당 부분</td>
+          <td><strong>전체</strong> (기획, 개발, 디자인)</td>
+        </tr>
+        <tr>
+          <td>• 기술</td>
+          <td>안드로이드</td>
+        </tr>
+      </table>
+    </div>
+    <h2 class="ui top attached header">Space Impact (모바일 게임)</h2>
+    <div class="ui attached segment">
+      <table class="inline-profile">
+        <tr>
+          <td>• 개요</td>
+          <td>충돌형 슈팅 게임.</td>
+        </tr>
+        <tr>
+          <td>• 진행 기간</td>
+          <td>2015년 7월 ~ 8월 (2개월)</td>
+        </tr>
+        <tr>
+          <td>• 담당 부분</td>
+          <td>기획, 스테이지 작성, 밸런싱</td>
+        </tr>
+        <tr>
+          <td>• 기술</td>
+          <td>Unity 3d, 기획</td>
+        </tr>
+      </table>
+      <div class="embed">
+        <iframe width="420" height="315" src="https://www.youtube.com/embed/2AfGEGtOiHM?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

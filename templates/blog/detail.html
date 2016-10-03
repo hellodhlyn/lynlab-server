@@ -43,7 +43,7 @@
 
   <!-- 포스트 본문 -->
   <div class="post-detail-container">
-    <h1 class="content-subhead">{{ post.category.name }}</h1>
+    <a href="{% url 'blog-category' post.category.url %}"><h1 class="content-subhead">{{ post.category.name }}</h1></a>
     <article class="post">
       <a href="{% url 'detail' post.id %}">
         <h2 class="post-detail-title">
@@ -62,8 +62,8 @@
         {% if not post.public_post %}
         <span class="ui mini blue tag label">비공개</span>
         {% endif %}
-        {% for tag in post.split_tags %}
-        <span class="ui mini tag label">{{ tag }}</span>
+        {% for tag in post.get_tags %}
+        <a class="ui mini tag label" href="{% url 'blog-tag' tag.url %}">{{ tag.get_name }}</a>
         {% endfor %}
       </p>
       <div class="ui divider"></div>

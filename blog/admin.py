@@ -35,6 +35,7 @@ def create_post(request):
         context = {
             'types': zip(all_types, post_types),
             'categories': Category.objects.all(),
+            'tags': Tag.objects.all(),
             'series_list': Series.objects.all(),
         }
 
@@ -61,6 +62,7 @@ def modify_post(request, pk):
             'post': post[0],
             'types': zip(all_types, post_types),
             'categories': Category.objects.all(),
+            'tags': Tag.objects.all(),
             'series_list': Series.objects.all(),
         }
 
@@ -71,12 +73,41 @@ def modify_post(request, pk):
 
 @staff_member_required
 def __modify_post(request):
+    def __migrate_tags(post, old_tags):
+        for tag_name in old_tags.split(','):
+            tag_name = tag_name.lower()
+            try:
+                tag = Tag.objects.get(url=tag_name)
+            except:
+                tag = Tag(url=tag_name)
+                tag.save()
+
+            PostTagRelation(post=post, tag=tag).save()
+
+    def __modify_tags(post, tags):
+        current_tags = PostTagRelation.objects.filter(post=post)
+
+        for url in tags.split(','):
+            tag = None
+            try:
+                tag = Tag.objects.get(url=url)
+            except:
+                tag = Tag(url=url)
+                tag.save()
+
+            try: 
+                PostTagRelation.object.get(post=post, tag=tag)
+            except:
+                PostTagRelation(post=post, tag=tag).save()
+
+
     req_id = request.POST.get('id')
     req_title = request.POST.get('title')
     req_content = request.POST.get('content')
     req_description = request.POST.get('description')
     req_category = request.POST.get('category')
-    req_tags = request.POST.get('tags')
+    req_old_tags = request.POST.get('tags')
+    req_tags = request.POST.get('new_tags')
     req_series_id = request.POST.get('series')
     req_posttype = request.POST.get('posttype')
     req_preview = request.POST.get('preview')
@@ -84,16 +115,21 @@ def __modify_post(request):
 
     try:
         post = Post.objects.get(id=req_id)
+
+        if PostTagRelation.objects.filter(post=post).count() == 0:
+            __migrate_tags(post, req_old_tags)
+            req_old_tags = ''
     except ValueError:
         post = Post()
     except ObjectDoesNotExist:
         post = Post()
 
+    __modify_tags(post, req_tags)
     post.title = req_title or '제목이 없습니다'
     post.content = req_content or ''
     post.description = req_description or '설명이 없습니다'
     post.category = Category.objects.get(url=req_category)
-    post.tags = req_tags or ''
+    post.tags = req_old_tags or ''
     post.series_id = None if int(req_series_id) == -1 else int(req_series_id)
     post.posttype = req_posttype or '0'
     post.preview = req_preview or ''
@@ -176,5 +212,22 @@ class CategoryAdmin(djangoadmin.ModelAdmin):
     search_fields = ['name']
     ordering = ['name']
 
+class TagAdmin(djangoadmin.ModelAdmin):
+    list_display = ['id', 'url']
+    list_editable = ['url']
+    ordering = ['id']
+
+class TagTranslationsAdmin(djangoadmin.ModelAdmin):
+    list_display = ['id', 'tag', 'name', 'language']
+    list_editable = ['name']
+    ordering = ['tag']
+
+class PostTagRelationAdmin(djangoadmin.ModelAdmin):
+    list_display = ['tag', 'post']
+    ordering = ['post']
+
 djangoadmin.site.register(PostType, PostTypeAdmin)
 djangoadmin.site.register(Category, CategoryAdmin)
+djangoadmin.site.register(Tag, TagAdmin)
+djangoadmin.site.register(TagTranslations, TagTranslationsAdmin)
+djangoadmin.site.register(PostTagRelation, PostTagRelationAdmin)

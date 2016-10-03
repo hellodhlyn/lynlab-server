@@ -9,6 +9,9 @@
 <script src="{% static 'js/blog.js' %}"></script>
 <script src="{% static 'js/wiki.js' %}"></script>
 <script src="{% static 'js/editor.js' %}"></script>
+<script type="text/javascript">
+  $('.ui.dropdown').dropdown();
+</script>
 <title>관리자 페이지 | LYnTimeline</title>
 {% endblock %}
 {% block content %}
@@ -77,8 +80,22 @@
 
       <!-- 태그 -->
       <div class="field">
-        <label>태그</label>
+        <label>태그 (구)</label>
         <input type="text" name="tags" value="{{ post.tags }}"></input>
+      </div>
+
+      <div class="field">
+        <label>태그 (신)</label>
+        <div class="ui multiple selection dropdown">
+          <input name="new_tags" type="hidden" value="{{ post.get_tags_url }}">
+          <i class="dropdown icon"></i>
+          <div class="default text">태그</div>
+          <div class="menu">
+            {% for tag in tags %}
+            <div class="item" data-value="{{ tag.url }}">{{ tag.url }}</div>
+            {% endfor %}
+          </div>
+        </div>
       </div>
 
       <!-- 유형 -->

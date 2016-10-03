@@ -51,7 +51,6 @@ coverage.xml
 
 # Django stuff:
 *.log
-migrations
 settings_var.py
 
 # Static / Databases
@@ -68,3 +67,5 @@ target/
 # Develop environments
 sftp-config.json
 migrate.sh
+run.sh
+wiki/
