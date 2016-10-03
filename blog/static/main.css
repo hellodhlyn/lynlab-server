@@ -263,4 +263,15 @@ ul.share-buttons li{
         margin: 1em;
         padding: 1.4em;
     }
+
+    #search-filter {
+        padding: 2em 2em 0 2em;
+        text-align: center;
+        font-weight: 200;
+    }
+
+    #search-filter > :first-child {
+        margin-bottom: 0.1em;
+        font-size: 150%;
+    }
 }

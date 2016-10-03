@@ -40,6 +40,9 @@ def load_posts(request):
 
     try:
         if key and value and len(key) > 0 and len(value) > 0:
+            key = key.lower()
+            value = value.lower()
+            
             if key == 'tag':
                 posts = sorted(map(lambda x: x.post, PostTagRelation.objects.filter(tag=Tag.objects.get(url=value))), key=lambda y: y.id)
             elif key == 'category':
