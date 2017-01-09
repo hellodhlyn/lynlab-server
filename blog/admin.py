@@ -4,6 +4,7 @@ from django.contrib import admin as djangoadmin
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 
@@ -12,6 +13,7 @@ from dateutil import parser
 from .models import *
 
 import twitter
+
 
 @staff_member_required
 def admin(request):
@@ -23,6 +25,7 @@ def admin(request):
     }
 
     return render_to_response(template_name, context, context_instance=RequestContext(request))
+
 
 @staff_member_required
 def create_post(request):
@@ -43,6 +46,7 @@ def create_post(request):
 
     elif request.method == 'POST':
         return __modify_post(request)
+
 
 @staff_member_required
 def modify_post(request, pk):
@@ -71,6 +75,7 @@ def modify_post(request, pk):
     elif request.method == 'POST':
         return __modify_post(request)
 
+
 @staff_member_required
 def __modify_post(request):
     def __migrate_tags(post, old_tags):
@@ -85,7 +90,8 @@ def __modify_post(request):
             PostTagRelation(post=post, tag=tag).save()
 
     def __modify_tags(post, tags):
-        current_tags = PostTagRelation.objects.filter(post=post)
+        if tags is None or len(tags) is 0:
+            return
 
         for url in tags.split(','):
             tag = None
@@ -95,11 +101,10 @@ def __modify_post(request):
                 tag = Tag(url=url)
                 tag.save()
 
-            try: 
+            try:
                 PostTagRelation.object.get(post=post, tag=tag)
             except:
                 PostTagRelation(post=post, tag=tag).save()
-
 
     req_id = request.POST.get('id')
     req_title = request.POST.get('title')
@@ -116,15 +121,13 @@ def __modify_post(request):
     try:
         post = Post.objects.get(id=req_id)
 
-        if PostTagRelation.objects.filter(post=post).count() == 0:
-            __migrate_tags(post, req_old_tags)
-            req_old_tags = ''
     except ValueError:
         post = Post()
     except ObjectDoesNotExist:
         post = Post()
 
     __modify_tags(post, req_tags)
+
     post.title = req_title or '제목이 없습니다'
     post.content = req_content or ''
     post.description = req_description or '설명이 없습니다'
@@ -137,7 +140,7 @@ def __modify_post(request):
     post.save()
 
     for t in PostType.objects.all():
-        req_type = request.POST.get('type'+str(t.id))
+        req_type = request.POST.get('type' + str(t.id))
         if req_type:
             related = PostTypeRelation.objects.filter(post_id=post.id, type_id=t.id)
             if len(related) == 0:
@@ -153,6 +156,7 @@ def __modify_post(request):
         return redirect(reverse('blog-admin-modify-post', kwargs={'pk': post.id}))
     elif 'submit_complete' in request.POST:
         return redirect(reverse('blogadmin'))
+
 
 @staff_member_required
 def create_tweet(request):
@@ -181,6 +185,7 @@ def create_tweet(request):
 
     return render_to_response(template_name, context, context_instance=RequestContext(request))
 
+
 @staff_member_required
 def series(request):
     # 시리즈를 생성한다
@@ -195,6 +200,7 @@ def series(request):
 
     return redirect(reverse('blogadmin'))
 
+
 @staff_member_required
 def modify_series(request, id):
     return None
@@ -206,25 +212,30 @@ class PostTypeAdmin(djangoadmin.ModelAdmin):
     search_fields = ['name']
     ordering = ['name']
 
+
 class CategoryAdmin(djangoadmin.ModelAdmin):
     list_display = ['name']
     list_editable = ['name']
     search_fields = ['name']
     ordering = ['name']
 
+
 class TagAdmin(djangoadmin.ModelAdmin):
     list_display = ['id', 'url']
     list_editable = ['url']
     ordering = ['id']
+
 
 class TagTranslationsAdmin(djangoadmin.ModelAdmin):
     list_display = ['id', 'tag', 'name', 'language']
     list_editable = ['name']
     ordering = ['tag']
 
+
 class PostTagRelationAdmin(djangoadmin.ModelAdmin):
     list_display = ['tag', 'post']
     ordering = ['post']
+
 
 djangoadmin.site.register(PostType, PostTypeAdmin)
 djangoadmin.site.register(Category, CategoryAdmin)

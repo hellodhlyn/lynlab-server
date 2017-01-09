@@ -1,24 +1,20 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import patterns, include, url
+import simple_wiki.models as WikiModel
+
+from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import RedirectView, TemplateView
-from django.http import HttpResponse
-
-from media.views import upload_view, show_media
 
 import blog.admin as BlogAdmin
+import blog.controllers as BlogControl
 import blog.models as blog
 import blog.views as BlogView
-import blog.controllers as BlogControl
-
 import dashboard.views as DashboardView
-
 import media.models as media
-
-import simple_wiki.models as WikiModel
+from media.views import upload_view, show_media
 
 sitemaps = {
     'sitemaps': {
@@ -66,8 +62,8 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
     # member:
-    #url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^accounts/profile/$', RedirectView.as_view(url='/wiki/')),
+    # url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
 
     # apis:
