@@ -46,7 +46,7 @@ def load_posts(request):
 
             if key == 'tag':
                 posts = sorted(map(lambda x: x.post, PostTagRelation.objects.filter(tag=Tag.objects.get(url=value))),
-                               key=lambda y: y.id)
+                               key=lambda y: y.id, reverse=True)
             elif key == 'category':
                 posts = Post.objects.filter(category=Category.objects.get(url=value)).order_by('-created')
             else:
