@@ -1,0 +1,49 @@
+body {
+	line-height: 1.6rem;
+}
+
+h1 {
+	margin: 2.5rem 0 0.5rem 0;
+  font-size: 200%;
+}
+
+h2 {
+	margin: 1.5rem 0 0.3rem 0;
+	font-size: 150%;
+}
+
+h3 {
+    margin: 1rem 0 0.3rem 0;
+}
+
+ul {
+    margin-top: 0.5rem;
+}
+
+.ui.divider {
+    margin: 0.5rem 0 0.5rem 0;
+}
+
+.container {
+	padding-top: 3rem;
+}
+
+.sub-content {
+	margin-left: 0.2rem;
+	font-weight: lighter;
+	font-size: 90%;
+	color: #909090;
+}
+
+.about.icon {
+	margin: 0;
+}
+
+#about-header {
+	margin: 0;
+	font-size: 300%;
+}
+
+#about-subheader {
+	font-size: 120%;
+}
