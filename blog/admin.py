@@ -78,17 +78,6 @@ def modify_post(request, pk):
 
 @staff_member_required
 def __modify_post(request):
-    def __migrate_tags(post, old_tags):
-        for tag_name in old_tags.split(','):
-            tag_name = tag_name.lower()
-            try:
-                tag = Tag.objects.get(url=tag_name)
-            except:
-                tag = Tag(url=tag_name)
-                tag.save()
-
-            PostTagRelation(post=post, tag=tag).save()
-
     def __modify_tags(post, tags):
         if tags is None or len(tags) is 0:
             return

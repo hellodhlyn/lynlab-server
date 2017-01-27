@@ -183,12 +183,13 @@ li > img:not(.share-button) {
 .post-description {
     font-size: 110%;
     font-weight: normal;
+    padding-bottom: 2em;
     color: #444;
-    line-height: 1.8em;
+    line-height: 2em;
 }
 
 .post-description > p {
-    line-height: 1.8em;
+    line-height: 2em;
 }
 
 .post-meta {
