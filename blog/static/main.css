@@ -264,6 +264,10 @@ ul.share-buttons li{
         padding: 1.4em;
     }
 
+    .post-title {
+        font-size: 2em;
+    }
+
     #search-filter {
         padding: 2em 2em 0 2em;
         text-align: center;
