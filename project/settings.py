@@ -35,11 +35,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
-    'django_multimarkup',
+    'django_markup',
     'django_ajax',
     'templatetags',
     'el_pagination',
-    'simple_wiki',
     'blog',
     'dashboard',
     'media',
@@ -71,7 +70,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.core.context_processors.request',
-                'simple_wiki.context_processors.wiki',
             ],
         },
     },
@@ -150,7 +148,6 @@ LOGGING = {
 }
 
 # Email backends
-
 ACCOUNT_ACTIVATION_DAYS = 2
 
 DEFAULT_FROM_EMAIL = 'admin@lynlab.co.kr'
@@ -162,15 +159,7 @@ EMAIL_PORT = 25
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
-# Wiki
-
-WIKI_NAME = "LYnWiki α"
-
-WIKI_SLOGAN = "전 지구상의 잡지식 집합소"
-
-
 # Social OAuth backends
-
 TWITTER_ACCOUNT = settings_var.TWITTER_ACCOUNT
 
 TWITTER_KEY = settings_var.TWITTER_KEY
@@ -191,5 +180,4 @@ LOGOUT_REDIRECT_URL = '/'
 
 
 # Endless pagination
-
 EL_PAGINATION_PER_PAGE = 5

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import simple_wiki.models as WikiModel
-
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.sitemaps import GenericSitemap
@@ -12,6 +10,7 @@ import blog.admin as BlogAdmin
 import blog.controllers as BlogControl
 import blog.models as blog
 import blog.views as BlogView
+import common.views as common_view
 import dashboard.views as DashboardView
 import media.models as media
 from media.views import upload_view, show_media
@@ -21,11 +20,7 @@ sitemaps = {
         'blog': GenericSitemap({
             'queryset': blog.Post.objects.all(),
             'date_field': 'created',
-        }, changefreq='monthly'),
-        'wiki': GenericSitemap({
-            'queryset': WikiModel.Article.objects.all(),
-            'date_field': 'created',
-        }, changefreq='weekly'),
+        }, changefreq='monthly')
     },
 }
 
@@ -52,7 +47,7 @@ urlpatterns = [
     url(r'^dashboard/bus$', DashboardView.bus, name='dashboard-bus'),
 
     # wiki:
-    url(r'^wiki/', include('simple_wiki.urls')),
+    url(r'^wiki/', common_view.error_410),
 
     # media:
     url(r'^media/upload/$', upload_view, name='mediaupload'),
