@@ -1,15 +1,13 @@
 {% extends 'base.html' %}
 {% block style %}
 {% load staticfiles %}
-<link rel="stylesheet" href="{% static 'admin.css' %}">
 <title>관리자 페이지 | LYnTimeline</title>
 {% endblock %}
 {% block content %}
 {% include 'blog/admin/_mobilebar.html' %}
 <div class="pusher">
   {% include 'blog/admin/_desktopbar.html' %}
-  <div class="content article-description">
-
+  <div class="ui container content">
     {% if messages %}
       {% for message in messages %}
       <div class="ui {{ message.tags }} message">

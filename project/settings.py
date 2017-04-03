@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os
-import settings_var
+
 from django.utils.translation import ugettext_lazy as _
+from . import settings_var
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

@@ -4,7 +4,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps.views import sitemap
-from django.views.generic import RedirectView, TemplateView
+from django.views.generic import TemplateView
 
 import blog.admin as BlogAdmin
 import blog.controllers as BlogControl
@@ -57,7 +57,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
     # member:
-    url(r'^accounts/profile/$', RedirectView.as_view(url='/wiki/')),
     # url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
 

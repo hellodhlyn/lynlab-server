@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% block style %}
 {% load staticfiles %}
-<link rel="stylesheet" href="{% static 'wiki.css' %}">
-<link rel="stylesheet" href="{% static 'article.css' %}">
-<script src="{% static 'js/wiki.js' %}"></script>
 <title>파일 올리기 | LYnMedia</title>
 {% endblock %}
 {% block content %}
@@ -18,10 +15,10 @@
             </div>
         </div>
     </div>
-    <div class="header">
-        <h1>파일 올리기</h1>
-    </div>
-    <div class="content article-description">
+    <div class="ui text container content">
+        <div class="header">
+            <h1>파일 올리기</h1>
+        </div>
         {% if error == 409 %}
         <div class="ui icon negative message">
             <i class="warning circle icon"></i>
