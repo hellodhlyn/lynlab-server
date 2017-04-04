@@ -7,3 +7,10 @@ services:
       - .:/usr/src/app
     ports:
       - "8080:8080"
+    depends_on:
+      - static
+  static:
+    build: .
+    command: python manage.py collectstatic --no-input
+    volumes:
+      - /var/www/static/:/var/www/static/
