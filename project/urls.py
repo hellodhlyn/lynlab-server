@@ -47,7 +47,7 @@ urlpatterns = [
     url(r'^dashboard/bus$', DashboardView.bus, name='dashboard-bus'),
 
     # wiki:
-    url(r'^wiki/', common_view.error_410),
+    url(r'^wiki/', TemplateView.as_view(template_name='204.html')),
 
     # media:
     url(r'^media/upload/$', upload_view, name='mediaupload'),

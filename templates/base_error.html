@@ -19,7 +19,7 @@ body > .grid {
 <div class="ui middle aligned center aligned grid">
 	<div class="column">
 		<h2 class="ui center aligned icon header">
-		<i class="warning sign icon"></i>
+		<i class="{% block icon %}{% endblock %} icon"></i>
 		<div class="content">
             {% block error_title %}
             {% endblock %}
