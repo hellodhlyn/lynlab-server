@@ -2,7 +2,7 @@ version: '2'
 services:
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8080
+    command: python manage.py runserver 0.0.0.0:8080 --settings=project.settings.production
     volumes:
       - .:/usr/src/app
     ports:
