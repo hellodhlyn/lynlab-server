@@ -7,7 +7,7 @@ services:
       - .:/usr/src/app
       - /var/lynlab/alpha/static/:/var/lynlab/static/
     ports:
-      - "8080:8080"
+      - "9090:9090"
     environment:
-      DJANGO_PORT: 8080
-      DJANGO_SETTINGS_MODULE: project.settings.production
+      DJANGO_PORT: 9090
+      DJANGO_SETTINGS_MODULE: project.settings.alpha

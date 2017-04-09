@@ -13,4 +13,3 @@ RUN pip install -e /usr/src/Python-Markdown
 
 # Add application
 ADD . /usr/src/app
-
