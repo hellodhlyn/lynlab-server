@@ -18,7 +18,7 @@ import wiki.views as WikiView
 sitemaps = {
     'sitemaps': {
         'blog': GenericSitemap({
-            'queryset': blog.Post.objects.all(),
+            'queryset': blog.Post.objects.filter(public_post=True),
             'date_field': 'created',
         }, changefreq='monthly')
     },

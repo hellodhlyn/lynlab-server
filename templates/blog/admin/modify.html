@@ -75,12 +75,7 @@
 
       <!-- 태그 -->
       <div class="field">
-        <label>태그 (구)</label>
-        <input type="text" name="tags" value="{{ post.tags }}"/>
-      </div>
-
-      <div class="field">
-        <label>태그 (신)</label>
+        <label>태그</label>
         <div class="ui multiple selection dropdown">
           <input name="new_tags" type="hidden" value="{{ post.get_tags_url }}">
           <i class="dropdown icon"></i>
