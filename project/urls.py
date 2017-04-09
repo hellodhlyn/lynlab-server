@@ -10,10 +10,10 @@ import blog.admin as BlogAdmin
 import blog.controllers as BlogControl
 import blog.models as blog
 import blog.views as BlogView
-import common.views as common_view
 import dashboard.views as DashboardView
 import media.models as media
 from media.views import upload_view, show_media
+import wiki.views as WikiView
 
 sitemaps = {
     'sitemaps': {
@@ -47,7 +47,8 @@ urlpatterns = [
     url(r'^dashboard/bus$', DashboardView.bus, name='dashboard-bus'),
 
     # wiki:
-    url(r'^wiki/', TemplateView.as_view(template_name='204.html')),
+    url(r'^wiki/$', TemplateView.as_view(template_name='204.html')),
+    url(r'^wiki/(?P<title>[\w|\W]+)/$', WikiView.article, name='wiki-article'),
 
     # media:
     url(r'^media/upload/$', upload_view, name='mediaupload'),

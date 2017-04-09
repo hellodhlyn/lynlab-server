@@ -51,6 +51,7 @@ coverage.xml
 
 # Django stuff:
 *.log
+*.out
 settings_var.py
 
 # Static / Databases

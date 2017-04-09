@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block style %}
+<title>{{ article.title }} | LYnWiki</title>
+<style>
+.container {
+    padding: 3rem 0;
+}
+
+.wiki-header {
+    padding-bottom: 1rem;
+}
+
+.wiki-header > h1 {
+    font-size: 250%;
+    font-weight: lighter;
+}
+
+.title {
+    font-size: 200%;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="ui text container">
+    <div class="wiki-header">
+        <h1>LYnWiki 아카이브</h1>
+        <p><a href="/blog">블로그</a>
+    </div>
+
+    <h1 class="title">{{ article.title }}</h1>
+    <p class="timestamp"><i class="time icon"></i> {{ article.last_modified }}</p>
+    <div class="ui divider"></div>
+
+    <div class="ui icon message">
+        <i class="cubes icon"></i>
+        <div class="content">
+            <div class="header">읽기 전용으로만 제공되고 있습니다!</div>
+            <p>위키는 새단장중입니다. 기존 내용은 읽기 전용으로만 제공됩니다.</p>
+        </div>
+    </div>
+    {% load markup_tags %}
+    {{ article.content|apply_markup:"markdown" }}
+</div>
+{% endblock %}

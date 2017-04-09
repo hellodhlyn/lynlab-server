@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'blog',
     'dashboard',
     'media',
+    'wiki',
 )
 
 MIDDLEWARE_CLASSES = (
