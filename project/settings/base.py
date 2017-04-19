@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 
 import os
-import settings_var
 from django.utils.translation import ugettext_lazy as _
 
+from project.settings import settings_var
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = settings_var.SECRET_KEY
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -35,14 +33,14 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
-    'django_multimarkup',
+    'django_markup',
     'django_ajax',
     'templatetags',
     'el_pagination',
-    'simple_wiki',
     'blog',
     'dashboard',
     'media',
+    'wiki',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -71,7 +69,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.core.context_processors.request',
-                'simple_wiki.context_processors.wiki',
             ],
         },
     },
@@ -109,7 +106,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-STATIC_ROOT = ''
+STATIC_ROOT = '/var/lynlab/static/'
 
 STATIC_URL = '/static/'
 
@@ -150,7 +147,6 @@ LOGGING = {
 }
 
 # Email backends
-
 ACCOUNT_ACTIVATION_DAYS = 2
 
 DEFAULT_FROM_EMAIL = 'admin@lynlab.co.kr'
@@ -162,15 +158,7 @@ EMAIL_PORT = 25
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
-# Wiki
-
-WIKI_NAME = "LYnWiki α"
-
-WIKI_SLOGAN = "전 지구상의 잡지식 집합소"
-
-
 # Social OAuth backends
-
 TWITTER_ACCOUNT = settings_var.TWITTER_ACCOUNT
 
 TWITTER_KEY = settings_var.TWITTER_KEY
@@ -191,5 +179,4 @@ LOGOUT_REDIRECT_URL = '/'
 
 
 # Endless pagination
-
 EL_PAGINATION_PER_PAGE = 5

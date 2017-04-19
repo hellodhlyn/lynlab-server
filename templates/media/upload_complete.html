@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% block style %}
 {% load staticfiles %}
-<link rel="stylesheet" href="{% static 'wiki.css' %}">
-<link rel="stylesheet" href="{% static 'article.css' %}">
-<script src="{% static 'js/wiki.js' %}"></script>
 <title>파일 올리기 | LYnMedia</title>
 {% endblock %}
 {% block content %}
@@ -18,10 +15,11 @@
             </div>
         </div>
     </div>
-    <div class="header">
-        <h1>업로드 완료</h1>
-    </div>
-    <div class="content article-description">
+    <div class="ui text container content">
+        <div class="header">
+            <h1>업로드 완료</h1>
+        </div>
+
         <p>업로드가 완료되었습니다!<br/>
         LYnLab 사이트 내부에서 사용하실 경우 다음의 주소로 불러오실 수 있습니다.</p>
 

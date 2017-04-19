@@ -2,14 +2,15 @@
 {% block style %}
 {% load staticfiles %}
 <title>회원가입 | LYnLab</title>
-<link rel="stylesheet" href="{% static 'wiki.css' %}">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
 <script src="{% static 'js/accounts.js' %}"></script>
 {% endblock %}
 {% block content %}
-    <div class="header">
-        <h1>회원가입</h1>
-    </div>
-    <div class="content">
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        <div class="header">
+            <h1>회원가입</h1>
+        </div>
         <div class="ui text container" id="accounts-registration-form">
             <form class="ui large form" method="post" action=".">{% csrf_token %}
                 {% if form.errors %}
@@ -19,7 +20,7 @@
                         <div class="header" id="error-msg">
                             회원가입 실패
                         </div>
-                        <p>회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.</p>
+                        <p>회원가입 중 오류가 발생했습니다. 다시 시도해주세요.</p>
                     </div>
                 </div>
                 {% endif %}
@@ -29,7 +30,7 @@
                             <div class="sixteen wide column">
                                 <div class="ui left icon input">
                                     <i class="user icon"></i>
-                                    <input type="text" placeholder="ID" name="username" required />
+                                    <input type="text" placeholder="아이디" name="username" required />
                                 </div>
                             </div>
                         </div>
@@ -43,7 +44,7 @@
                     <div class="field">
                         <div class="ui left icon input">
                             <i class="lock icon"></i>
-                            <input type="password" placeholder="비밀번호" name="password2" required />
+                            <input type="password" placeholder="비밀번호 (확인)" name="password2" required />
                         </div>
                     </div>
                     <div class="field">
@@ -57,4 +58,5 @@
             </form>
         </div>
     </div>
+</div>
 {% endblock %}

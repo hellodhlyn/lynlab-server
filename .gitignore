@@ -51,13 +51,12 @@ coverage.xml
 
 # Django stuff:
 *.log
+*.out
 settings_var.py
 
 # Static / Databases
 *.sqlite3
-images
-semantic
-media/*
+media/storage/*
 
 # Sphinx documentation
 docs/_build/
@@ -66,10 +65,9 @@ docs/_build/
 target/
 
 # Develop environments
-sftp-config.json
-migrate.sh
-run.sh
-wiki/
 .idea/
+run.sh
+migrate.sh
+sftp-config.json
 pip-selfcheck.json
 

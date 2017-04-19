@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import simple_wiki.models as WikiModel
-
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps.views import sitemap
-from django.views.generic import RedirectView, TemplateView
+from django.views.generic import TemplateView
 
 import blog.admin as BlogAdmin
 import blog.controllers as BlogControl
@@ -15,17 +13,14 @@ import blog.views as BlogView
 import dashboard.views as DashboardView
 import media.models as media
 from media.views import upload_view, show_media
+import wiki.views as WikiView
 
 sitemaps = {
     'sitemaps': {
         'blog': GenericSitemap({
-            'queryset': blog.Post.objects.all(),
+            'queryset': blog.Post.objects.filter(public_post=True),
             'date_field': 'created',
-        }, changefreq='monthly'),
-        'wiki': GenericSitemap({
-            'queryset': WikiModel.Article.objects.all(),
-            'date_field': 'created',
-        }, changefreq='weekly'),
+        }, changefreq='monthly')
     },
 }
 
@@ -52,7 +47,8 @@ urlpatterns = [
     url(r'^dashboard/bus$', DashboardView.bus, name='dashboard-bus'),
 
     # wiki:
-    url(r'^wiki/', include('simple_wiki.urls')),
+    url(r'^wiki/$', TemplateView.as_view(template_name='204.html')),
+    url(r'^wiki/(?P<title>[\w|\W]+)/$', WikiView.article, name='wiki-article'),
 
     # media:
     url(r'^media/upload/$', upload_view, name='mediaupload'),
@@ -62,7 +58,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 
     # member:
-    url(r'^accounts/profile/$', RedirectView.as_view(url='/wiki/')),
     # url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
 

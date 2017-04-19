@@ -2,13 +2,14 @@
 {% block style %}
 {% load staticfiles %}
 <title>로그인 | LYnLab</title>
-<link rel="stylesheet" href="{% static 'wiki.css' %}">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
 {% block content %}
-    <div class="header">
-        <h1>로그인</h1>
-    </div>
-    <div class="content">
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        <div class="header">
+            <h1>LYnLab 로그인</h1>
+        </div>
         <div class="ui text container">
             <form class="ui large form" method="post" action=".">{% csrf_token %}
                 <div class="ui stacked segment">
@@ -36,6 +37,7 @@
                         </div>
                     </div>
                     <input type="submit" value="로그인" class="ui fluid large teal submit button" />
+                    <input type="hidden" name="next" value="{{ next }}"/>
                 </div>
             </form>
 
@@ -44,4 +46,5 @@
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

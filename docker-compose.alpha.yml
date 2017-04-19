@@ -1,0 +1,13 @@
+version: '2'
+services:
+  web:
+    build: .
+    command: ./docker-run.sh
+    volumes:
+      - .:/usr/src/app
+      - /var/lynlab/alpha/static/:/var/lynlab/static/
+    ports:
+      - "9090:9090"
+    environment:
+      DJANGO_PORT: 9090
+      DJANGO_SETTINGS_MODULE: project.settings.alpha

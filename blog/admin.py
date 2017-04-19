@@ -83,16 +83,15 @@ def __modify_post(request):
             return
 
         for url in tags.split(','):
-            tag = None
             try:
                 tag = Tag.objects.get(url=url)
-            except:
+            except ObjectDoesNotExist:
                 tag = Tag(url=url)
                 tag.save()
 
             try:
-                PostTagRelation.object.get(post=post, tag=tag)
-            except:
+                PostTagRelation.objects.get(post=post, tag=tag)
+            except ObjectDoesNotExist:
                 PostTagRelation(post=post, tag=tag).save()
 
     req_id = request.POST.get('id')
@@ -107,15 +106,13 @@ def __modify_post(request):
     req_preview = request.POST.get('preview')
     req_public_post = request.POST.get('public_post', False)
 
+    # ID에 해당하는 포스트를 가져온다. ID가 없을 경우 (i.e. 신규일 경우) 에는 새로운 인스턴스를 만든다.
     try:
         post = Post.objects.get(id=req_id)
-
     except ValueError:
         post = Post()
     except ObjectDoesNotExist:
         post = Post()
-
-    __modify_tags(post, req_tags)
 
     post.title = req_title or '제목이 없습니다'
     post.content = req_content or ''
@@ -127,6 +124,9 @@ def __modify_post(request):
     post.preview = req_preview or ''
     post.public_post = req_public_post
     post.save()
+
+    # 태그를 설정한다.
+    __modify_tags(post, req_tags)
 
     for t in PostType.objects.all():
         req_type = request.POST.get('type' + str(t.id))
