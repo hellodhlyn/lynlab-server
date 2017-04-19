@@ -56,8 +56,7 @@ settings_var.py
 
 # Static / Databases
 *.sqlite3
-images
-media/*
+media/storage/*
 
 # Sphinx documentation
 docs/_build/
