@@ -5,7 +5,7 @@ services:
     command: ./docker-run.sh
     volumes:
       - .:/usr/src/app
-      - /var/lynlab/alpha/static/:/var/lynlab/static/
+      - /var/lynlab/production/static/:/var/lynlab/static/
     ports:
       - "8080:8080"
     environment:
