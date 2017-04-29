@@ -1,49 +1,97 @@
-body {
-	line-height: 1.6rem;
+html * {
+    font-family: 'Nanum Barun Gothic', sans-serif;
+    font-weight: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'NanumSquare', sans-serif;
 }
 
 h1 {
-	margin: 2.5rem 0 0.5rem 0;
-  font-size: 200%;
+    padding-top: 2.5rem;
+    font-size: xx-large;
+    font-weight: bold;
 }
 
 h2 {
-	margin: 1.5rem 0 0.3rem 0;
-	font-size: 150%;
+    margin-bottom: 0.2rem;
 }
 
-h3 {
-    margin: 1rem 0 0.3rem 0;
+p {
+    margin-bottom: 0.5rem;
 }
 
-ul {
-    margin-top: 0.5rem;
+li {
+    padding: 0.2rem 0;
 }
 
-.ui.divider {
-    margin: 0.5rem 0 0.5rem 0;
+.center.aligned {
+    text-align: center;
 }
 
-.container {
-	padding-top: 3rem;
+.grey {
+    text-decoration: line-through;
+    color: #adb5bd;
 }
 
-.sub-content {
-	margin-left: 0.2rem;
-	font-weight: lighter;
-	font-size: 90%;
-	color: #909090;
+.item-wrapper > .circle {
+    position: relative;
+    top: 2.25rem;
+    width: 20px;
+    height: 20px;
+    background: #ced4da;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
 }
 
-.about.icon {
-	margin: 0;
+.item-wrapper > .circle.active {
+    background: #4dadf7;
 }
 
-#about-header {
-	margin: 0;
-	font-size: 300%;
+.filled.item-wrapper:nth-of-type(2n) {
+    background-color: #f8f9fa;
 }
 
-#about-subheader {
-	font-size: 120%;
+.filled.item-wrapper:nth-of-type(2n+1) {
+    background-color: #f1f3f5;
+}
+
+.item-wrapper > .item {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+@media only screen and (max-width: 768px) {
+    .main > * {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .item-wrapper > .timeline.item {
+        margin-top: -20px;
+        padding-left: 1.5rem;
+        border-left: 2px solid #dee2e6;
+    }
+
+    .item-wrapper > .circle {
+        left: -9px;
+    }
+}
+
+@media only screen and (min-width: 769px) {
+    .main > * {
+        padding-left: 17.5%;
+        padding-right: 17.5%;
+    }
+
+    .item-wrapper > .timeline.item {
+        margin-top: -20px;
+        padding-left: 1.5rem;
+        border-left: 4px solid #dee2e6;
+    }
+
+    .item-wrapper > .circle {
+        left: -8px;
+    }
 }

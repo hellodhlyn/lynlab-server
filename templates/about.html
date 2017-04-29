@@ -5,130 +5,121 @@
 <title>About | LYnLab</title>
 {% endblock %}
 {% block content %}
-<div class="ui text container">
-  <div id="about-header">About: LYn</div>
-  <div id="about-subheader">
-    도회린 (Do Hoerin)
-    <a href="mailto:lyn@lynlab.co.kr"><i class="about icon mail"></i></a>
-    <a href="https://twitter.com/HelloDHLyn"><i class="about icon twitter"></i></a>
-    <a href="https://github.com/HelloDHLyn"><i class="about icon github"></i></a>
-    <a href="/blog"><i class="about icon home"></i></a>
-  </div>
-  <!-- Not yet! -->
-  <!-- <p>Also available with <a href="/about/en">English</a>, <a href="/about/ja">日本語</a>.</p> -->
+<div class="main">
+    <div class="item-wrapper">
+        <div class="center aligned">
+            <h1>About: LYn</h1>
+        </div>
+        <div class="ui divider"></div>
+    </div>
 
-  <h1>소속</h1>
-  <div class="ui divider"></div>
+    <h1><i class="fa fa-building"></i> 경력 / 학력</h1>
+    <div class="filled item-wrapper">
+        <div class="active circle"></div>
+        <div class="timeline item">
+            <h2>두나무 주식회사</h2>
+            <p>
+                2016. 03 ~ 재직<br/>
+                Android → Backend Developer
+            </p>
+            <ul>
+                <li>카카오스탁 서버 개발 및 운영 (現)</li>
+                <li>포털 Daum 금융 서버 개발 및 운영 (現)</li>
+                <li>카카오스탁 안드로이드 앱 개발 / 유지보수 (2016. 03 ~ 10)</li>
+                <li><del>신규 서비스 안드로이드 앱 개발 전담</del> → 서비스 공중분해</li>
+            </ul>
+        </div>
+    </div>
+    <div class="filled item-wrapper">
+        <div class="circle"></div>
+        <div class="timeline item">
+            <h2>SW마에스트로 과정</h2>
+            <p>2015. 06 ~ 12</p>
+        </div>
+    </div>
+    <div class="filled item-wrapper">
+        <div class="circle"></div>
+        <div class="timeline item">
+            <h2>연세대학교 컴퓨터과학과</h2>
+            <p>2014. 03 ~ 휴학</p>
+            <ul>
+                <li>Computational Intelligence & Photography 연구실 학부생 인턴 (2016)</li>
+                <li>공과대학 프로그래밍 동아리 PoolC 대표 (2015 ~ 2016)</li>
+            </ul>
+        </div>
+    </div>
+    <div class="filled item-wrapper">
+        <div class="circle"></div>
+        <div class="timeline item">
+            <h2>경남과학고등학교</h2>
+            <p>2012. 03 ~ 2014. 02 (조기졸업)</p>
+        </div>
+    </div>
 
-  <h2>두나무 주식회사 <span class="sub-content">2016 ~</span></h2>
-  <ul>
-    <li>(現) 두나무 <a href="http://kakao.com/stock">카카오증권</a> 서버 개발 및 운영 <span class="sub-content">2016. 11 ~</span>
-    <li>(現) 다음카카오 <a href="http://finance.daum.net">Daum 금융</a> 서버 운영 <span class="sub-content">2016. 11 ~</span>
-    <li>카카오증권 안드로이드 클라이언트 개발 <span class="sub-content">2016. 03 ~ 10</span></li>
-  </ul>
+    <h1><i class="fa fa-id-card-o"></i> 수상 / 자격</h1>
+    <div class="filled item-wrapper">
+        <div class="item">
+            <ul>
+                <li><b>2016</b> : 국가기술자격 정보처리산업기사</li>
+                <li><b>2015</b> : JLPT 일본어능력시험 N2</li>
+                <li><b>2014</b> : 특허등록 제1635167호 (<a href="https://goo.gl/7J9tI2">링크</a>)</li>
+                <li><b>2014</b> : 제20회 삼성휴먼테크논문대상 고교부문 수학/전산분야 <strong>금상</strong></li>
+                <li><b>2009 ~ 2013</b> : 한국정보올림피아드 <strong>금, 은, 동상</strong>(지역), <strong>장려상</strong></li>
+            </ul>
+        </div>
+    </div>
 
-  <h2>연세대학교 <span class="sub-content">2014 ~</span></h2>
-  <ul>
-    <li>컴퓨터과학과 재학 <span class="sub-content">2014 ~ 휴학</span></li>
-    <li>Computational Intelligence & Photography 연구실 학부생 인턴 <span class="sub-content">2016</span></li>
-    <li>공과대학 프로그래밍 동아리 <a href="https://poolc.org/">PoolC</a> 대표 <span class="sub-content">2015 ~ 2016</span>
-  </ul>
-
-  <h2>SW마에스트로 과정 <span class="sub-content">2015</span></h2>
-  <ul>
-    <li>6기 연수생</li>
-  </ul>
-
-  <h2>경남과학고등학교 <span class="sub-content">2012 ~ 2014</span></h2>
-  <ul>
-    <li>조기졸업</li>
-  </ul>
-
-
-  <h1>수상 / 자격</h1>
-  <div class="ui divider"></div>
-
-  <ul>
-    <li>국가기술자격 정보처리산업기사 <span class="sub-content">2016</span></li>
-    <li>JLPT 일본어능력시험 N2 <span class="sub-content">2015</span></li>
-    <li>특허등록 제1635167호 (<a href="https://goo.gl/7J9tI2">링크</a>) <span class="sub-content">2014</span></li>
-    <li>제20회 삼성휴먼테크논문대상 고교부문 수학/전산분야 <strong>금상</strong> <span class="sub-content">2014</span></li>
-    <li>한국정보올림피아드 <strong>금, 은, 동상</strong>(지역), <strong>장려상</strong>(전국) <span class="sub-content">2009 ~ 2013</span></li>
-  </ul>
-
-  <h1>기술</h1>
-  <div class="ui divider"></div>
-
-  <h2>서버 프로그래밍 <span class="sub-content">2016 ~</span></h2>
-  <h3>Spring Framework</h3>
-  <ul>
-    <li><strong>카카오증권 서버</strong> <span class="sub-content">ー 두나무</span></li>
-    <ul>
-      <li>Groovy Language</li>
-      <li>Spring Boot</li>
-      <li>Apache Kafka</li>
-      <li>Redis</li>
-    </ul>
-    <li><strong><a href="http://finance.daum.net/">Daum 금융</a> 서버</strong> <span class="sub-content">ー 다음카카오 X 두나무</span></li>
-  </ul>
-
-  <h2>프론트엔드 프로그래밍 <span class="sub-content">2011 ~</span></h2>
-  <h3>Android</h3>
-  <ul>
-    <li><strong>카카오증권</strong> <span class="sub-content">ー 두나무</span></li>
-    <ul>
-      <li>Java 8</li>
-      <li>RxJava</li>
-      <li>Realm Mobile Database</li>
-    </ul>
-    <li><strong>결함찾기</strong> <span class="sub-content">ー 누적 유저 23.8만의 1인 운영 서비스</span></li>
-    <ul>
-      <li>2011년 03월 ~ 2016년 09월</li>
-    </ul>
-  </ul>
-
-  <h2>웹 프로그래밍 <span class="sub-content">2014 ~</span></h2>
-  <h3>Django</h3>
-  <ul>
-    <li><strong>도우샘</strong> <a href="http://doughsam.com/"><i class="linkify icon"></i></a><span class="sub-content">ー 연세대학교 수강신청 도우미</span></li>
-    <ul>
-      <li>Django</li>
-      <li>PostgreSQL</li>
-    </ul>
-  </ul>
-
-  <h3>PHP</h3>
-  <ul>
-    <li>오픈 서버 프로젝트 <a href="https://github.com/HelloDHLyn/legacy/tree/master/open_server"><i class="github icon"></i></a></li>
-    <li>(구) 연세대학교 수강신청 서포터 <a href="https://github.com/HelloDHLyn/legacy/tree/master/yonsei"><i class="github icon"></i></a></li>
-  </ul>
-
-  <h2>데이터 분석 <span class="sub-content">2015 ~</span></h2>
-  <h3>Deep Learning</h3>
-  <ul>
-    <li>지능형 할 일 관리 서비스를 위한 기술 개발 <a href="http://www.slideshare.net/DoHoerin/ss-55262148"><i class="linkify icon"></i></a><span class="sub-content">ー SW마에스트로 프로젝트</span></li>
-    <li>기계 학습을 이용한 숫자 인식기 개발 <a href="http://www.slideshare.net/DoHoerin/ss-55157355"><i class="linkify icon"></i></a><span class="sub-content">ー SW마에스트로 프로젝트</span></li>
-  </ul>
-
-  <h2>기타</h2>
-  <h3>기술/알고리즘</h3>
-  <ul>
-    <li>굴곡면에 비춰지는 영상의 평면화 프로그램 개발에 대한 연구</li>
-    <ul>
-      <li>특허등록 제1635167호</li>
-      <li>제20회 삼성휴먼테크논문대상 고교부문 수학/전산분야 금상</li>
-    </ul>
-  </ul>
-
-  <h3>게임 기획</h3>
-  <ul>
-    <li>Space Imapct <a href="https://youtu.be/2AfGEGtOiHM"><i class="youtube play icon"></i></a><span class="sub-content">ー 신개념 슈팅 게임</span></li>
-    <ul>
-      <li>Unity3D</li>
-    </ul>
-  </ul>
-  <ul>
-
-  </ul>
+    <h1><i class="fa fa-stack-overflow"></i> 기술 스택</h1>
+    <div class="filled item-wrapper">
+        <div class="circle"></div>
+        <div class="timeline item">
+            <h2>서버 / 백엔드</h2>
+            <ul>
+                <li>Java + Groovy</li>
+                <li>Spring Framework, Spring Boot</li>
+                <li>Ruby on Rails (걸음마 정도...)</li>
+                <li>Apache Kafka</li>
+                <li>JPA / Hibernate</li>
+                <li>MySQL, PostgreSQL</li>
+            </ul>
+            <p>관련 서비스 - <a href="http://kakao.com/stock">카카오스탁</a></p>
+        </div>
+    </div>
+    <div class="filled item-wrapper">
+        <div class="circle"></div>
+        <div class="timeline item">
+            <h2>인프라 / 보안</h2>
+            <ul>
+                <li>개인용 클라우드 서버 5대 구축, 운용중</li>
+                <li>100+ 대의 IDC 서버 운용 경험</li>
+                <li>Docker, Docker Compose</li>
+                <li>Serverless Infrastructure (AWS Lambda + DynamoDB)</li>
+            </ul>
+        </div>
+    </div>
+    <div class="filled item-wrapper">
+        <div class="circle"></div>
+        <div class="timeline item">
+            <h2>안드로이드 앱 개발</h2>
+            <ul>
+                <li>Java 8</li>
+                <li>RxJava + retrolambda</li>
+                <li>Realm Mobile Database</li>
+                <li>각종 오픈 소스 라이브러리 (okhttp3, retrofit)</li>
+            </ul>
+            <p>관련 서비스 - <a href="http://kakao.com/stock">카카오스탁 애플리케이션</a> / 결함찾기</p>
+            <p><span class="grey">부끄러운</span> 지역 언론사 인터뷰 기사 - <a href="http://www.knnews.co.kr/news/articleView.php?idxno=889905">경남신문</a> / <a href="http://www.gndomin.com/news/articleView.html?idxno=43019">경남도민신문</a> </p>
+        </div>
+    </div>
+    <div class="filled item-wrapper">
+        <div class="circle"></div>
+        <div class="timeline item">
+            <h2>웹 개발</h2>
+            <ul>
+                <li>Django, Flask</li>
+            </ul>
+            <p>관련 서비스 - <a href="https://github.com/HelloDHLyn/lynlab"><i class="github icon"></i>LYnLab</a> / <a href="http://doughsam.com/">도우샘</a></p>
+        </div>
+    </div>
 </div>
 {% endblock %}
