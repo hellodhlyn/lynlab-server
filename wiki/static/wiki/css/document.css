@@ -1,0 +1,62 @@
+h1.title {
+    font-size: xx-large;
+}
+
+blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+}
+
+blockquote:before {
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+}
+
+code {
+    font-size: 95%;
+    font-family: Hack, monospace;
+    background-color: #f0f0f0;
+    display: block;
+    padding: 10px;
+}
+
+p.timestamp {
+    margin: 0;
+    font-size: 14px;
+}
+
+.ui.divider {
+    margin: 0.5rem 0;
+}
+
+.main {
+    min-height: 70%;
+    max-width: 700px;
+    padding: 2.5rem 0;
+    margin: 0 auto;
+}
+
+.main .content p, li {
+    line-height: 200%;
+}
+
+.main img {
+    display: block;
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+footer {
+    margin: 2rem 0;
+    font-size: 14px;
+}

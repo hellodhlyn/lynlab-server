@@ -13,6 +13,7 @@ import blog.views as BlogView
 import dashboard.views as DashboardView
 import media.models as media
 from media.views import upload_view, show_media
+import wiki.services as WikiService
 import wiki.views as WikiView
 
 sitemaps = {
@@ -23,7 +24,6 @@ sitemaps = {
         }, changefreq='monthly')
     },
 }
-
 urlpatterns = [
     # global:
     url(r'^$', TemplateView.as_view(template_name='welcome.html'), name='home'),
@@ -47,8 +47,11 @@ urlpatterns = [
     url(r'^dashboard/bus$', DashboardView.bus, name='dashboard-bus'),
 
     # wiki:
-    url(r'^wiki/$', TemplateView.as_view(template_name='204.html')),
-    url(r'^wiki/(?P<title>[\w|\W]+)/$', WikiView.article, name='wiki-article'),
+    url(r'^wiki/$', TemplateView.as_view(template_name='204.html'), name='wiki'),
+    url(r'^wiki/search/$', WikiService.search_document, name='wiki-search'),
+    url(r'^wiki/search/(?P<title>[\w|\W]+)/$', WikiView.suggest_document, name='wiki-document-suggest'),
+    url(r'^wiki/modify/(?P<title>[\w|\W]+)/$', WikiView.modify_document, name='wiki-document-modify'),
+    url(r'^wiki/(?P<title>[\w|\W]+)/$', WikiView.get_document, name='wiki-document'),
 
     # media:
     url(r'^media/upload/$', upload_view, name='mediaupload'),
@@ -71,3 +74,4 @@ urlpatterns = [
     url(r'^robots.txt/$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'), name='robots'),
     url(r'^sitemap\.xml$', sitemap, sitemaps, name='django.contrib.sitemaps.views.sitemap'),
 ]
+

@@ -1,14 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-신위키로의 마이그레이션을 위한 임시 구위키 모델.
-현재는 기존의 Article을 readonly로만 제공하고 있음.
-"""
-
 
 import binascii
-import os
 from difflib import Differ
 
+import os
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -16,7 +11,55 @@ from django.db import models
 from django.http import HttpResponse, HttpResponseRedirect
 
 
+class DocumentPermission:
+    """
+    위키 문서 열람 권한 (Enum)
+    """
+
+    def __init__(self):
+        pass
+
+    ADMIN_USER = 1
+    LOGIN_USER = 2
+    PUBLIC = 3
+
+
+class Document(models.Model):
+    """
+    위키 문서
+    """
+
+    title = models.CharField(max_length=200)
+    content = models.TextField(blank=True, default='')
+    permission = models.IntegerField(default=DocumentPermission.ADMIN_USER)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return self.title
+
+
+class DocumentRevision(models.Model):
+    """
+    문서 편집 기록
+    """
+
+    document = models.ForeignKey(Document)
+    revision = models.IntegerField(default=1)
+
+    timestamp = models.DateTimeField(auto_now_add=True)
+    editor = models.CharField(verbose_name=u'editor', max_length=256)
+
+    def __unicode__(self):
+        return "%s (%s)" % (self.document.title, self.revision)
+
+
 class Article(models.Model):
+    """
+    (구)위키 문서
+    """
+
     class Meta:
         verbose_name = u'wiki'
         ordering = ['title']
@@ -40,6 +83,10 @@ class Article(models.Model):
 
 
 class ModifyHistory(models.Model):
+    """
+    구위키 문서 편집 기록
+    """
+
     class Meta:
         verbose_name = u'wiki_history'
         ordering = ['timestamp']
@@ -51,16 +98,6 @@ class ModifyHistory(models.Model):
     timestamp = models.DateTimeField(verbose_name=u'timestamp', auto_now_add=True)
     editor = models.CharField(verbose_name=u'editor', max_length=256)
     diff = models.TextField(u'diff', blank=True, default='')
-
-
-def search(request):
-    req_title = request.POST['title']
-    try:
-        Article.objects.get(title=req_title)
-    except ObjectDoesNotExist:
-        return HttpResponseRedirect(reverse('wiki-article', kwargs={'pk': req_title}))
-    else:
-        return HttpResponseRedirect(reverse('wiki-article', kwargs={'pk': req_title}))
 
 
 @login_required(login_url='/accounts/login/')
