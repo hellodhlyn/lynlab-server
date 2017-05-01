@@ -52,7 +52,8 @@ p.timestamp {
 
 .main img {
     display: block;
-    max-width: 680px;
+    width: 90%;
+    max-width: 600px;
     margin: 0 auto;
 }
 
