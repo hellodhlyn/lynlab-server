@@ -47,10 +47,12 @@ urlpatterns = [
     url(r'^dashboard/bus$', DashboardView.bus, name='dashboard-bus'),
 
     # wiki:
-    url(r'^wiki/$', TemplateView.as_view(template_name='204.html'), name='wiki'),
+    url(r'^wiki/$', WikiView.welcome, name='wiki'),
     url(r'^wiki/search/$', WikiService.search_document, name='wiki-search'),
     url(r'^wiki/search/(?P<title>[\w|\W]+)/$', WikiView.suggest_document, name='wiki-document-suggest'),
     url(r'^wiki/modify/(?P<title>[\w|\W]+)/$', WikiView.modify_document, name='wiki-document-modify'),
+    url(r'^wiki/history/(?P<title>[\w|\W]+)/$', WikiView.list_revisions, name='wiki-document-history'),
+    url(r'^wiki/history/$', WikiView.list_revisions, name='wiki-history'),
     url(r'^wiki/(?P<title>[\w|\W]+)/$', WikiView.get_document, name='wiki-document'),
 
     # media:

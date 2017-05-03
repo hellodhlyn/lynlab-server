@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block style %}
+{% load staticfiles %}
+<title>{% if document %}{{ document.title }} {% endif %}편집 기록 | LYnWiki</title>
+<link rel="stylesheet" href="{% static 'wiki/css/history.css' %}">
+{% endblock %}
+{% block content %}
+<div class="ui inverted vertical masthead center aligned segment">
+    <div class="ui container">
+        <div class="ui large secondary inverted pointing menu">
+            <a class="active item" href="{% url 'wiki' %}">LYnWiki</a>
+            {% if document %}
+            <a class="item" href="{% url 'wiki-document' document.title %}">문서 보기</a>
+            <a class="item" href="{% url 'wiki-document-modify' document.title %}">편집</a>
+            <a class="item" href="{% url 'wiki-history' %}">최근 바뀜</a>
+            {% endif %}
+            <div class="right item" style="padding: 0">
+                <form class="ui form" method="post" action="{% url 'wiki-search' %}">
+                    {% csrf_token %}
+                    <div class="ui icon input">
+                        <input type="text" name="title" placeholder="검색어를 입력...">
+                        <i class="inverted circular search link icon"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="ui container">
+        <table class="ui celled striped table">
+            <thead>
+                <tr>
+                    <th>문서</th>
+                    <th>리비전</th>
+                    <th>편집자</th>
+                    <th>편집시각</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for revision in revisions %}
+                <tr>
+                    <td><a href="{% url 'wiki-document' revision.document.title %}"><b>{{ revision.document.title }}</b></a></td>
+                    <td>{{ revision.revision }}</td>
+                    <td><i class="user icon"></i>{{ revision.editor }}</td>
+                    <td><i class="time icon"></i>{{ revision.timestamp }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

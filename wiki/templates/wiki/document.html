@@ -3,43 +3,60 @@
 {% load staticfiles %}
 <title>{{ document.title }} | LYnWiki</title>
 <link rel="stylesheet" href="{% static 'wiki/css/document.css' %}">
+<script src="{% static 'wiki/js/document.js' %}"></script>
 {% endblock %}
 {% block content %}
-<div class="ui inverted vertical masthead center aligned segment">
-    <div class="ui container">
-        <div class="ui large secondary inverted pointing menu">
-            <a class="active item" href="{% url 'wiki' %}">LYnWiki</a>
-            <a class="item" href="{% url 'wiki-document-modify' document.title %}">편집</a>
-            <div class="right item" style="padding: 0">
-                <form class="ui form" name="wikiForm" method="post" action="{% url 'wiki-search' %}">
-                    {% csrf_token %}
-                    <div class="ui icon input">
-                        <input type="text" name="title" placeholder="검색어를 입력...">
-                        <i class="inverted circular search link icon"></i>
-                    </div>
-                </form>
+<div class="ui left demo vertical inverted sidebar labeled icon menu">
+    <a class="active item" href="{% url 'wiki' %}"><i class="home icon"></i>LYnWiki</a>
+    <a class="item" href="{% url 'wiki-document-modify' document.title %}"><i class="edit icon"></i>편집</a>
+    <a class="item" href="{% url 'wiki-document-history' document.title %}"><i class="history icon"></i>역사</a>
+    <a class="item" href="{% url 'wiki-history' %}"><i class="history icon"></i>최근 바뀜</a>
+</div>
+<div class="pusher">
+    <div class="ui inverted vertical masthead center aligned segment">
+        <div class="ui container">
+            <div class="ui large secondary inverted pointing menu">
+                <div class="mobile-visible item" id="menu-toggle">
+                    <i class="sidebar icon"></i>
+                </div>
+                <a class="active item" href="{% url 'wiki' %}">LYnWiki</a>
+                <a class="item" href="{% url 'wiki-document-modify' document.title %}">편집</a>
+                <a class="item" href="{% url 'wiki-document-history' document.title %}">역사</a>
+                <a class="item" href="{% url 'wiki-history' %}">최근 바뀜</a>
+                <div class="right mobile-visible search item">
+                    <form class="ui form" method="post" action="{% url 'wiki-search' %}">
+                        {% csrf_token %}
+                        <div class="ui icon input">
+                            <input type="text" name="title" placeholder="검색어를 입력...">
+                            <i class="inverted circular search link icon"></i>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="main">
-    <div class="ui text container">
-        <h1 class="title">{{ document.title }}</h1>
-        <p class="timestamp"><i class="time icon"></i> {{ document.modified_at }}</p>
-        <div class="ui divider"></div>
+    <div class="main">
+        <div class="ui text container">
+            <h1 class="title">{{ document.title }}</h1>
+            <p class="timestamp">
+                <i class="time icon"></i> {{ document.modified_at }}
+                {% if document.admin_required %} | <i class="lock icon"></i>{% endif %}
+            </p>
+            <div class="ui divider"></div>
 
-        <div class="content">
-        {% load markup_tags %}
-        {{ document.content | apply_markup:"markdown" }}
+            <div class="content">
+            {% load markup_tags %}
+            {{ document.content | apply_markup:"markdown" }}
+            </div>
         </div>
     </div>
-</div>
-<div class="ui text container">
-    <div class="ui divider"></div>
-    <footer>
-        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="크리에이티브 커먼즈 라이선스" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br/>
-        이 저작물은 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">크리에이티브 커먼즈 저작자표시-동일조건변경허락 4.0 국제 라이선스</a>에 따라 이용할 수 있습니다.<br/>
-        LYnWiki는 모두가 편집할 수 있는 위키위키입니다. 서술된 내용은 운영자의 견해와 다를 수 있습니다.
-    </footer>
+    <div class="ui text container">
+        <div class="ui divider"></div>
+        <footer>
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="크리에이티브 커먼즈 라이선스" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br/>
+            이 저작물은 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">크리에이티브 커먼즈 저작자표시-동일조건변경허락 4.0 국제 라이선스</a>에 따라 이용할 수 있습니다.<br/>
+            LYnWiki는 모두가 편집할 수 있는 위키위키입니다. 서술된 내용은 운영자의 견해와 다를 수 있습니다.
+        </footer>
+    </div>
 </div>
 {% endblock %}

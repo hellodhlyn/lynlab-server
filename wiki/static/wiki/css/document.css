@@ -30,6 +30,11 @@ code {
     padding: 10px;
 }
 
+.menu .search.item {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 p.timestamp {
     margin: 0;
     font-size: 14px;
@@ -40,14 +45,14 @@ p.timestamp {
 }
 
 .main {
-    min-height: 70%;
+    min-height: 25rem;
     max-width: 700px;
     padding: 2.5rem 0;
     margin: 0 auto;
 }
 
 .main .content p, li {
-    line-height: 200%;
+    line-height: 180%;
 }
 
 .main img {
@@ -60,4 +65,10 @@ p.timestamp {
 footer {
     margin: 2rem 0;
     font-size: 14px;
+}
+
+@media (max-width: 425px) {
+    .secondary.menu .item:not(.mobile-visible) {
+        display: none !important;
+    }
 }

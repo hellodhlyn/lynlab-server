@@ -31,13 +31,19 @@ class Document(models.Model):
 
     title = models.CharField(max_length=200)
     content = models.TextField(blank=True, default='')
-    permission = models.IntegerField(default=DocumentPermission.ADMIN_USER)
+    permission = models.IntegerField(default=DocumentPermission.PUBLIC)
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return self.title
+
+    def admin_required(self):
+        return self.permission == DocumentPermission.ADMIN_USER
+
+    def login_required(self):
+        return self.admin_required() or (self.permission == DocumentPermission.LOGIN_USER)
 
 
 class DocumentRevision(models.Model):
