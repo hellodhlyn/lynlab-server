@@ -43,7 +43,9 @@
             <h1 class="title">{{ document.title }}</h1>
             <p class="timestamp">
                 <i class="time icon"></i> {{ document.modified_at }}
-                {% if document.admin_required %} | <i class="lock icon"></i>{% endif %}
+                {% if document.admin_required %}<span data-tooltip="관리자만 볼 수 있는 글" data-inverted=""> | <i class="lock icon"></i></span>
+                {% elif document.login_required %}<span data-tooltip="로그인 유저만 볼 수 있는 글" data-inverted=""> | <i class="lock icon"></i></span>
+                {% endif %}
             </p>
             <div class="ui divider"></div>
 

@@ -40,7 +40,12 @@
             <tbody>
                 {% for revision in revisions %}
                 <tr>
-                    <td><a href="{% url 'wiki-document' revision.document.title %}"><b>{{ revision.document.title }}</b></a></td>
+                    <td>
+                        {% if revision.document.admin_required %}<span data-tooltip="관리자만 볼 수 있는 글" data-inverted=""><i class="lock icon"></i></span>
+                        {% elif revision.document.login_required %}<span data-tooltip="로그인 유저만 볼 수 있는 글" data-inverted=""><i class="lock icon"></i></span>
+                        {% endif %}
+                        <a href="{% url 'wiki-document' revision.document.title %}"><b>{{ revision.document.title }}</b></a>
+                    </td>
                     <td>{{ revision.revision }}</td>
                     <td><i class="user icon"></i>{{ revision.editor }}</td>
                     <td><i class="time icon"></i>{{ revision.timestamp }}</td>
