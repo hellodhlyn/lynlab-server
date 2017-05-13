@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block style %}
+{% load staticfiles %}
+<title>{{ document.title }} 편집 | LYnWiki</title>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<link rel="stylesheet" href="{% static 'wiki/css/document.css' %}">
+<script src="{% static 'wiki/js/modify.js' %}"></script>
+<script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+{% endblock %}
+{% block content %}
+<div class="ui inverted vertical masthead center aligned segment">
+    <div class="ui container">
+        <div class="ui large secondary inverted pointing menu">
+            <a class="active mobile-visible item" href="{% url 'wiki' %}">LYnWiki</a>
+            <a class="mobile-visible item" href="{% url 'wiki-document' document.title %}">본문 보기</a>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="ui text container">
+        <h1>편집 : {{ document.title }}</h1>
+        <form class="ui form" action="#" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="title" value="{{ document.title }}">
+            <div class="field">
+                <label>본문</label>
+                <textarea id="field-content" name="content" rows="25">{{ document.content }}</textarea>
+            </div>
+            <div class="field">
+                <input type="submit" name="save" value="저장" class="ui fluid blue submit button" />
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
