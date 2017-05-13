@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% block style %}
 {% load staticfiles %}
+<title>{{ post.title }} | LYnTimeline</title>
+<meta name="description" content="{{ post.description|addslashes }}" />
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{ post.title }} | LYnTimeline">
+<meta property="og:description" content="{{ post.description|addslashes }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
 <link rel="stylesheet" href="{% static 'detail.css' %}">
 <script type="text/javascript">
   $(document).ready(function() {
@@ -25,8 +31,6 @@
     });
   });
 </script>
-<meta name="description" content="{{ post.description|addslashes }}" />
-<title>{{ post.title }} | LYnTimeline</title>
 {% endblock %}
 {% block content %}
 {% include 'blog/_sidebar_hide.html' %}

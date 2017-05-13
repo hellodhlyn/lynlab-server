@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 {% block style %}
 {% load staticfiles %}
+<title>LYnLab</title>
+<meta name="description" content="LYnLab 블로그, 위키">
+<meta property="og:type" content="website">
+<meta property="og:title" content="LYnLab">
+<meta property="og:description" content="LYnLab 블로그, 위키">
+<meta property="og:url" content="http://lynlab.co.kr/">
 <link rel="stylesheet" href="{% static 'welcome.css' %}">
 <script src="{% static 'welcome.js' %}"></script>
 {% endblock %}
 {% block content %}
 <div class="ui left demo vertical inverted sidebar labeled icon menu" id="main-sidebar">
   <a class="item" href="{% url 'blog' %}"><i class="home icon"></i> BLOG</a>
+  <a class="item" href="{% url 'wiki' %}"><i class="home icon"></i> WIKI</a>
   <a class="item" href="{% url 'about' %}"><i class="list icon"></i> RESUME</a>
 </div>
 <div class="ui inverted vertical masthead center aligned segment pusher">
@@ -17,6 +24,7 @@
       </a>
       <a class="active item">LYnLab</a>
       <a class="item" href="{% url 'blog' %}">BLOG</a>
+      <a class="item" href="{% url 'wiki' %}">WIKI</a>
       <a class="item" href="{% url 'about' %}">RESUME</a>
       <div class="right item">
         {% if user.is_authenticated %}
