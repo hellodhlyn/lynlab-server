@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.shortcuts import render, render_to_response

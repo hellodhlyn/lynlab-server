@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.contrib import admin as djangoadmin
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -164,8 +162,6 @@ def create_tweet(request):
         'content': tweet.text,
         'tags': tweet.id,
     }
-
-    print tweet
 
     template_name = 'blog/admin/create_tweet.html'
     context = {

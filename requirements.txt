@@ -1,4 +1,4 @@
-django==1.9.12
+django==1.9.13
 djangoajax
 django-el-pagination
 django-markup
