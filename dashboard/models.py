@@ -11,5 +11,5 @@ class BusDashboard(models.Model):
     station_id = models.CharField(max_length=10)
     station_name = models.CharField(max_length=40)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.bus_id
