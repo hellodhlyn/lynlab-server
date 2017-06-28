@@ -1,30 +1,24 @@
-# -*- coding: utf-8 -*-
-
+import twitter
+from dateutil import parser
+from django.conf import settings
 from django.contrib import admin as djangoadmin
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render_to_response, redirect
-from django.template import RequestContext
-
-from dateutil import parser
+from django.shortcuts import redirect, render
 
 from .models import *
-
-import twitter
 
 
 @staff_member_required
 def admin(request):
     template_name = 'blog/admin/admin.html'
-
     context = {
         'posts': Post.objects.all().order_by('-created'),
         'series_list': Series.objects.all(),
     }
 
-    return render_to_response(template_name, context, context_instance=RequestContext(request))
+    return render(request, template_name, context)
 
 
 @staff_member_required
@@ -42,7 +36,7 @@ def create_post(request):
             'series_list': Series.objects.all(),
         }
 
-        return render_to_response(template_name, context, context_instance=RequestContext(request))
+        return render(request, template_name, context)
 
     elif request.method == 'POST':
         return __modify_post(request)
@@ -70,7 +64,7 @@ def modify_post(request, pk):
             'series_list': Series.objects.all(),
         }
 
-        return render_to_response(template_name, context, context_instance=RequestContext(request))
+        return render(request, template_name, context)
 
     elif request.method == 'POST':
         return __modify_post(request)
@@ -122,7 +116,7 @@ def __modify_post(request):
     post.series_id = None if int(req_series_id) == -1 else int(req_series_id)
     post.posttype = req_posttype or '0'
     post.preview = req_preview or ''
-    post.public_post = req_public_post
+    post.public_post = (req_public_post == 'on')
     post.save()
 
     # 태그를 설정한다.
@@ -165,14 +159,12 @@ def create_tweet(request):
         'tags': tweet.id,
     }
 
-    print tweet
-
     template_name = 'blog/admin/create_tweet.html'
     context = {
         'post': post,
     }
 
-    return render_to_response(template_name, context, context_instance=RequestContext(request))
+    return render(request, template_name, context)
 
 
 @staff_member_required
@@ -205,6 +197,7 @@ class PostTypeAdmin(djangoadmin.ModelAdmin):
 class CategoryAdmin(djangoadmin.ModelAdmin):
     list_display = ['name']
     list_editable = ['name']
+    list_display_links = None
     search_fields = ['name']
     ordering = ['name']
 

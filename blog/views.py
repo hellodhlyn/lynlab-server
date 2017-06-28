@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
-from django.shortcuts import render, render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.views.generic import CreateView
 
 from .controllers import get_client_ip, is_recent_visitor
@@ -19,12 +17,9 @@ def main(request):
     List of all posts. (/)
     """
     template_name = 'blog/home.html'
+    context = {'types': PostType.objects.all()}
 
-    context = {
-        'types': PostType.objects.all(),
-    }
-
-    return render_to_response(template_name, context, context_instance=RequestContext(request))
+    return render(request, template_name, context)
 
 
 def by_tag(request, tag):
@@ -34,13 +29,12 @@ def by_tag(request, tag):
     :param tag: URL query {tag}
     """
     template_name = 'blog/home.html'
-
     context = {
         'search_tag': tag,
         'types': PostType.objects.all(),
     }
 
-    return render_to_response(template_name, context, context_instance=RequestContext(request))
+    return render(request, template_name, context)
 
 
 def by_category(request, category):
@@ -50,13 +44,12 @@ def by_category(request, category):
     :param category: URL query {category}
     """
     template_name = 'blog/home.html'
-
     context = {
         'search_category': category,
         'types': PostType.objects.all(),
     }
 
-    return render_to_response(template_name, context, context_instance=RequestContext(request))
+    return render(request, template_name, context)
 
 
 def post_detail(request, pk):
@@ -95,4 +88,4 @@ def post_detail(request, pk):
         'liked': liked,
     }
 
-    return render(request, 'blog/detail.html', context, context_instance=RequestContext(request))
+    return render(request, 'blog/detail.html', context)
