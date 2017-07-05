@@ -33,6 +33,7 @@ INSTALLED_APPS = (
     'blog',
     'dashboard',
     'media',
+    'moneybook',
     'wiki',
 )
 

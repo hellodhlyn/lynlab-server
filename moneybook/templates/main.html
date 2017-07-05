@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block style %}
+{% load staticfiles %}
+<title>가계부 메인 | LYnMoneybook</title>
+{% endblock %}
+{% block content %}
+{% for transaction in transactions %}
+<p>{{ transaction.place }} : {{ transaction.price }} 원</p>
+{% endfor %}
+{% endblock %}
