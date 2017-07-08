@@ -3,12 +3,31 @@
 {% load staticfiles %}
 <title>가계부 메인 | LYnMoneybook</title>
 <link rel="stylesheet" type="text/css" href="{% static '/css/moneybook.css' %}">
+<script type="text/javascript" src="{% static '/js/moneybook.js' %}"></script>
 {% endblock %}
 {% block content %}
 {% load humanize %}
 <div class="ui container">
     <h1>{{ year }}년 {{ month }}월 가계부</h1>
     <div class="ui divider"></div>
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <div class="ui success icon message">
+        <i class="check circle icon"></i>
+        <div class="header">{{ message }}</div>
+    </div>
+    {% else %}
+    <div class="ui negative icon message">
+        <i class="warning circle icon"></i>
+        <div class="header">{{ message }}</div>
+    </div>
+    {% endif %}
+
+    {% endfor %}
+    {% endif %}
+
     <div class="ui mini statistics" id="monthly-statistics">
         <div class="statistic">
             <div class="value">￦ {{ expense_sum|intcomma }}</div>
@@ -30,6 +49,7 @@
             <th>사용처</th>
             <th class="right aligned">금액</th>
             <th class="right aligned">일시</th>
+            <th class="center aligned">동작</th>
         </tr>
         </thead>
         <tbody>
@@ -39,9 +59,16 @@
             <td>{{ transaction.place }}</td>
             <td class="right aligned">{% if transaction.type == 'INCOME' %}+ {% endif %}{{ transaction.price|intcomma }} 원</td>
             <td class="right aligned">{{ transaction.timestamp }}</td>
+            <td class="center aligned">
+                <div class="ui mini circular icon action-modify button" data-transaction-id="{{ transaction.id }}">
+                    <i class="edit icon"></i>
+                </div>
+            </td>
         </tr>
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="ui small modal" id="modify-modal"></div>
 </div>
 {% endblock %}

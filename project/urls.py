@@ -63,6 +63,7 @@ urlpatterns = [
     # moneybook:
     url(r'^moneybook/$', moneybook_view.main, name='moneybook'),
     url(r'^moneybook/(?P<year>\d+)/(?P<month>\d+)/$', moneybook_view.by_year_month, name='moneybook-year-month'),
+    url(r'^moneybook/modify/(?P<transaction_id>[\w|\W]+)/$', moneybook_view.modify, name='moneybook-modify'),
 
     # admin:
     url(r'^admin/', include(admin.site.urls)),
