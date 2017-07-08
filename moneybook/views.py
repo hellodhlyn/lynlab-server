@@ -1,10 +1,13 @@
+from datetime import datetime
+
 from django.shortcuts import render
 
 from .helper import DynamoDBHelper
 
 
 def main(request):
-    return by_year_month(request, 2017, 6)
+    now = datetime.now()
+    return by_year_month(request, now.year, now.month)
 
 
 def by_year_month(request, year, month):
@@ -14,9 +17,12 @@ def by_year_month(request, year, month):
     incomes = DynamoDBHelper.get_transactions('INCOME', year_month)
 
     context = {
+        'year': year,
+        'month': month,
         'expense_sum': sum(map(lambda t: int(t['price']), expenses)),
         'income_sum': sum(map(lambda t: int(t['price']), incomes)),
         'transactions': sorted(expenses + incomes, key=lambda t: t['timestamp']),
     }
+    context['net_income'] = context['income_sum'] - context['expense_sum']
 
     return render(request, 'main.html', context=context)

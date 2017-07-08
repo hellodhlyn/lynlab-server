@@ -1,11 +1,13 @@
 import json
+
+import certifi
 import urllib3
 
 from project.settings.settings_var import AWS_X_API_KEY
 
 
 class DynamoDBHelper(object):
-    _pool = urllib3.PoolManager()
+    _pool = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
 
     @classmethod
     def __request(cls, method, url):
