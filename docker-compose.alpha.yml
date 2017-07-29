@@ -1,7 +1,9 @@
 version: '2'
 services:
-  web:
+  web_alpha:
     build: .
+    image: lynlab-alpha
+    container_name: lynlab-alpha
     command: ./docker-run.sh
     volumes:
       - .:/usr/src/app
