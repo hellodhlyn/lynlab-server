@@ -22,6 +22,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.humanize',
     'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.sitemaps',
@@ -33,6 +34,7 @@ INSTALLED_APPS = (
     'blog',
     'dashboard',
     'media',
+    'moneybook',
     'wiki',
 )
 

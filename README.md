@@ -22,6 +22,9 @@ docker-compose up -d
   - `docker-compose.yml` : production environment
 
 ## Django apps
-  - blog
-  - media
-  - wiki
+  - public
+    - blog
+    - media
+    - wiki
+  - private
+    - moneybook
