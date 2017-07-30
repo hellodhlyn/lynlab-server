@@ -1,17 +1,20 @@
 from datetime import datetime
 
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .helper import DynamoDBHelper
 
 
+@staff_member_required
 def main(request):
     now = datetime.now()
     return by_year_month(request, now.year, now.month)
 
 
+@staff_member_required
 def by_year_month(request, year, month):
     year_month = f"{year}-{str(month).zfill(2)}"
 
@@ -30,6 +33,7 @@ def by_year_month(request, year, month):
     return render(request, 'main.html', context=context)
 
 
+@staff_member_required
 def modify(request, transaction_id):
     if request.method == 'GET':
         context = {'transaction': DynamoDBHelper.get_transaction(transaction_id)}
