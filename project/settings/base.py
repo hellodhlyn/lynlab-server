@@ -16,7 +16,6 @@ ALLOWED_HOSTS = [
     '128.199.104.189.'
 ]
 
-
 # Application definition
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -70,7 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 DATABASES = {
@@ -79,7 +77,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -97,14 +94,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 STATIC_ROOT = '/var/lynlab/static/'
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = ( os.path.join('static'), )
+STATICFILES_DIRS = (os.path.join('static'),)
 
 # Logging
 LOGGING = {
@@ -112,8 +108,8 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt': "%d/%b/%Y %H:%M:%S"
         },
         'simple': {
             'format': '%(levelname)s %(message)s'
@@ -129,9 +125,9 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers':['file'],
+            'handlers': ['file'],
             'propagate': True,
-            'level':'INFO',
+            'level': 'INFO',
         },
         'wiki': {
             'handlers': ['file'],
@@ -150,7 +146,6 @@ EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 
 # Social OAuth backends
 TWITTER_ACCOUNT = settings_var.TWITTER_ACCOUNT
@@ -171,6 +166,11 @@ LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'
 
-
 # Endless pagination
 EL_PAGINATION_PER_PAGE = 5
+
+MARKUP_SETTINGS = {
+    'markdown': {
+        'safe_mode': False
+    }
+}
