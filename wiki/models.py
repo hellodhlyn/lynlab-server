@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import binascii
 from difflib import Differ
 
@@ -36,7 +34,7 @@ class Document(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def admin_required(self):
@@ -57,7 +55,7 @@ class DocumentRevision(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     editor = models.CharField(verbose_name=u'editor', max_length=256)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s (%s)" % (self.document.title, self.revision)
 
 
@@ -81,7 +79,7 @@ class Article(models.Model):
     # state code 200: normal, 303: see other
     code = models.IntegerField(u'code', default=200)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_absolute_url(self):

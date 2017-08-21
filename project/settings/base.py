@@ -1,17 +1,10 @@
-# -*- coding: utf-8 -*-
-
 import os
 from django.utils.translation import ugettext_lazy as _
 
 from project.settings import settings_var
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = settings_var.SECRET_KEY
 
 ALLOWED_HOSTS = [
@@ -23,12 +16,12 @@ ALLOWED_HOSTS = [
     '128.199.104.189.'
 ]
 
-
 # Application definition
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.humanize',
     'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.sitemaps',
@@ -40,6 +33,7 @@ INSTALLED_APPS = (
     'blog',
     'dashboard',
     'media',
+    'moneybook',
     'wiki',
 )
 
@@ -68,14 +62,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.core.context_processors.request',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'project.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -85,7 +77,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -103,14 +94,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 STATIC_ROOT = '/var/lynlab/static/'
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = ( os.path.join('static'), )
+STATICFILES_DIRS = (os.path.join('static'),)
 
 # Logging
 LOGGING = {
@@ -118,8 +108,8 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt': "%d/%b/%Y %H:%M:%S"
         },
         'simple': {
             'format': '%(levelname)s %(message)s'
@@ -135,9 +125,9 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers':['file'],
+            'handlers': ['file'],
             'propagate': True,
-            'level':'INFO',
+            'level': 'INFO',
         },
         'wiki': {
             'handlers': ['file'],
@@ -156,7 +146,6 @@ EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 
 # Social OAuth backends
 TWITTER_ACCOUNT = settings_var.TWITTER_ACCOUNT
@@ -177,6 +166,11 @@ LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'
 
-
 # Endless pagination
 EL_PAGINATION_PER_PAGE = 5
+
+MARKUP_SETTINGS = {
+    'markdown': {
+        'safe_mode': False
+    }
+}

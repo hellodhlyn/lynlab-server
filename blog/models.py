@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import datetime
 
 from django.core.urlresolvers import reverse
@@ -19,7 +18,7 @@ class Category(models.Model):
     name = models.CharField(verbose_name=u'name', max_length=50)
     url = models.CharField(max_length=32, default='')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -57,7 +56,7 @@ class Tag(models.Model):
         except:
             return self.url
 
-    def __unicode__(self):
+    def __str__(self):
         return self.url
 
 
@@ -69,7 +68,7 @@ class TagTranslations(models.Model):
     name = models.CharField(max_length=20, null=False, default='')
     language = models.CharField(max_length=8, null=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -102,7 +101,7 @@ class Post(models.Model):
     # Types (0: general post / 1: notify post)
     posttype = models.CharField(u'posttype', null=False, max_length=20)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_absolute_url(self):

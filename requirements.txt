@@ -1,4 +1,4 @@
-django==1.9.12
+django==1.11.2
 djangoajax
 django-el-pagination
 django-markup
@@ -6,3 +6,5 @@ django-registration
 twitter
 python-dateutil
 xmltodict==0.10.1
+urllib3
+certifi

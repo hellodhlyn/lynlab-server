@@ -17,11 +17,14 @@ docker-compose up -d
 ```
 
 ### docker profiles
-  - `docker-compose.yml` : production environment
-  - `docker-compose.alpha.yml` : remote test environment
   - `docker-compose.dev.yml` : local development environment (DEBUG mode)
+  - `docker-compose.alpha.yml` : remote test environment
+  - `docker-compose.yml` : production environment
 
 ## Django apps
-  - blog
-  - media
-  - wiki (*개선 작업 진행중, 현재는 기존 문서를 readonly로 제공*)
+  - public
+    - blog
+    - media
+    - wiki
+  - private
+    - moneybook
