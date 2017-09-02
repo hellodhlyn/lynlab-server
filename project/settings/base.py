@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'media',
     'moneybook',
     'wiki',
+    'storage',
 )
 
 MIDDLEWARE = (
@@ -173,3 +174,6 @@ MARKUP_SETTINGS = {
         'safe_mode': False
     }
 }
+
+# Stoarge
+MEDIA_ROOT = os.path.join(BASE_DIR, 'storage/objects')
