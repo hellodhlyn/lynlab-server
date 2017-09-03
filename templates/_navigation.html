@@ -1,0 +1,17 @@
+{% if navbar %}
+  <div class="navbar-container">
+    <header class="navbar">
+      <section class="navbar-section">
+        <a href="{% url navbar.title.url %}" class="navbar-brand mr-10">{{ navbar.title.name }}</a>
+        {% for menu in navbar.left %}
+          {% include 'macro/_navigation_menu.html' %}
+        {% endfor %}
+      </section>
+      <section class="navbar-section">
+        {% for menu in navbar.right %}
+          {% include 'macro/_navigation_menu.html' %}
+        {% endfor %}
+      </section>
+    </header>
+  </div>
+{% endif %}

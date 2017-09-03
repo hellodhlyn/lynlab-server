@@ -3,9 +3,10 @@ import datetime
 from django import urls
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction, IntegrityError
-from django.http import HttpResponseBadRequest, HttpResponseNotFound, HttpResponse
+from django.http import HttpResponseBadRequest, HttpResponseNotFound, HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect
 
+from storage.apps import navigation
 from storage.forms import ObjectForm
 from storage.models import Object
 
@@ -15,7 +16,8 @@ def index(request):
         cursor = request.GET.get('cursor', datetime.datetime.now())
         context = {
             'total_count': Object.objects.count(),
-            'files': Object.objects.filter(modified_at__lt=cursor).order_by('-created_at')
+            'files': Object.objects.filter(modified_at__lt=cursor).order_by('-created_at'),
+            'navbar': navigation()
         }
 
         return render(request, 'index.html', context=context)
@@ -24,7 +26,6 @@ def index(request):
 def upload(request):
     if request.method == 'GET':
         form = ObjectForm()
-
     elif request.method == 'POST':
         form = ObjectForm(data=request.POST, files=request.FILES)
 
@@ -43,9 +44,12 @@ def upload(request):
 
         else:
             return HttpResponseBadRequest()
+    else:
+        return HttpResponseNotAllowed(['GET', 'POST'])
 
     context = {
-        'form': form
+        'form': form,
+        'navbar': navigation()
     }
 
     return render(request, 'upload.html', context=context)
