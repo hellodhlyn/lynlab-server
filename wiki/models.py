@@ -1,3 +1,5 @@
+from enum import Enum
+
 import binascii
 from difflib import Differ
 
@@ -9,14 +11,10 @@ from django.db import models
 from django.http import HttpResponse, HttpResponseRedirect
 
 
-class DocumentPermission:
+class DocumentPermission(Enum):
     """
     위키 문서 열람 권한 (Enum)
     """
-
-    def __init__(self):
-        pass
-
     ADMIN_USER = 1
     LOGIN_USER = 2
     PUBLIC = 3
@@ -29,7 +27,7 @@ class Document(models.Model):
 
     title = models.CharField(max_length=200)
     content = models.TextField(blank=True, default='')
-    permission = models.IntegerField(default=DocumentPermission.PUBLIC)
+    permission = models.IntegerField(default=DocumentPermission.PUBLIC.value)
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
@@ -38,10 +36,13 @@ class Document(models.Model):
         return self.title
 
     def admin_required(self):
-        return self.permission == DocumentPermission.ADMIN_USER
+        return self.permission == DocumentPermission.ADMIN_USER.value
 
     def login_required(self):
-        return self.admin_required() or (self.permission == DocumentPermission.LOGIN_USER)
+        return self.permission == DocumentPermission.LOGIN_USER.value
+
+    def public(self):
+        return self.permission == DocumentPermission.PUBLIC.value
 
 
 class DocumentRevision(models.Model):

@@ -22,6 +22,27 @@
         <form class="ui form" action="#" method="post">
             {% csrf_token %}
             <input type="hidden" name="title" value="{{ document.title }}">
+            <div class="inline fields">
+                <label>문서보기 권한</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input name="permission" value="3" {% if document.public == 3 %}checked="checked"{% endif %} type="radio">
+                        <label>전체공개</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input name="permission" value="2" {% if document.login_required == 2 %}checked="checked"{% endif %} type="radio">
+                        <label>로그인 유저</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input name="permission" value="1" {% if document.admin_required == 1 %}checked="checked"{% endif %} type="radio">
+                        <label>관리자 유저</label>
+                    </div>
+                </div>
+            </div>
             <div class="field">
                 <label>본문</label>
                 <textarea id="field-content" name="content" rows="25">{{ document.content }}</textarea>
