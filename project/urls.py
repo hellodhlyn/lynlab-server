@@ -4,7 +4,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps.views import sitemap
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 from media.views import upload_view, show_media
 
 import blog.admin as blog_admin
@@ -28,7 +28,8 @@ sitemaps = {
 urlpatterns = [
     # global:
     url(r'^$', TemplateView.as_view(template_name='welcome.html'), name='home'),
-    url(r'^about/$', TemplateView.as_view(template_name='about.html'), name='about'),
+    url(r'^resume/$', TemplateView.as_view(template_name='resume.html'), name='resume'),
+    url(r'^about/$', RedirectView.as_view(pattern_name='resume', permanent=True)),
 
     # blog:
     url(r'^blog/$', blog_view.main, name='blog'),

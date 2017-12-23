@@ -1,0 +1,141 @@
+{
+  "basics": {
+    "name": "Do Hoerin",
+    "label": "Software Engineer",
+    "email": "hellodhlyn@gmail.com",
+    "phone": "+82-10-8896-5803",
+    "website": "https://lynlab.co.kr",
+    "location": {},
+    "profiles": []
+  },
+  "work": [
+    {
+      "company": "Dunamu Inc.",
+      "position": "Software Engineer",
+      "website": "https://dunamu.com",
+      "startDate": "2016-03-14",
+      "highlights": [
+        "UpBit - Backend & Infra Development (2017 ~ Present)",
+        "KakaoStock - Backend & Infra Development (2016. 10 ~ Present)",
+        "Daum Finance - Backend Maintenance (2016. 10. ~ Present)",
+        "Moneybook - Android App Lead Development (2016. 4. ~ 7.)",
+        "Kakaostock - Android App Development (2016. 3. ~ 10.)"
+      ]
+    },
+    {
+      "company": "CIP Lab (Yonsei Univ.)",
+      "summary": "Computational Intelligence & Photography Lab",
+      "position": "Undergraduate Intern",
+      "startDate": "2016-01-02",
+      "endDate": "2017-03-13"
+    },
+    {
+      "company": "SW Maestro",
+      "position": "Trainee",
+      "startDate": "2015-07-01",
+      "endDate": "2015-11-30"
+    }
+  ],
+  "education": [
+    {
+      "institution": "Yonsei University",
+      "area": "Computer Science",
+      "studyType": "Bachelor",
+      "startDate": "2014-03-02"
+    },
+    {
+      "institution": "Gyonegnam Science High School",
+      "area": "Computer Science",
+      "studyType": "Student",
+      "startDate": "2012-03-02",
+      "endDate": "2014-02-28"
+    }
+  ],
+  "awards": [
+    {
+      "title": "(Certification) Industrial Engineer Information Processing",
+      "date": "2016-05-01",
+      "awarder": "HR Development Service of Korea"
+    },
+    {
+      "title": "Samsung Humantech Paper Award",
+      "date": "2014-01-01",
+      "awarder": "Samsung Electronics",
+      "summary": "Gold Medal (1st place) on Mathematics & Data Processing field"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Web & Backend Development",
+      "level": "HIGH",
+      "keywords": [
+        "Django",
+        "Flask",
+        "Ruby on Rails",
+        "Apache Kafka",
+        "MySQL/MariaDB",
+        "Docker",
+        "Redis"
+      ]
+    },
+    {
+      "name": "AWS Infrastructure",
+      "level": "HIGH",
+      "keywords": [
+        "EC2",
+        "ECS",
+        "Terraform"
+      ]
+    },
+    {
+      "name": "Backend Developent (with Spring Framework)",
+      "level": "MIDDLE HIGH",
+      "keywords": [
+        "Java 8",
+        "Groovy",
+        "Spring Boot",
+        "JPA / Hibernate"
+      ]
+    },
+    {
+      "name": "Serverless Architecture",
+      "level": "MIDDLE HIGH",
+      "keywords": [
+        "AWS Lambda",
+        "DynamoDB",
+        "Apex"
+      ]
+    },
+    {
+      "name": "Android Development",
+      "level": "MIDDLE",
+      "keywords": [
+        "RxJava",
+        "Kotlin",
+        "Retrolambda"
+      ]
+    }
+  ],
+  "publications": [
+    {
+      "name": "(Patent) Apparatus and Method for Correcting Display",
+      "publisher": "Korean Intellectual Property Office",
+      "releaseDate": "2014-12-30",
+      "summary": "KR 10-2014-0192784"
+    }
+  ],
+  "languages": [
+    {
+      "language": "Korean",
+      "fluency": "Native speaker"
+    },
+    {
+      "language": "English",
+      "fluency": "Working proficiency"
+    },
+    {
+      "language": "Japanese",
+      "fluency": "Limitied working proficiency"
+    }
+  ]
+}
