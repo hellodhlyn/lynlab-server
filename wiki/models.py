@@ -6,9 +6,9 @@ from difflib import Differ
 import os
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
 
 class DocumentPermission(Enum):
@@ -50,7 +50,7 @@ class DocumentRevision(models.Model):
     문서 편집 기록
     """
 
-    document = models.ForeignKey(Document)
+    document = models.ForeignKey(Document, on_delete=models.CASCADE)
     revision = models.IntegerField(default=1)
 
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -107,7 +107,7 @@ class ModifyHistory(models.Model):
 
 @login_required(login_url='/accounts/login/')
 def modify(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         username = request.user.username
     else:
         return HttpResponse(status=201)

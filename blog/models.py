@@ -1,7 +1,7 @@
 import datetime
 
-from django.core.urlresolvers import reverse
 from django.db import models
+from django.urls import reverse
 from django.utils import translation
 from django.utils.timezone import utc
 
@@ -64,7 +64,7 @@ class TagTranslations(models.Model):
     """
     Translations of tags.
     """
-    tag = models.ForeignKey(Tag)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     name = models.CharField(max_length=20, null=False, default='')
     language = models.CharField(max_length=8, null=False)
 
@@ -82,13 +82,13 @@ class Post(models.Model):
         ordering = ['created']
 
     # Meta infos
-    category = models.ForeignKey(Category, verbose_name=u'category', null=True, blank=True)
+    category = models.ForeignKey(Category, verbose_name=u'category', null=True, blank=True, on_delete=models.DO_NOTHING)
     created = models.DateTimeField(auto_now_add=True, verbose_name=u'date')
     preview = models.CharField(verbose_name=u'preview', null=True, blank=True, max_length=256)
     tags = models.TextField(max_length=256, default='')     # DEPRECATED: Use PostTagRelation model instead!
     hitcount = models.IntegerField(default=0)
     like_count = models.IntegerField(default=0)
-    series = models.ForeignKey(Series, related_name='posts', null=True)
+    series = models.ForeignKey(Series, related_name='posts', null=True, on_delete=models.DO_NOTHING)
 
     # Contents
     title = models.CharField(u'title', max_length=256)
@@ -148,15 +148,15 @@ class PostTagRelation(models.Model):
     """
     Many-to-many relation table of Post and Tag.
     """
-    tag = models.ForeignKey(Tag)
-    post = models.ForeignKey(Post)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 
 class PostHitAddress(models.Model):
     """
     Hit addresses of the post.
     """
-    post = models.ForeignKey(Post)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     address = models.TextField(max_length=16, default='')
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -165,6 +165,6 @@ class PostLikeAddress(models.Model):
     """
     Liked addresses of the post.
     """
-    post = models.ForeignKey(Post)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     address = models.TextField(max_length=16, default='')
     timestamp = models.DateTimeField(auto_now_add=True)

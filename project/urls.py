@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.sitemaps import GenericSitemap
@@ -42,7 +40,6 @@ urlpatterns = [
     url(r'^blog/myadmin/series/$', blog_admin.series, name='blog-admin-create-series'),
     url(r'^blog/myadmin/series/modify/(?P<id>\d+)/$', blog_admin.modify_series, name='blog-admin-modify-series'),
     url(r'^blog/(?P<pk>\d+)/$', blog_view.post_detail, name='detail'),
-    # url(r'^blog/', include('blog.urls')),
 
     # dashboard:
     url(r'^dashboard/$', dashboard_view.dashboard, name='dashboard'),
@@ -67,7 +64,7 @@ urlpatterns = [
     url(r'^moneybook/modify/(?P<transaction_id>[\w|\W]+)/$', moneybook_view.modify, name='moneybook-modify'),
 
     # admin:
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
 
     # member:
     # url(r'^accounts/', include('django.contrib.auth.urls')),
