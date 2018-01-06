@@ -8,3 +8,4 @@ python-dateutil
 xmltodict==0.10.1
 urllib3
 certifi
+python-magic==0.*

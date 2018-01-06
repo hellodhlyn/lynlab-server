@@ -67,6 +67,7 @@ urlpatterns = [
     # storage
     url(r'^storage/$', storage_view.index, name='storage'),
     url(r'^storage/upload/$', storage_view.upload, name='storage-upload'),
+    url(r'^storage/delete/(?P<name>[\w|\W]+)/$', storage_view.delete, name='storage-delete'),
     url(r'^storage/(?P<name>[\w|\W]+)/$', storage_view.show, name='storage-show'),
 
     # admin:

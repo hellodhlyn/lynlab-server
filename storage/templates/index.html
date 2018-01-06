@@ -3,7 +3,19 @@
   <title>LYnStorage</title>
 {% endblock %}
 {% block content %}
-  <h1>최근 업로드</h1>
+  <h2>최근 업로드</h2>
+
+  {% if messages %}
+    {% for message in messages %}
+      {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+        <div class="toast toast-success">
+          <button class="btn btn-clear float-right"></button>
+          {{ message }}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
   <p>총 {{ total_count }}개의 파일이 있습니다.</p>
   <table class="table table-striped table-hover">
     <thead>
@@ -11,7 +23,7 @@
       <th>파일명</th>
       <th>유저</th>
       <th>업로드 일자</th>
-      <th>안전확인 여부</th>
+      <th>동작</th>
     </tr>
     </thead>
     <tbody>
@@ -20,7 +32,7 @@
         <td><a href="{% url 'storage-show' file.name %}">{{ file.name }}</a></td>
         <td>{{ file.uploader }}</td>
         <td>{{ file.modified_at }}</td>
-        <td>{{ file.safety_checked }}</td>
+        <td><a href="{% url 'storage-delete' file.name %}"><i class="fa fa-trash-alt"></i> 삭제</a></td>
       </tr>
     {% endfor %}
     </tbody>

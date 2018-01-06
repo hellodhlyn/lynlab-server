@@ -7,7 +7,7 @@
       {% for submenu in menu.submenu %}
         <li>
           {% if submenu.outer_url %}
-            <a href="{{ submenu.url }}">{{ submenu.name }}</a> <i class="fa fa-external-link"></i>
+            <a href="{{ submenu.url }}">{{ submenu.name }}</a> <i class="fa fa-external-link-alt"></i>
           {% else %}
             <a href="{% url submenu.url %}">{{ submenu.name }}</a>
           {% endif %}
