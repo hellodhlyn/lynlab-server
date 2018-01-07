@@ -1,8 +1,8 @@
 import datetime
-import mimetypes
 
 from django import urls
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction, IntegrityError
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, \
@@ -14,18 +14,20 @@ from storage.forms import ObjectForm
 from storage.models import Object
 
 
+@login_required
 def index(request):
     if request.method == 'GET':
         cursor = request.GET.get('cursor', datetime.datetime.now())
         context = {
-            'total_count': Object.objects.count(),
-            'files': Object.objects.filter(modified_at__lt=cursor).order_by('-created_at'),
+            'total_count': Object.objects.filter(uploader=request.user).count(),
+            'files': Object.objects.filter(uploader=request.user, modified_at__lt=cursor).order_by('-created_at'),
             'navbar': _navigation()
         }
 
         return render(request, 'index.html', context=context)
 
 
+@login_required
 def upload(request):
     """
     Upload an object to server.
@@ -37,9 +39,7 @@ def upload(request):
 
         if form.is_valid():
             # Make object and save
-            obj = Object(file=request.FILES['file'],
-                         name=request.POST['name'],
-                         uploader=request.user.username)
+            obj = Object(file=request.FILES['file'], name=request.POST['name'], uploader=request.user)
             try:
                 with transaction.atomic():
                     obj.save()
@@ -61,6 +61,22 @@ def upload(request):
     return render(request, 'upload.html', context=context)
 
 
+@login_required
+def recent(request):
+    """
+    Get list of objects.
+    """
+    if request.method == 'GET':
+        cursor = request.GET.get('cursor', datetime.datetime.now())
+        context = {
+            'total_count': Object.objects.count(),
+            'files': Object.objects.filter(modified_at__lt=cursor).order_by('-created_at'),
+            'navbar': _navigation()
+        }
+
+        return render(request, 'recent.html', context=context)
+
+
 def show(request, name):
     """
     Get an object.
@@ -76,6 +92,7 @@ def show(request, name):
         return HttpResponse(obj.file.read(), content_type=obj.content_type)
 
 
+@login_required
 def delete(request, name):
     """
     Delete an object.
@@ -86,7 +103,7 @@ def delete(request, name):
         except ObjectDoesNotExist:
             return HttpResponseNotFound()
 
-        if not obj.uploader == request.user.username:
+        if not obj.uploader == request.user:
             return HttpResponseForbidden()
 
         obj.delete()
@@ -99,6 +116,7 @@ def _navigation():
     return {
         'title': {'name': 'LYnStorage', 'url': 'storage'},
         'left': [
+            {'name': '최근 바뀜', 'url': 'storage-recent'},
             {'name': '업로드', 'url': 'storage-upload'},
         ],
         'right': [
@@ -106,6 +124,7 @@ def _navigation():
                 'name': 'LYnLab',
                 'dropdown': True,
                 'submenu': [
+                    {'name': 'LYnLab', 'url': 'home'},
                     {'name': '블로그', 'url': 'blog'},
                     {'name': '위키', 'url': 'wiki'},
                     {'outer_url': True, 'name': '앉아서 집에가자', 'url': 'https://bus.lynlab.co.kr'}

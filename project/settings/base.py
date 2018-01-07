@@ -158,10 +158,6 @@ TWITTER_ACCESS_KEY = settings_var.TWITTER_ACCESS_KEY
 
 TWITTER_ACCESS_SECRET = settings_var.TWITTER_ACCESS_SECRET
 
-LOGIN_URL = '/oauth/twitter/login'
-
-LOGOUT_URL = '/oauth/twitter/logout'
-
 LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'

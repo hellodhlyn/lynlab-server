@@ -11,6 +11,11 @@
         {% for menu in navbar.right %}
           {% include 'macro/_navigation_menu.html' %}
         {% endfor %}
+        {% if user.is_authenticated %}
+          <a href="{% url 'auth_logout' %}" class="btn btn-link">로그아웃</a>
+        {% else %}
+          <a href="{% url 'auth_login' %}" class="btn btn-link">로그인</a>
+        {% endif %}
       </section>
     </header>
   </div>

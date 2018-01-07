@@ -1,6 +1,7 @@
 import os
 
 import magic
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
@@ -15,7 +16,7 @@ class Object(models.Model):
     content_type = models.CharField(max_length=200, default='text')
 
     name = models.CharField(max_length=200, unique=True)
-    uploader = models.CharField(max_length=200)
+    uploader = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     safety_checked = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)

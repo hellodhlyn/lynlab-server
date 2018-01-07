@@ -3,7 +3,8 @@
   <title>LYnStorage</title>
 {% endblock %}
 {% block content %}
-  <h2>내 파일</h2>
+  {% load humanize %}
+  <h2>최근 업로드</h2>
 
   {% if messages %}
     {% for message in messages %}
@@ -21,16 +22,18 @@
     <thead>
     <tr>
       <th>파일명</th>
+      <th>용량</th>
+      <th>유저</th>
       <th>업로드 일자</th>
-      <th>동작</th>
     </tr>
     </thead>
     <tbody>
     {% for file in files %}
       <tr>
         <td><a href="{% url 'storage-show' file.name %}">{{ file.name }}</a></td>
+        <td>{{ file.file.size|intcomma }} bytes</td>
+        <td>{{ file.uploader }}</td>
         <td>{{ file.modified_at }}</td>
-        <td><a href="{% url 'storage-delete' file.name %}"><i class="fa fa-trash-alt"></i> 삭제</a></td>
       </tr>
     {% endfor %}
     </tbody>
