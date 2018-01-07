@@ -1,4 +1,4 @@
-django==1.11.2
+django==2.0.*
 djangoajax
 django-el-pagination
 django-markup
@@ -8,3 +8,4 @@ python-dateutil
 xmltodict==0.10.1
 urllib3
 certifi
+python-magic==0.*

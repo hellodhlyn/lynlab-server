@@ -35,14 +35,14 @@ INSTALLED_APPS = (
     'media',
     'moneybook',
     'wiki',
+    'storage',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -141,11 +141,15 @@ ACCOUNT_ACTIVATION_DAYS = 2
 
 DEFAULT_FROM_EMAIL = 'admin@lynlab.co.kr'
 
-EMAIL_HOST = 'localhost'
+EMAIL_HOST = 'smtp.sendgrid.net'
 
-EMAIL_PORT = 25
+EMAIL_HOST_USER = 'HelloDHLyn'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_PASSWORD = settings_var.EMAIL_HOST_PASSWORD
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
 
 # Social OAuth backends
 TWITTER_ACCOUNT = settings_var.TWITTER_ACCOUNT
@@ -157,10 +161,6 @@ TWITTER_SECRET = settings_var.TWITTER_SECRET
 TWITTER_ACCESS_KEY = settings_var.TWITTER_ACCESS_KEY
 
 TWITTER_ACCESS_SECRET = settings_var.TWITTER_ACCESS_SECRET
-
-LOGIN_URL = '/oauth/twitter/login'
-
-LOGOUT_URL = '/oauth/twitter/logout'
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -174,3 +174,6 @@ MARKUP_SETTINGS = {
         'safe_mode': False
     }
 }
+
+# Stoarge
+MEDIA_ROOT = os.path.join(BASE_DIR, 'storage/objects')

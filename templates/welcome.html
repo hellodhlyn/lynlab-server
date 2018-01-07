@@ -14,7 +14,8 @@
 <div class="ui left demo vertical inverted sidebar labeled icon menu" id="main-sidebar">
   <a class="item" href="{% url 'blog' %}"><i class="home icon"></i> BLOG</a>
   <a class="item" href="{% url 'wiki' %}"><i class="home icon"></i> WIKI</a>
-  <a class="item" href="{% url 'about' %}"><i class="list icon"></i> RESUME</a>
+  <a class="item" href="{% url 'storage' %}"><i class="home icon"></i> STORAGE</a>
+  <a class="item" href="{% url 'resume' %}"><i class="list icon"></i> RESUME</a>
 </div>
 <div class="ui inverted vertical masthead center aligned segment pusher">
   <div class="ui container">
@@ -25,7 +26,8 @@
       <a class="active item">LYnLab</a>
       <a class="item" href="{% url 'blog' %}">BLOG</a>
       <a class="item" href="{% url 'wiki' %}">WIKI</a>
-      <a class="item" href="{% url 'about' %}">RESUME</a>
+      <a class="item" href="{% url 'storage' %}">STORAGE</a>
+      <a class="item" href="{% url 'resume' %}">RESUME</a>
       <div class="right item">
         {% if user.is_authenticated %}
         <a class="ui inverted button" href="/accounts/logout">로그아웃</a>

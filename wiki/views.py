@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
-from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
 from .models import Document, DocumentPermission, DocumentRevision
 
@@ -26,12 +26,12 @@ def _get_document_item(request, title):
     document = Document.objects.get(title=title)
 
     # 로그인이 필요할 경우에 대한 확인
-    if document.permission == DocumentPermission.ADMIN_USER:
-        if not request.user.is_authenticated():
+    if document.permission == DocumentPermission.ADMIN_USER.value:
+        if not request.user.is_authenticated:
             raise LoginRequired(document.permission)
         if not request.user.is_staff:
             raise PermissionDenied
-    elif document.permission == DocumentPermission.LOGIN_USER and not request.user.is_authenticated():
+    elif document.permission == DocumentPermission.LOGIN_USER.value and not request.user.is_authenticated:
         raise LoginRequired(document.permission)
 
     return document
@@ -91,6 +91,7 @@ def modify_document(request, title):
             raise PermissionDenied
 
         document.content = request.POST['content']
+        document.permission = DocumentPermission(int(request.POST['permission'])).value
         document.save()
 
         # Revision 생성

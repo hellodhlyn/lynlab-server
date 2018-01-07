@@ -1,15 +1,9 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.shortcuts import render
-from django.views.generic import CreateView
 
 from .controllers import get_client_ip, is_recent_visitor
 from .models import *
-
-
-class PostCreate(CreateView):
-    model = Post
-    template_name = 'create.html'
 
 
 def main(request):

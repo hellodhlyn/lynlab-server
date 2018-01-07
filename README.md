@@ -23,8 +23,8 @@ docker-compose up -d
 
 ## Django apps
   - public
-    - blog
-    - media
-    - wiki
+    - 블로그 (`/blog`)
+    - 위키 (`/wiki`)
+    - 스토리지 (구. media, `/storage`)
   - private
-    - moneybook
+    - 가계부

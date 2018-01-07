@@ -1,5 +1,5 @@
-from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
+from django.urls import reverse
 
 
 def search_document(request):

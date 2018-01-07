@@ -1,0 +1,20 @@
+{% if menu.dropdown %}
+  <div class="dropdown">
+    <a href="#" class="btn btn-link dropdown-toggle" tabindex="0">
+      {{ menu.name }} <i class="fa fa-caret-down"></i>
+    </a>
+    <ul class="menu">
+      {% for submenu in menu.submenu %}
+        <li>
+          {% if submenu.outer_url %}
+            <a href="{{ submenu.url }}">{{ submenu.name }}</a> <i class="fa fa-external-link-alt"></i>
+          {% else %}
+            <a href="{% url submenu.url %}">{{ submenu.name }}</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% else %}
+  <a href="{% url menu.url %}" class="btn btn-link">{{ menu.name }}</a>
+{% endif %}

@@ -1,0 +1,27 @@
+{% extends 'base_spectre.html' %}
+{% block head %}
+  <title>파일 업로드 | LYnStorage</title>
+{% endblock %}
+{% block content %}
+  <h2>파일 업로드</h2>
+  <form class="form-group" action="." method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if form.name.errors %}
+      <div class="toast toast-error">
+        {{ form.name.errors.as_text }}
+      </div>
+    {% endif %}
+
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}
+        {{ field }}
+      </p>
+    {% endfor %}
+
+    <p>
+      <button class="btn btn-primary input-group-bt">업로드</button>
+    </p>
+  </form>
+{% endblock %}
