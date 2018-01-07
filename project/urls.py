@@ -3,18 +3,17 @@ from django.contrib import admin
 from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView, RedirectView
-from media.views import upload_view, show_media
 
 import blog.admin as blog_admin
 import blog.controllers as blog_controller
 import blog.models as blog
 import blog.views as blog_view
 import dashboard.views as dashboard_view
-import media.models as media
 import moneybook.views as moneybook_view
 import storage.views as storage_view
 import wiki.services as wiki_service
 import wiki.views as wiki_view
+from media.views import show_media
 
 sitemaps = {
     'sitemaps': {
@@ -56,7 +55,6 @@ urlpatterns = [
     url(r'^wiki/(?P<title>[\w|\W]+)/$', wiki_view.get_document, name='wiki-document'),
 
     # media:
-    url(r'^media/upload/$', upload_view, name='mediaupload'),
     url(r'^media/(?P<pk>[\w|\W]+)/$', show_media, name='mediashow'),
 
     # moneybook:
