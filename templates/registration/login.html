@@ -1,50 +1,39 @@
-{% extends 'base.html' %}
-{% block style %}
-{% load staticfiles %}
-<title>로그인 | LYnLab</title>
-<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% extends 'base_spectre.html' %}
+{% block head %}
+  {% load staticfiles %}
+  <title>로그인 | LYnLab</title>
+  <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
 {% endblock %}
 {% block content %}
-<div class="ui middle aligned center aligned grid">
-    <div class="column">
-        <div class="header">
-            <h1>LYnLab 로그인</h1>
-        </div>
-        <div class="ui text container">
-            <form class="ui large form" method="post" action=".">{% csrf_token %}
-                <div class="ui stacked segment">
-                    {% if form.errors %}
-                    <div class="ui icon negative message">
-                        <i class="warning circle icon"></i>
-                        <div class="content">
-                            <div class="header" id="error-msg">
-                                로그인 실패
-                            </div>
-                            <p>존재하지 않는 계정이거나 비밀번호가 틀립니다.</p>
-                        </div>
-                    </div>
-                    {% endif %}
-                    <div class="field">
-                        <div class="ui left icon input">
-                            <i class="user icon"></i>
-                            {{ form.username }}
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                            <i class="lock icon"></i>
-                            {{ form.password }}
-                        </div>
-                    </div>
-                    <input type="submit" value="로그인" class="ui fluid large teal submit button" />
-                    <input type="hidden" name="next" value="{{ next }}"/>
-                </div>
-            </form>
+  <h1>LYnLab에 로그인</h1>
 
-            <div class="ui message">
-                계정이 없으신가요? <a href="/accounts/register/">회원가입</a>
-            </div>
-        </div>
+  {% if form.errors %}
+    <div class="toast toast-error">
+      <button class="btn btn-clear float-right"></button>
+      존재하지 않는 계정이거나, 비밀번호가 일치하지 않습니다.
     </div>
-</div>
+  {% endif %}
+
+  <form class="form-group" method="post" action=".">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}"/>
+    <p>
+      <label>
+        아이디
+        <input class="form-input" name="username" type="text" maxlength="255">
+      </label>
+    </p>
+    <p>
+      <label>
+        비밀번호
+        <input class="form-input" name="password" type="password">
+      </label>
+    </p>
+    <p>
+      <button class="btn btn-primary input-group-bt">로그인</button>
+      <a href="{% url 'registration_register' %}">
+        <button type="button" class="btn input-group-bt">회원가입</button>
+      </a>
+    </p>
+  </form>
 {% endblock %}

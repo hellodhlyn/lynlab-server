@@ -1,62 +1,47 @@
-{% extends 'base.html' %}
-{% block style %}
-{% load staticfiles %}
-<title>회원가입 | LYnLab</title>
-<link rel="stylesheet" href="{% static 'css/login.css' %}">
-<script src="{% static 'js/accounts.js' %}"></script>
+{% extends 'base_spectre.html' %}
+{% block head %}
+  {% load staticfiles %}
+  <title>회원가입 | LYnLab</title>
+  <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
 {% endblock %}
 {% block content %}
-<div class="ui middle aligned center aligned grid">
-    <div class="column">
-        <div class="header">
-            <h1>회원가입</h1>
-        </div>
-        <div class="ui text container" id="accounts-registration-form">
-            <form class="ui large form" method="post" action=".">{% csrf_token %}
-                {% if form.errors %}
-                <div class="ui icon negative message">
-                    <i class="warning circle icon"></i>
-                    <div class="content">
-                        <div class="header" id="error-msg">
-                            회원가입 실패
-                        </div>
-                        <p>회원가입 중 오류가 발생했습니다. 다시 시도해주세요.</p>
-                    </div>
-                </div>
-                {% endif %}
-                <div class="ui stacked segment">
-                    <div class="field">
-                        <div class="ui grid">
-                            <div class="sixteen wide column">
-                                <div class="ui left icon input">
-                                    <i class="user icon"></i>
-                                    <input type="text" placeholder="아이디" name="username" required />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                            <i class="lock icon"></i>
-                            <input type="password" placeholder="비밀번호" name="password1" required />
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                            <i class="lock icon"></i>
-                            <input type="password" placeholder="비밀번호 (확인)" name="password2" required />
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                            <i class="mail icon"></i>
-                            <input type="email" placeholder="이메일" name="email" required />
-                        </div>
-                    </div>
-                    <input type="submit" value="가입 완료!" class="ui fluid large teal submit button" />
-                </div>
-            </form>
-        </div>
+  <h1>LYnLab에 회원가입</h1>
+
+  {% if form.errors %}
+    <div class="toast toast-error">
+      <button class="btn btn-clear float-right"></button>
+      회원가입 중 오류가 발생했습니다. 조건을 확인한 후 다시 시도해주세요.
     </div>
-</div>
+  {% endif %}
+
+  <form class="form-group" method="post" action=".">
+    {% csrf_token %}
+    <p>
+      <label>
+        아이디
+        <input class="form-input" name="username" type="text" maxlength="255">
+      </label>
+    </p>
+    <p>
+      <label>
+        이메일
+        <input class="form-input" name="email" type="email">
+      </label>
+    </p>
+    <p>
+      <label>
+        비밀번호
+        <input class="form-input" name="password1" type="password">
+      </label>
+    </p>
+    <p>
+      <label>
+        비밀번호 확인
+        <input class="form-input" name="password2" type="password">
+      </label>
+    </p>
+    <p>
+      <button class="btn btn-primary input-group-bt">가입 완료!</button>
+    </p>
+  </form>
 {% endblock %}

@@ -141,11 +141,15 @@ ACCOUNT_ACTIVATION_DAYS = 2
 
 DEFAULT_FROM_EMAIL = 'admin@lynlab.co.kr'
 
-EMAIL_HOST = 'localhost'
+EMAIL_HOST = 'smtp.sendgrid.net'
 
-EMAIL_PORT = 25
+EMAIL_HOST_USER = 'HelloDHLyn'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_PASSWORD = settings_var.EMAIL_HOST_PASSWORD
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
 
 # Social OAuth backends
 TWITTER_ACCOUNT = settings_var.TWITTER_ACCOUNT
