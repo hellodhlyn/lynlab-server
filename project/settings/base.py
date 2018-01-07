@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'media',
     'moneybook',
     'wiki',
+    'storage',
 )
 
 MIDDLEWARE = (
@@ -157,10 +158,6 @@ TWITTER_ACCESS_KEY = settings_var.TWITTER_ACCESS_KEY
 
 TWITTER_ACCESS_SECRET = settings_var.TWITTER_ACCESS_SECRET
 
-LOGIN_URL = '/oauth/twitter/login'
-
-LOGOUT_URL = '/oauth/twitter/logout'
-
 LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'
@@ -173,3 +170,6 @@ MARKUP_SETTINGS = {
         'safe_mode': False
     }
 }
+
+# Stoarge
+MEDIA_ROOT = os.path.join(BASE_DIR, 'storage/objects')

@@ -12,6 +12,7 @@ import blog.views as blog_view
 import dashboard.views as dashboard_view
 import media.models as media
 import moneybook.views as moneybook_view
+import storage.views as storage_view
 import wiki.services as wiki_service
 import wiki.views as wiki_view
 
@@ -62,6 +63,13 @@ urlpatterns = [
     url(r'^moneybook/$', moneybook_view.main, name='moneybook'),
     url(r'^moneybook/(?P<year>\d+)/(?P<month>\d+)/$', moneybook_view.by_year_month, name='moneybook-year-month'),
     url(r'^moneybook/modify/(?P<transaction_id>[\w|\W]+)/$', moneybook_view.modify, name='moneybook-modify'),
+
+    # storage
+    url(r'^storage/$', storage_view.index, name='storage'),
+    url(r'^storage/recent/$', storage_view.recent, name='storage-recent'),
+    url(r'^storage/upload/$', storage_view.upload, name='storage-upload'),
+    url(r'^storage/delete/(?P<name>[\w|\W]+)/$', storage_view.delete, name='storage-delete'),
+    url(r'^storage/(?P<name>[\w|\W]+)/$', storage_view.show, name='storage-show'),
 
     # admin:
     url(r'^admin/', admin.site.urls),

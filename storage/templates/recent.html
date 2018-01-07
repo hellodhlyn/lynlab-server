@@ -1,0 +1,41 @@
+{% extends 'base_spectre.html' %}
+{% block head %}
+  <title>LYnStorage</title>
+{% endblock %}
+{% block content %}
+  {% load humanize %}
+  <h2>최근 업로드</h2>
+
+  {% if messages %}
+    {% for message in messages %}
+      {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+        <div class="toast toast-success">
+          <button class="btn btn-clear float-right"></button>
+          {{ message }}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  <p>총 {{ total_count }}개의 파일이 있습니다.</p>
+  <table class="table table-striped table-hover">
+    <thead>
+    <tr>
+      <th>파일명</th>
+      <th>용량</th>
+      <th>유저</th>
+      <th>업로드 일자</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for file in files %}
+      <tr>
+        <td><a href="{% url 'storage-show' file.name %}">{{ file.name }}</a></td>
+        <td>{{ file.file.size|intcomma }} bytes</td>
+        <td>{{ file.uploader }}</td>
+        <td>{{ file.modified_at }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
