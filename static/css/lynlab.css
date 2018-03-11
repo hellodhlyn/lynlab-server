@@ -1,0 +1,83 @@
+body {
+  margin: 0;
+  font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #212121;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.content {
+  margin-top: 80px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+
+/* Navigation Bar */
+#navigation-bar {
+  position: fixed;
+  top: 0;
+  height: 40px;
+  width: 100%;
+  padding: 20px 0;
+  background-color: #FAFAFA;
+  border-bottom: 1px #E0E0E0 solid;
+}
+
+#navigation-bar ul {
+  margin: 0;
+  list-style-type: none;
+}
+
+#navigation-bar ul#right {
+  position: fixed;
+  right: 30px;
+  margin: 0;
+  list-style-type: none;
+}
+
+#navigation-bar ul li {
+  margin: 0 10px;
+  float: left;
+  font-size: 16px;
+  letter-spacing: 1px;
+  line-height: 40px;
+  text-transform: uppercase;
+}
+
+#navigation-bar ul li.primary {
+  font-weight: bold;
+}
+
+#navigation-bar ul li.icon {
+  font-size: 20px;
+}
+
+
+/* UI Components */
+#square-button {
+  background-color: #00000000;
+  padding: 0 14px;
+  font-size: 14px;
+  line-height: 36px;
+  border: #212121 2px solid;
+}
+
+#square-button:hover {
+  background-color: #212121;
+  color: #FAFAFA;
+  cursor: pointer;
+}

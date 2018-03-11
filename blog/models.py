@@ -82,33 +82,27 @@ class Post(models.Model):
         ordering = ['created']
 
     # Meta infos
-    category = models.ForeignKey(Category, verbose_name=u'category', null=True, blank=True, on_delete=models.DO_NOTHING)
-    created = models.DateTimeField(auto_now_add=True, verbose_name=u'date')
-    preview = models.CharField(verbose_name=u'preview', null=True, blank=True, max_length=256)
-    tags = models.TextField(max_length=256, default='')     # DEPRECATED: Use PostTagRelation model instead!
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.DO_NOTHING)
+    created = models.DateTimeField(auto_now_add=True)
+    preview = models.CharField(null=True, blank=True, max_length=256)
+    tags = models.TextField(max_length=256, default='')  # DEPRECATED: Use PostTagRelation model instead!
     hitcount = models.IntegerField(default=0)
-    like_count = models.IntegerField(default=0)
+    like_count = models.IntegerField(default=0)  # DEPRECATED: Not supported anymore!
     series = models.ForeignKey(Series, related_name='posts', null=True, on_delete=models.DO_NOTHING)
 
     # Contents
-    title = models.CharField(u'title', max_length=256)
-    description = models.TextField(u'description', blank=True, default='')
-    content = models.TextField(u'content', blank=True, default='')
+    title = models.CharField(max_length=256)
+    description = models.TextField(blank=True, default='')
+    content = models.TextField(blank=True, default='')
 
     # Options
     public_post = models.BooleanField(default=False)
 
     # Types (0: general post / 1: notify post)
-    posttype = models.CharField(u'posttype', null=False, max_length=20)
+    posttype = models.CharField(null=False, max_length=20)  # DEPRECATED: Not supported anymore!
 
     def __str__(self):
         return self.title
-
-    def get_absolute_url(self):
-        """
-        :return: URL to the post detail.
-        """
-        return reverse('detail', kwargs={'pk': self.id})
 
     def is_recent_post(self):
         """
@@ -151,20 +145,3 @@ class PostTagRelation(models.Model):
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
-
-class PostHitAddress(models.Model):
-    """
-    Hit addresses of the post.
-    """
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    address = models.TextField(max_length=16, default='')
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-
-class PostLikeAddress(models.Model):
-    """
-    Liked addresses of the post.
-    """
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    address = models.TextField(max_length=16, default='')
-    timestamp = models.DateTimeField(auto_now_add=True)

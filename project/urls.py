@@ -5,7 +5,6 @@ from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView, RedirectView
 
 import blog.admin as blog_admin
-import blog.controllers as blog_controller
 import blog.models as blog
 import blog.views as blog_view
 import dashboard.views as dashboard_view
@@ -30,16 +29,14 @@ urlpatterns = [
     url(r'^about/$', RedirectView.as_view(pattern_name='resume', permanent=True)),
 
     # blog:
-    url(r'^blog/$', blog_view.main, name='blog'),
-    url(r'^blog/tag/(?P<tag>[\w|\W]+)/$', blog_view.by_tag, name='blog-tag'),
-    url(r'^blog/category/(?P<category>[\w|\W]+)/$', blog_view.by_category, name='blog-category'),
+    url(r'^blog/$', blog_view.index, name='blog'),
     url(r'^blog/myadmin/$', blog_admin.admin, name='blogadmin'),
     url(r'^blog/myadmin/create/tweet/$', blog_admin.create_tweet, name='blog-admin-create-tweet'),
     url(r'^blog/myadmin/modify/$', blog_admin.create_post, name='blog-admin-create-post'),
     url(r'^blog/myadmin/modify/(?P<pk>\d+)$', blog_admin.modify_post, name='blog-admin-modify-post'),
     url(r'^blog/myadmin/series/$', blog_admin.series, name='blog-admin-create-series'),
     url(r'^blog/myadmin/series/modify/(?P<id>\d+)/$', blog_admin.modify_series, name='blog-admin-modify-series'),
-    url(r'^blog/(?P<pk>\d+)/$', blog_view.post_detail, name='detail'),
+    url(r'^blog/(?P<pk>\d+)/$', blog_view.post, name='detail'),
 
     # dashboard:
     url(r'^dashboard/$', dashboard_view.dashboard, name='dashboard'),
@@ -75,11 +72,6 @@ urlpatterns = [
     # member:
     # url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
-
-    # apis:
-    url(r'^api/blog/posts/$', blog_controller.load_posts, name='api-blog-posts'),
-    url(r'^api/blog/like/(?P<id>\d+)/$', blog_controller.like_post, name='api-blog-like-post'),
-    url(r'^api/blog/unlike/(?P<id>\d+)/$', blog_controller.unlike_post, name='api-blog-unlike-post'),
 
     # static:
     url(r'^robots.txt/$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'), name='robots'),

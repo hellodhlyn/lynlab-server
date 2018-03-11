@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="google-site-verification" content="qsge0CQmLyeoE557CzeBrzTJ2WI1657njG1ZE-IS-wk"/>
+    <meta name="naver-site-verification" content="3bb494b2eba12c40a14fd6864f8028706bbb3cc5"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    {% load staticfiles %}
+    <link href="https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet" type="text/css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/lynlab.css' %}" rel="stylesheet" type="text/css">
+    <style>
+      {% block style %}
+      {% endblock %}
+    </style>
+    <script type="text/javascript" src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5a8713a8c30b87b5"></script>
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body>
+    {# Navigation Bar #}
+    <div id="navigation-bar">
+      <ul id="left">
+        <li class="primary"><a href="{% url 'home' %}">LYnLab</a></li>
+        <li><a href="{% url 'blog' %}">Blog</a></li>
+        <li><a href="{% url 'wiki' %}">Wiki</a></li>
+        <li><a href="{% url 'storage' %}">Storage</a></li>
+      </ul>
+      <ul id="right">
+        <li class="icon"><a target="_blank" href="https://twitter.com/HelloDHLyn"><i class="fab fa-twitter"></i></a></li>
+        <li class="icon"><a target="_blank" href="https://github.com/HelloDHLyn"><i class="fab fa-github"></i></a></li>
+        <li class="icon"><a target="_blank" href="https://www.linkedin.com/in/hoerin-do-13b065105/"><i class="fab fa-linkedin"></i></a></li>
+        {% if user.is_authenticated %}
+          <a href="{% url 'auth_logout' %}">
+            <li><button id="square-button" type="button">LOGOUT</button></li>
+          </a>
+        {% else %}
+          <a href="{% url 'auth_login' %}">
+            <li><button id="square-button" type="button">LOGIN</button></li>
+          </a>
+        {% endif %}
+      </ul>
+    </div>
+
+    {# Content #}
+    <div class="content">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+</html>
