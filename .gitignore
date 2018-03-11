@@ -74,3 +74,6 @@ pip-selfcheck.json
 
 categories.json
 confusables.json
+
+# Sensitive stuffs
+.envrc
