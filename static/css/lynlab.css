@@ -1,9 +1,16 @@
 body {
   margin: 0;
+  padding-bottom: 40px;
   font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #212121;
+}
+
+code {
+  font-family: 'Hack', monospace;
+  font-size: 14px;
+  line-height: 1.2;
 }
 
 a {

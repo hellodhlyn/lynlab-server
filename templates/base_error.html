@@ -1,40 +1,33 @@
-{% extends 'base.html' %}
-{% block style %}
-{% load staticfiles %}
-<style>
-body > .grid {
-	height: 100%;
-}
-
-.column {
-	max-width: 450px;
-}
-
-.sub.header {
-	line-height: 1.4em !important;
-}
-</style>
+{% extends 'base_lynlab.html' %}
+{% block head %}
+  <title>Error | LYnLab</title>
 {% endblock %}
+
+{% block style %}
+#error-view {
+  padding: 100px 0;
+  text-align: center;
+}
+
+#error-view i {
+  font-size: 72px;
+}
+
+#error-message {
+  margin-bottom: 0;
+}
+
+#error-hint {
+  margin: 4px 0 24px 0;
+}
+{% endblock %}
+
 {% block content %}
-<div class="ui middle aligned center aligned grid">
-	<div class="column">
-		<h2 class="ui center aligned icon header">
-		<i class="{% block icon %}{% endblock %} icon"></i>
-		<div class="content">
-            {% block error_title %}
-            {% endblock %}
-			<div class="sub header">
-                <p>
-                {% block error_description %}
-                {% endblock %}
-				</p>
-				오류가 지속적으로 나타나면 관리자에게 문의해주세요.<br/>
-				문의 : <a href="mailto:lyn@lynlab.co.kr">lyn@lynlab.co.kr</a>
-			</div>
-			<div class="ui divider"></div>
-			<a class="ui blue button" href="javascript:history.back()">이전으로 돌아가기</a>
-		</div>
-		</h2>
-	</div>
-</div>
+  <div id="error-view">
+    <i class="fas fa-exclamation-triangle"></i>
+    <h1 id="error-message">{% block error_title %}{% endblock %}</h1>
+    <p id="error-hint">{% block error_description %}{% endblock %}</p>
+
+    <a href="/"><button id="square-button" type="button">메인으로</button></a>
+  </div>
 {% endblock %}

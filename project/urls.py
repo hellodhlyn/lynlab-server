@@ -24,9 +24,7 @@ sitemaps = {
 }
 urlpatterns = [
     # global:
-    url(r'^$', TemplateView.as_view(template_name='welcome.html'), name='home'),
-    url(r'^resume/$', TemplateView.as_view(template_name='resume.html'), name='resume'),
-    url(r'^about/$', RedirectView.as_view(pattern_name='resume', permanent=True)),
+    url(r'^$', RedirectView.as_view(pattern_name='blog', permanent=True), name='home'),
 
     # blog:
     url(r'^blog/$', blog_view.index, name='blog'),

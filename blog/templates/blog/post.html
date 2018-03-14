@@ -19,7 +19,7 @@
 }
 
 #post-body {
-  margin: 50px 0 100px 0;
+  margin: 50px 0;
   text-align: left;
   line-height: 2.0;
 }
@@ -50,6 +50,25 @@
   margin: 40px auto;
   max-width: 600px;
 }
+
+#post-disclaimer {
+  margin-top: 40px;
+  font-size: 14px;
+  text-align: center;
+}
+
+#post-disclaimer a {
+  color: #1565C0;
+}
+
+{% endblock %}
+
+{% block head %}
+  <title>{{ post.title }} | LYnLab</title>
+  <meta property="og:title" content="{{ post.title }}" />
+  <meta property="og:description" content="{{ post.description }}" />
+  <meta property="og:url" content="{{ request.get_full_path }}" />
+  <meta property="og:type" content="article" />
 {% endblock %}
 
 {% block content %}
@@ -74,6 +93,13 @@
   {#    <vue-disqus shortname="lynlab" :identifier="'id=' + post.id" />#}
     </div>
     <div id="disqus_thread"></div>
+
+    <div id="post-disclaimer">
+      <p>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="크리에이티브 커먼즈 라이선스" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br/>
+        이 저작물은 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">크리에이티브 커먼즈 저작자표시-동일조건변경허락 4.0 국제 라이선스</a>에 따라 이용할 수 있습니다.
+      </p>
+    </div>
   </div>
 
   <script type="text/javascript">
