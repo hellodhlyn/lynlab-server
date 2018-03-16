@@ -7,7 +7,6 @@ from django.views.generic import TemplateView, RedirectView
 import blog.admin as blog_admin
 import blog.models as blog
 import blog.views as blog_view
-import dashboard.views as dashboard_view
 import moneybook.views as moneybook_view
 import storage.views as storage_view
 import wiki.services as wiki_service
@@ -29,16 +28,11 @@ urlpatterns = [
     # blog:
     url(r'^blog/$', blog_view.index, name='blog'),
     url(r'^blog/myadmin/$', blog_admin.admin, name='blogadmin'),
-    url(r'^blog/myadmin/create/tweet/$', blog_admin.create_tweet, name='blog-admin-create-tweet'),
     url(r'^blog/myadmin/modify/$', blog_admin.create_post, name='blog-admin-create-post'),
     url(r'^blog/myadmin/modify/(?P<pk>\d+)$', blog_admin.modify_post, name='blog-admin-modify-post'),
     url(r'^blog/myadmin/series/$', blog_admin.series, name='blog-admin-create-series'),
     url(r'^blog/myadmin/series/modify/(?P<id>\d+)/$', blog_admin.modify_series, name='blog-admin-modify-series'),
     url(r'^blog/(?P<pk>\d+)/$', blog_view.post, name='detail'),
-
-    # dashboard:
-    url(r'^dashboard/$', dashboard_view.dashboard, name='dashboard'),
-    url(r'^dashboard/bus$', dashboard_view.bus, name='dashboard-bus'),
 
     # wiki:
     url(r'^wiki/$', wiki_view.welcome, name='wiki'),

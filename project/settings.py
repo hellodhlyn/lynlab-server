@@ -30,10 +30,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_markup',
     'django_ajax',
-    'templatetags',
     'el_pagination',
     'blog',
-    'dashboard',
     'media',
     'moneybook',
     'wiki',
@@ -158,16 +156,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # Social OAuth backends
-TWITTER_ACCOUNT = os.environ.get('TWITTER_ACCOUNT')
-
-TWITTER_KEY = os.environ.get('TWITTER_KEY')
-
-TWITTER_SECRET = os.environ.get('TWITTER_SECRET')
-
-TWITTER_ACCESS_KEY = os.environ.get('TWITTER_ACCESS_KEY')
-
-TWITTER_ACCESS_SECRET = os.environ.get('TWITTER_ACCESS_SECRET')
-
 LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'

@@ -39,6 +39,11 @@
   bottom: -100%;
 }
 
+.post-paginator {
+  padding: 20px 0;
+  text-align: center;
+}
+
 @media only screen and (max-width: 768px) {
   .post-title {
     font-size: 24px;
@@ -79,4 +84,13 @@
       </div>
     </div>
   {% endfor %}
+
+  <p class="post-paginator">
+    {% if posts.has_previous %}
+      <a href="?page={{ posts.previous_page_number }}"><button id="square-button" type="button">&lt; 이전 페이지</button></a>
+    {% endif %}
+    {% if posts.has_next %}
+      <a href="?page={{ posts.next_page_number }}"><button id="square-button" type="button">다음 페이지 &gt;</button></a>
+    {% endif %}
+  </p>
 {% endblock %}

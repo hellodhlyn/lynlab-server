@@ -1,6 +1,3 @@
-import twitter
-from dateutil import parser
-from django.conf import settings
 from django.contrib import admin as djangoadmin
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -139,32 +136,6 @@ def __modify_post(request):
         return redirect(reverse('blog-admin-modify-post', kwargs={'pk': post.id}))
     elif 'submit_complete' in request.POST:
         return redirect(reverse('blogadmin'))
-
-
-@staff_member_required
-def create_tweet(request):
-    api = twitter.Api(consumer_key=settings.TWITTER_KEY,
-                      consumer_secret=settings.TWITTER_SECRET,
-                      access_token_key=settings.TWITTER_ACCESS_KEY,
-                      access_token_secret=settings.TWITTER_ACCESS_SECRET)
-
-    tweet_id = request.POST.get('tweet_id')
-    tweet = api.GetStatus(tweet_id)
-    tweet_time = parser.parse(tweet.created_at).strftime('%Y년 %m월 %d일 %I:%M %p')
-
-    post = {
-        'posttype': 'tweet',
-        'created': tweet_time,
-        'content': tweet.text,
-        'tags': tweet.id,
-    }
-
-    template_name = 'blog/admin/create_tweet.html'
-    context = {
-        'post': post,
-    }
-
-    return render(request, template_name, context)
 
 
 @staff_member_required

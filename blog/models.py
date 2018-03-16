@@ -85,9 +85,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.DO_NOTHING)
     created = models.DateTimeField(auto_now_add=True)
     preview = models.CharField(null=True, blank=True, max_length=256)
-    tags = models.TextField(max_length=256, default='')  # DEPRECATED: Use PostTagRelation model instead!
     hitcount = models.IntegerField(default=0)
-    like_count = models.IntegerField(default=0)  # DEPRECATED: Not supported anymore!
     series = models.ForeignKey(Series, related_name='posts', null=True, on_delete=models.DO_NOTHING)
 
     # Contents
@@ -97,9 +95,6 @@ class Post(models.Model):
 
     # Options
     public_post = models.BooleanField(default=False)
-
-    # Types (0: general post / 1: notify post)
-    posttype = models.CharField(null=False, max_length=20)  # DEPRECATED: Not supported anymore!
 
     def __str__(self):
         return self.title
