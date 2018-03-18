@@ -32,6 +32,12 @@ a:hover {
   padding: 16px;
 }
 
+@media only screen and (max-width: 768px) {
+  .content {
+    margin-top: 40px;
+  }
+}
+
 
 /* Navigation Bar */
 #navigation-bar {
@@ -49,15 +55,14 @@ a:hover {
   list-style-type: none;
 }
 
-#navigation-bar ul#right {
+#navigation-bar ul.right {
   position: fixed;
+  padding-left: 0;
   right: 30px;
-  margin: 0;
-  list-style-type: none;
 }
 
 #navigation-bar ul li {
-  margin: 0 10px;
+  padding: 0 10px;
   float: left;
   font-size: 16px;
   letter-spacing: 1px;
@@ -71,6 +76,45 @@ a:hover {
 
 #navigation-bar ul li.icon {
   font-size: 20px;
+}
+
+#navigation-bar .menu-button {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  #navigation-bar {
+    padding: 10px 0;
+  }
+
+  #navigation-bar .menu-button {
+    display: block;
+    padding-right: 15px;
+  }
+
+  #navigation-bar ul.title {
+    padding-left: 10px;
+  }
+
+  #navigation-bar ul.items {
+    display: none;
+    background: #FAFAFA;
+    padding-bottom: 10px;
+  }
+
+  #navigation-bar ul.items.right {
+    right: 0;
+    width: 100%;
+    border-bottom: 1px #E0E0E0 solid;
+  }
+
+  #navigation-bar ul.items.right li:first-child {
+    margin-left: 40px;
+  }
+
+  #navigation-bar ul li.menu {
+    float: none;
+  }
 }
 
 

@@ -1,5 +1,9 @@
 {% extends 'base_lynlab.html' %}
 
+{% block head %}
+  <title>LYnLab Blog</title>
+{% endblock %}
+
 {% block style %}
 .filter.container {
   text-align: center;
@@ -51,6 +55,11 @@
 
   .post-summary {
     flex-wrap: wrap;
+  }
+
+  .post-preview {
+    max-width: 90vw;
+    margin: 0 auto;
   }
 }
 {% endblock %}

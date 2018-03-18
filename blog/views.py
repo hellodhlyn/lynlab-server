@@ -32,15 +32,23 @@ def post(request, pk):
     Get a post.
     """
     try:
-        post = Post.objects.get(id=pk)
+        post_item = Post.objects.get(id=pk)
     except ObjectDoesNotExist:
         raise Http404()
 
-    if not post.public_post:
+    if not post_item.public_post:
         raise Http404()
 
+    # Increment hit count for first visit (by s ession)
+    hit_key = f"hit-post-{post_item.id}"
+    if hit_key not in request.session:
+        post_item.hitcount += 1
+        post_item.save()
+
+        request.session[hit_key] = 1
+
     context = {
-        'post': post
+        'post': post_item
     }
 
     return render(request, 'blog/post.html', context)
