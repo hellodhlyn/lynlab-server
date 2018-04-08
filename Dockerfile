@@ -5,11 +5,12 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Add requirements
-ADD requirements.txt /usr/src/app
+ADD ./requirements.txt ./requirements.txt
 RUN pip install -r requirements.txt
-
-RUN git clone -b multimarkdown https://github.com/HelloDHLyn/Python-Markdown /usr/src/Python-Markdown
-RUN pip install -e /usr/src/Python-Markdown
+RUN pip install git+https://github.com/HelloDHLyn/Python-Markdown@multimarkdown
 
 # Add application
 ADD . /usr/src/app
+
+ENTRYPOINT [ "./docker-entrypoint.sh" ]
+CMD [ "python", "manage.py", "runserver", "0.0.0.0:8080" ]

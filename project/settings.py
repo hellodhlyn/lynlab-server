@@ -1,19 +1,21 @@
 import os
 from django.utils.translation import ugettext_lazy as _
 
-from project.settings import settings_var
+import pymysql
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+pymysql.install_as_MySQLdb()
 
-SECRET_KEY = settings_var.SECRET_KEY
+DEBUG = (os.environ.get('DJANGO_ENV', '') != 'prod')
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 ALLOWED_HOSTS = [
     'localhost',
     'localhost.',
     '.lynlab.co.kr',
     '.lynlab.co.kr.',
-    '128.199.104.189',
-    '128.199.104.189.'
 ]
 
 # Application definition
@@ -28,10 +30,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_markup',
     'django_ajax',
-    'templatetags',
     'el_pagination',
     'blog',
-    'dashboard',
     'media',
     'moneybook',
     'wiki',
@@ -73,8 +73,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USERNAME'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': os.environ['DB_HOST'],
+        'PORT': '3306',
     }
 }
 
@@ -145,23 +149,13 @@ EMAIL_HOST = 'smtp.sendgrid.net'
 
 EMAIL_HOST_USER = 'HelloDHLyn'
 
-EMAIL_HOST_PASSWORD = settings_var.EMAIL_HOST_PASSWORD
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 
 EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
 
 # Social OAuth backends
-TWITTER_ACCOUNT = settings_var.TWITTER_ACCOUNT
-
-TWITTER_KEY = settings_var.TWITTER_KEY
-
-TWITTER_SECRET = settings_var.TWITTER_SECRET
-
-TWITTER_ACCESS_KEY = settings_var.TWITTER_ACCESS_KEY
-
-TWITTER_ACCESS_SECRET = settings_var.TWITTER_ACCESS_SECRET
-
 LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'

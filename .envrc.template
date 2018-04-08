@@ -1,0 +1,10 @@
+export DJANGO_ENV=dev
+export DJANGO_SECRET_KEY=
+
+export DB_HOST=
+export DB_USERNAME=
+export DB_PASSWORD=
+export DB_NAME=
+
+export AWS_X_API_KEY=
+export EMAIL_HOST_PASSWORD=

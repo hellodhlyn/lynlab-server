@@ -1,9 +1,8 @@
 import json
 
 import certifi
+import os
 import urllib3
-
-from project.settings.settings_var import AWS_X_API_KEY
 
 
 class DynamoDBHelper(object):
@@ -13,9 +12,9 @@ class DynamoDBHelper(object):
     def __request(cls, method, url, body=None):
         if body:
             encoded_body = json.dumps(body).encode('utf-8')
-            res = cls._pool.request(method, url, body=encoded_body, headers={'x-api-key': AWS_X_API_KEY})
+            res = cls._pool.request(method, url, body=encoded_body, headers={'x-api-key': os.environ['AWS_X_API_KEY']})
         else:
-            res = cls._pool.request(method, url, headers={'x-api-key': AWS_X_API_KEY})
+            res = cls._pool.request(method, url, headers={'x-api-key': os.environ['AWS_X_API_KEY']})
 
         if res.status >= 400:
             raise RuntimeError(f"요청 중 오류가 발생했습니다. ({res.status})")
