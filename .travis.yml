@@ -16,16 +16,16 @@ script:
 after_success:
   # Push only for push integrations, not pull request.
   - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
-      docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+      docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
 
-      docker build -t lynlab/lynlab:${TRAVIS_BRANCH} .
-      docker push lynlab/lynlab:${TRAVIS_BRANCH}
+      docker build -t lynlab/lynlab:${TRAVIS_BRANCH} .;
+      docker push lynlab/lynlab:${TRAVIS_BRANCH};
 
-      docker build -t lynlab/lynlab:latest .
-      docker push lynlab/lynlab:latest
+      docker build -t lynlab/lynlab:latest .;
+      docker push lynlab/lynlab:latest;
 
       if [ -n "${TRAVIS_TAG}" ]; then
-        docker build -t lynlab/lynlab:${TRAVIS_TAG} .
-        docker push lynlab/lynlab:${TRAVIS_TAG}
+        docker build -t lynlab/lynlab:${TRAVIS_TAG} .;
+        docker push lynlab/lynlab:${TRAVIS_TAG};
       fi
     fi
