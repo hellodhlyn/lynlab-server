@@ -67,6 +67,7 @@ target/
 
 # Develop environments
 .idea/
+.vscode/
 run.sh
 migrate.sh
 sftp-config.json
@@ -74,3 +75,6 @@ pip-selfcheck.json
 
 categories.json
 confusables.json
+
+# Sensitive stuffs
+.envrc

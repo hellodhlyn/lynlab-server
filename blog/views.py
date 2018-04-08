@@ -1,85 +1,54 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 from django.http import Http404
 from django.shortcuts import render
 
-from .controllers import get_client_ip, is_recent_visitor
 from .models import *
 
 
-def main(request):
+def index(request):
     """
-    List of all posts. (/)
-    """
-    template_name = 'blog/home.html'
-    context = {'types': PostType.objects.all()}
+    List all posts.
 
-    return render(request, template_name, context)
-
-
-def by_tag(request, tag):
+    Query param =>
+      category: (int) ID of category.
     """
-    Get list of posts filtered by a tag. (/tag/{tag})
-    :param request:
-    :param tag: URL query {tag}
-    """
-    template_name = 'blog/home.html'
+    post_filters = {'public_post': True}
+    if request.GET.get('category'):
+        post_filters['category'] = request.GET['category']
+    post_list = Post.objects.filter(**post_filters).order_by('-created')
+
+    page = request.GET.get('page', 1)
     context = {
-        'search_tag': tag,
-        'types': PostType.objects.all(),
+        'post_filters': post_filters,
+        'posts': Paginator(post_list, 20).get_page(page),
     }
 
-    return render(request, template_name, context)
+    return render(request, 'blog/index.html', context)
 
 
-def by_category(request, category):
+def post(request, pk):
     """
-    Get list of posts filtered by a category. (/category/{category})
-    :param request:
-    :param category: URL query {category}
-    """
-    template_name = 'blog/home.html'
-    context = {
-        'search_category': category,
-        'types': PostType.objects.all(),
-    }
-
-    return render(request, template_name, context)
-
-
-def post_detail(request, pk):
-    """
-    Get detail of the post. (/{pk})
-    :param request:
-    :param pk: ID of the post, URL query {pk}
+    Get a post.
     """
     try:
-        post = Post.objects.get(id=pk)
-        if post.public_post is False:
-            raise Http404
+        post_item = Post.objects.get(id=pk)
     except ObjectDoesNotExist:
-        raise Http404
+        raise Http404()
 
-    address = get_client_ip(request)
+    if not post_item.public_post:
+        raise Http404()
 
-    # Increase the hit count
-    hits = sorted(PostHitAddress.objects.filter(post=post, address=address), key=lambda hit: hit.timestamp,
-                  reverse=True)
-    if len(hits) == 0 or not is_recent_visitor(hits[0].timestamp):
-        post.hitcount += 1
-        post.save()
+    # Increment hit count for first visit (by s ession)
+    hit_key = f"hit-post-{post_item.id}"
+    if hit_key not in request.session:
+        post_item.hitcount += 1
+        post_item.save()
 
-        hit_instance = PostHitAddress(post=post, address=address)
-        hit_instance.save()
+        request.session[hit_key] = 1
 
-    # Get liked info
-    likes = sorted(PostLikeAddress.objects.filter(post=post, address=address), key=lambda like: like.timestamp,
-                   reverse=True)
-    liked = len(likes) > 0 and is_recent_visitor(likes[0].timestamp)
-
-    # Get the content and make context
     context = {
-        'post': post,
-        'liked': liked,
+        'post': post_item
     }
 
-    return render(request, 'blog/detail.html', context)
+    return render(request, 'blog/post.html', context)

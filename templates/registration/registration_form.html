@@ -1,47 +1,89 @@
-{% extends 'base_spectre.html' %}
-{% block head %}
-  {% load staticfiles %}
-  <title>회원가입 | LYnLab</title>
-  <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+{% extends 'base_lynlab.html' %}
+
+{% block style %}
+  .login.container {
+    max-width: 320px;
+    padding: inherit 0;
+  }
+
+  .login h1 {
+    font-weight: normal;
+  }
+
+  .login a {
+    color: #1565C0;
+  }
+
+  .login .error {
+    color: #F44336;
+  }
+
+  .login input {
+    margin: 4px 0;
+    width: calc(100% - 8px);
+    height: 24px;
+    font-size: 16px;
+  }
+
+  .login button {
+    width: 100%;
+  }
+
+  .login button {
+    background-color: #3F51B5;
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
 {% endblock %}
+
+{% block head %}
+  <title>회원가입 | LYnLab</title>
+{% endblock %}
+
 {% block content %}
-  <h1>LYnLab에 회원가입</h1>
+  <div class="login container">
+    <h1>LYnLab에 회원가입</h1>
 
-  {% if form.errors %}
-    <div class="toast toast-error">
-      <button class="btn btn-clear float-right"></button>
-      회원가입 중 오류가 발생했습니다. 조건을 확인한 후 다시 시도해주세요.
-    </div>
-  {% endif %}
-
-  <form class="form-group" method="post" action=".">
-    {% csrf_token %}
-    <p>
-      <label>
-        아이디
-        <input class="form-input" name="username" type="text" maxlength="255">
-      </label>
-    </p>
-    <p>
-      <label>
-        이메일
-        <input class="form-input" name="email" type="email">
-      </label>
-    </p>
-    <p>
-      <label>
-        비밀번호
-        <input class="form-input" name="password1" type="password">
-      </label>
-    </p>
-    <p>
-      <label>
-        비밀번호 확인
-        <input class="form-input" name="password2" type="password">
-      </label>
-    </p>
-    <p>
-      <button class="btn btn-primary input-group-bt">가입 완료!</button>
-    </p>
-  </form>
+    {% if form.errors %}
+      <div class="error">
+        데이터가 올바르지 않습니다. 조건을 확인한 후 다시 시도해주세요.
+      </div>
+    {% endif %}
+  
+    <form class="form-group" method="post" action=".">
+      {% csrf_token %}
+      <p>
+        <label>
+          아이디
+          <input class="form-input" name="username" type="text" maxlength="255">
+        </label>
+      </p>
+      <p>
+        <label>
+          이메일
+          <input class="form-input" name="email" type="email">
+        </label>
+      </p>
+      <p>
+        <label>
+          비밀번호
+          <input class="form-input" name="password1" type="password">
+        </label>
+      </p>
+      <p>
+        <label>
+          비밀번호 확인
+          <input class="form-input" name="password2" type="password">
+        </label>
+      </p>
+      <p>
+        <button class="btn btn-primary input-group-bt">가입 완료!</button>
+      </p>
+    </form>
+  </div>
 {% endblock %}
