@@ -1,30 +1,51 @@
 # lynlab
-## Deploy & Run
-### Requirements
-  - git
-  - docker-compose
 
-### Setup
+[![Build Status](https://travis-ci.org/lynlab/lynlab.svg?branch=master)](https://travis-ci.org/lynlab/lynlab)
+
+## Prerequisites
+  - python 3.6 (or later)
+  - docker
+
+## Development
 ```
-# 레포지토리 Clone
-git clone https://github.com/HelloDHLyn/lynlab.git
+# Install required libraries.
+pip install -r requirements.txt
+pip install git+https://github.com/HelloDHLyn/Python-Markdown@multimarkdown
 
-# 설정 변수 세팅
-vim project/settings/settings_var.py
+# Migrate database schema.
+python manage.py migrate
 
-# Docker 실행
-docker-compose up -d
+# Run server.
+python manange.py runserver localhost:8080
 ```
 
-### docker profiles
-  - `docker-compose.dev.yml` : local development environment (DEBUG mode)
-  - `docker-compose.alpha.yml` : remote test environment
-  - `docker-compose.yml` : production environment
+You can use [direnv](https://direnv.net/) to set environment variables easily.
 
-## Django apps
+```
+cp .envrc.template .envrc
+vim .envrc
+```
+
+## Deployment
+```
+docker build -t lynlab/lynlab .
+docker run -e 'NAME=VALUE' ... lynlab/lynlab
+```
+
+## Environment variables
+  - `DJANGO_ENV` : application profile (`dev` | `prod`)
+  - `DJANGO_SECRET_KEY`
+  - `DB_HOST`
+  - `DB_USERNAME`
+  - `DB_PASSWORD`
+  - `DB_NAME`
+  - `AWS_X_API_KEY`
+  - `EMAIL_HOST_PASSWORD`
+
+## Services
   - public
-    - 블로그 (`/blog`)
-    - 위키 (`/wiki`)
-    - 스토리지 (구. media, `/storage`)
+    - Blog (`/blog`)
+    - Wiki (`/wiki`)
+    - Storage (formal: media, `/storage`)
   - private
-    - 가계부
+    - Moneybook

@@ -12,5 +12,5 @@ RUN pip install git+https://github.com/HelloDHLyn/Python-Markdown@multimarkdown
 # Add application
 ADD . /usr/src/app
 
-ENTRYPOINT ./docker-entrypoint.sh
+ENTRYPOINT [ "./docker-entrypoint.sh" ]
 CMD [ "python", "manage.py", "runserver", "0.0.0.0:8080" ]
