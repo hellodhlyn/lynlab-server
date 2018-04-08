@@ -1,8 +1,9 @@
-{% extends 'base.html' %}
-{% block style %}
-{% load staticfiles %}
+{% extends 'base_lynlab.html' %}
+{% block head %}
 <title>인증 실패 | LYnLab</title>
 {% endblock %}
 {% block content %}
-	<p>인증에 실패했습니다. 같은 오류가 게속하여 발생한다면 관리자에게 문의해주세요.</p>
+  <div class="container">
+    <p>인증에 실패했습니다. 같은 오류가 게속하여 발생한다면 관리자에게 문의해주세요.</p>
+  </div>
 {% endblock %}

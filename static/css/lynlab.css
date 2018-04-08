@@ -46,6 +46,7 @@ a:hover {
   height: 40px;
   width: 100%;
   padding: 20px 0;
+  box-sizing: initial;
   background-color: #FAFAFA;
   border-bottom: 1px #E0E0E0 solid;
 }
