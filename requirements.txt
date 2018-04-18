@@ -10,3 +10,4 @@ urllib3
 certifi
 python-magic==0.*
 pymysql
+newrelic==3.2.*
