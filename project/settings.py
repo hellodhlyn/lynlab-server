@@ -31,6 +31,7 @@ INSTALLED_APPS = (
     'django_markup',
     'django_ajax',
     'el_pagination',
+    'minio_storage',
     'blog',
     'media',
     'moneybook',
@@ -68,6 +69,22 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'project.wsgi.application'
+
+# Minio (Storage and Media)
+DEFAULT_FILE_STORAGE = 'minio_storage.storage.MinioMediaStorage'
+
+STATICFILES_STORAGE = 'minio_storage.storage.MinioStaticStorage'
+
+MINIO_STORAGE_ENDPOINT = os.environ['MINIO_ENDPOINT']
+
+MINIO_STORAGE_ACCESS_KEY = os.environ['MINIO_ACCESS_KEY']
+
+MINIO_STORAGE_SECRET_KEY = os.environ['MINIO_SECRET_KEY']
+
+MINIO_STORAGE_MEDIA_BUCKET_NAME = 'media'
+
+MINIO_STORAGE_STATIC_BUCKET_NAME = 'static-dev'
+
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -168,6 +185,3 @@ MARKUP_SETTINGS = {
         'safe_mode': False
     }
 }
-
-# Stoarge
-MEDIA_ROOT = os.path.join(BASE_DIR, 'storage/objects')

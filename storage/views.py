@@ -39,7 +39,7 @@ def upload(request):
 
         if form.is_valid():
             # Make object and save
-            obj = Object(file=request.FILES['file'], name=request.POST['name'], uploader=request.user)
+            obj = Object(file_obj=request.FILES['file'], name=request.POST['name'], uploader=request.user)
             try:
                 with transaction.atomic():
                     obj.save()
@@ -89,7 +89,7 @@ def show(request, name):
         except ObjectDoesNotExist:
             return HttpResponseNotFound()
 
-        return HttpResponse(obj.file.read(), content_type=obj.content_type)
+        return HttpResponse(obj.file_obj.read(), content_type=obj.content_type)
 
 
 @login_required

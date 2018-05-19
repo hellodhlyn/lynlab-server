@@ -12,7 +12,7 @@ class Object(models.Model):
     스토리지 파일
     """
 
-    file = models.FileField()
+    file_obj = models.FileField()
     content_type = models.CharField(max_length=200, default='text')
 
     name = models.CharField(max_length=200, unique=True)
@@ -25,10 +25,10 @@ class Object(models.Model):
 
 @receiver(pre_save, sender=Object)
 def pre_object_save(sender, instance, *args, **kwargs):
-    instance.content_type = magic.from_buffer(instance.file.read(1024), mime=True)
+    instance.content_type = \
+        magic.from_buffer(instance.file_obj.read(1024), mime=True)
 
 
 @receiver(post_delete, sender=Object)
 def post_object_delete(sender, instance, *args, **kwargs):
-    if os.path.isfile(instance.file.path):
-        os.remove(instance.file.path)
+    instance.file_obj.delete()

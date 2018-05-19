@@ -31,7 +31,7 @@
     {% for file in files %}
       <tr>
         <td><a href="{% url 'storage-show' file.name %}">{{ file.name }}</a></td>
-        <td>{{ file.file.size|intcomma }} bytes</td>
+        <td>{{ file.file_obj.size|intcomma }} bytes</td>
         <td>{{ file.uploader }}</td>
         <td>{{ file.modified_at }}</td>
       </tr>
