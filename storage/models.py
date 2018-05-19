@@ -3,7 +3,7 @@ import os
 import magic
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_delete, pre_save
+from django.db.models.signals import pre_save, pre_delete
 from django.dispatch import receiver
 
 
@@ -25,10 +25,9 @@ class Object(models.Model):
 
 @receiver(pre_save, sender=Object)
 def pre_object_save(sender, instance, *args, **kwargs):
-    instance.content_type = \
-        magic.from_buffer(instance.file_obj.read(1024), mime=True)
+    instance.content_type = magic.from_buffer(instance.file_obj.read(1024), mime=True)
 
 
-@receiver(post_delete, sender=Object)
-def post_object_delete(sender, instance, *args, **kwargs):
+@receiver(pre_delete, sender=Object)
+def pre_object_delete(sender, instance, *args, **kwargs):
     instance.file_obj.delete()

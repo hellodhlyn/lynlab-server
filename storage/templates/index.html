@@ -1,38 +1,72 @@
-{% extends 'base_spectre.html' %}
+{% extends 'base_lynlab.html' %}
+
 {% block head %}
   <title>LYnStorage</title>
 {% endblock %}
+
+{% block style %}
+table {
+  width: 100%;
+  text-align: left;
+}
+
+tr {
+  height: 50px;
+}
+
+th {
+  padding: 0 10px 0 10px;
+  border-bottom: 1px #E0E0E0 solid;
+}
+
+td {
+  padding: 0 10px 0 10px;
+}
+
+tbody tr:nth-child(2n) {
+  background-color: #fafafa;
+}
+
+table .filename {
+  color: #1565C0;
+}
+{% endblock %}
+
 {% block content %}
-  <h2>내 파일</h2>
+  <div class="container">
+    <h1>내 파일</h1>
 
-  {% if messages %}
-    {% for message in messages %}
-      {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-        <div class="toast toast-success">
-          <button class="btn btn-clear float-right"></button>
-          {{ message }}
-        </div>
-      {% endif %}
-    {% endfor %}
-  {% endif %}
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+          <p>{{ message }}</p>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
 
-  <p>총 {{ total_count }}개의 파일이 있습니다.</p>
-  <table class="table table-striped table-hover">
-    <thead>
-    <tr>
-      <th>파일명</th>
-      <th>업로드 일자</th>
-      <th>동작</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for file in files %}
+    <p>
+      <a href="{% url 'storage-upload' %}">
+        <button class="primary-button" type="button">새 파일 업로드</button>
+      </a>
+    </p>
+
+    <table>
+      <thead>
       <tr>
-        <td><a href="{% url 'storage-show' file.name %}">{{ file.name }}</a></td>
-        <td>{{ file.modified_at }}</td>
-        <td><a href="{% url 'storage-delete' file.name %}"><i class="fa fa-trash-alt"></i> 삭제</a></td>
+        <th>파일명</th>
+        <th>업로드 일자</th>
+        <th>동작</th>
       </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+      {% for file in files %}
+        <tr>
+          <td class="filename"><a href="{% url 'storage-show' file.name %}">{{ file.name }}</a></td>
+          <td>{{ file.modified_at }}</td>
+          <td><a href="{% url 'storage-delete' file.name %}"><i class="fa fa-trash-alt"></i></a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}

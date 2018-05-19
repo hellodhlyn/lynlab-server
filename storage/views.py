@@ -1,4 +1,5 @@
 import datetime
+import uuid
 
 from django import urls
 from django.contrib import messages
@@ -38,8 +39,11 @@ def upload(request):
         form = ObjectForm(data=request.POST, files=request.FILES)
 
         if form.is_valid():
+            uploaded_file = request.FILES['file']
+            uploaded_file.name = str(uuid.uuid4())
+
             # Make object and save
-            obj = Object(file_obj=request.FILES['file'], name=request.POST['name'], uploader=request.user)
+            obj = Object(file_obj=uploaded_file, name=request.POST['name'], uploader=request.user)
             try:
                 with transaction.atomic():
                     obj.save()
@@ -59,22 +63,6 @@ def upload(request):
     }
 
     return render(request, 'upload.html', context=context)
-
-
-@login_required
-def recent(request):
-    """
-    Get list of objects.
-    """
-    if request.method == 'GET':
-        cursor = request.GET.get('cursor', datetime.datetime.now())
-        context = {
-            'total_count': Object.objects.count(),
-            'files': Object.objects.filter(modified_at__lt=cursor).order_by('-created_at'),
-            'navbar': _navigation()
-        }
-
-        return render(request, 'recent.html', context=context)
 
 
 def show(request, name):

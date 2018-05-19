@@ -73,7 +73,10 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Minio (Storage and Media)
 DEFAULT_FILE_STORAGE = 'minio_storage.storage.MinioMediaStorage'
 
-STATICFILES_STORAGE = 'minio_storage.storage.MinioStaticStorage'
+if DEBUG:
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+else:
+    STATICFILES_STORAGE = 'minio_storage.storage.MinioStaticStorage'
 
 MINIO_STORAGE_ENDPOINT = os.environ['MINIO_ENDPOINT']
 

@@ -7,6 +7,10 @@ body {
   color: #212121;
 }
 
+h1 {
+  font-weight: normal;
+}
+
 code {
   font-family: 'Hack', monospace;
   font-size: 14px;
@@ -120,7 +124,7 @@ a:hover {
 
 
 /* UI Components */
-#square-button {
+.square-button {
   background-color: #00000000;
   padding: 0 14px;
   font-size: 14px;
@@ -128,8 +132,22 @@ a:hover {
   border: #212121 2px solid;
 }
 
-#square-button:hover {
+.square-button:hover {
   background-color: #212121;
   color: #FAFAFA;
+  cursor: pointer;
+}
+
+.primary-button {
+  background-color: #3F51B5;
+  padding: 10px 24px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border: none;
+}
+
+.primary-button:hover {
   cursor: pointer;
 }
