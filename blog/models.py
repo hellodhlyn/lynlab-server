@@ -1,7 +1,6 @@
 import datetime
 
 from django.db import models
-from django.urls import reverse
 from django.utils import translation
 from django.utils.timezone import utc
 
@@ -53,7 +52,7 @@ class Tag(models.Model):
     def get_name(self):
         try:
             return TagTranslations.objects.get(tag=self, language=translation.get_language())
-        except:
+        except Exception as e:
             return self.url
 
     def __str__(self):
@@ -139,4 +138,3 @@ class PostTagRelation(models.Model):
     """
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-

@@ -20,8 +20,6 @@ def welcome(request):
 def _get_document_item(request, title):
     """
     문서를 가져온다.
-    :param request: 
-    :return: 
     """
     document = Document.objects.get(title=title)
 
