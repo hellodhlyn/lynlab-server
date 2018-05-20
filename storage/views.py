@@ -22,7 +22,6 @@ def index(request):
         context = {
             'total_count': Object.objects.filter(uploader=request.user).count(),
             'files': Object.objects.filter(uploader=request.user, modified_at__lt=cursor).order_by('-created_at'),
-            'navbar': _navigation()
         }
 
         return render(request, 'index.html', context=context)
@@ -57,10 +56,7 @@ def upload(request):
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
 
-    context = {
-        'form': form,
-        'navbar': _navigation()
-    }
+    context = {'form': form}
 
     return render(request, 'upload.html', context=context)
 
@@ -69,15 +65,21 @@ def show(request, name):
     """
     Get an object.
     """
-    if request.method == 'GET':
-        try:
-            obj = Object.objects.get(name=name)
+    try:
+        obj = Object.objects.get(name=name)
 
-            # TODO: Block if safety check is not finished
-        except ObjectDoesNotExist:
-            return HttpResponseNotFound()
+        # TODO: Block if safety check is not finished
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound()
 
-        return HttpResponse(obj.file_obj.read(), content_type=obj.content_type)
+    return HttpResponse(obj.file_obj.read(), content_type=obj.content_type)
+
+
+def show_from_media(request, name):
+    """
+    Migrated from media.
+    """
+    return redirect(reverse('storage-show', kwargs={'name': name}), permanent=True)
 
 
 @login_required
@@ -98,25 +100,3 @@ def delete(request, name):
 
         messages.add_message(request, level=messages.SUCCESS, message='성공적으로 삭제되었습니다.')
         return redirect(reverse('storage'))
-
-
-def _navigation():
-    return {
-        'title': {'name': 'LYnStorage', 'url': 'storage'},
-        'left': [
-            {'name': '최근 바뀜', 'url': 'storage-recent'},
-            {'name': '업로드', 'url': 'storage-upload'},
-        ],
-        'right': [
-            {
-                'name': 'LYnLab',
-                'dropdown': True,
-                'submenu': [
-                    {'name': 'LYnLab', 'url': 'home'},
-                    {'name': '블로그', 'url': 'blog'},
-                    {'name': '위키', 'url': 'wiki'},
-                    {'outer_url': True, 'name': '앉아서 집에가자', 'url': 'https://bus.lynlab.co.kr'}
-                ]
-            },
-        ],
-    }

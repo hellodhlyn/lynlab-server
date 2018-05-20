@@ -33,7 +33,6 @@ INSTALLED_APPS = (
     'el_pagination',
     'minio_storage',
     'blog',
-    'media',
     'moneybook',
     'wiki',
     'storage',
