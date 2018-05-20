@@ -39,6 +39,9 @@ docker run -e 'NAME=VALUE' ... lynlab/lynlab
   - `DB_USERNAME`
   - `DB_PASSWORD`
   - `DB_NAME`
+  - `MINIO_ENDPOINT`
+  - `MINIO_ACCESS_KEY`
+  - `MINIO_SECRET_KEY`
   - `AWS_X_API_KEY`
   - `EMAIL_HOST_PASSWORD`
 

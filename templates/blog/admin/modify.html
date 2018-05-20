@@ -102,10 +102,12 @@
 
       <!-- 기타 설정 -->
       <div class="field">
-        <button type="button" onclick="window.open('/media/upload/')" class="ui button">
-          <i class="photo icon"></i>
-          사진 올리기
-        </button>
+        <a href="{% url 'storage-upload' %}">
+          <button type="button" class="ui button">
+            <i class="photo icon"></i>
+            사진 올리기
+          </button>
+        </a>
         <div class="ui checkbox">
           <input type="checkbox" name="public_post" {% if post.public_post %}checked{% endif %}/>
           <label>공개 문서</label>

@@ -2,6 +2,7 @@ django==2.0.*
 djangoajax
 django-el-pagination
 django-markup
+django-minio-storage == 0.*
 django-registration
 twitter
 python-dateutil

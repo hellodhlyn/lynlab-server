@@ -6,10 +6,6 @@
     padding: inherit 0;
   }
 
-  .login h1 {
-    font-weight: normal;
-  }
-
   .login a {
     color: #1565C0;
   }
@@ -27,17 +23,6 @@
 
   .login button {
     width: 100%;
-  }
-
-  .login button {
-    background-color: #3F51B5;
-    border: none;
-    color: white;
-    padding: 10px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
   }
 {% endblock %}
 
@@ -66,7 +51,7 @@
         <label>비밀번호</label><br/>
         <input class="form-input" name="password" type="password">
       </p>
-      <button class="primary">로그인</button>
+      <button class="primary-button">로그인</button>
     </form>
     <p>계정이 없으신가요? <a href="{% url 'registration_register' %}">회원가입</a></p>
   </div>

@@ -7,7 +7,7 @@ class ObjectForm(forms.Form):
                                'class': 'form-input',
                                'placeholder': '파일 이름으로 URL이 생성됩니다.',
                            }))
-    file = forms.FileField(label='업로드 파일',
+    file = forms.FileField(label='업로드할 파일',
                            widget=forms.FileInput(attrs={
                                'class': 'form-input'
                            }))

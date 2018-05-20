@@ -11,7 +11,6 @@ import moneybook.views as moneybook_view
 import storage.views as storage_view
 import wiki.services as wiki_service
 import wiki.views as wiki_view
-from media.views import show_media
 
 sitemaps = {
     'sitemaps': {
@@ -44,7 +43,8 @@ urlpatterns = [
     url(r'^wiki/(?P<title>[\w|\W]+)/$', wiki_view.get_document, name='wiki-document'),
 
     # media:
-    url(r'^media/(?P<pk>[\w|\W]+)/$', show_media, name='mediashow'),
+    # Deprecated! Permanently redirect to storage service.
+    url(r'^media/(?P<name>[\w|\W]+)/$', storage_view.show_from_media, name='mediashow'),
 
     # moneybook:
     url(r'^moneybook/$', moneybook_view.main, name='moneybook'),
@@ -53,7 +53,6 @@ urlpatterns = [
 
     # storage
     url(r'^storage/$', storage_view.index, name='storage'),
-    url(r'^storage/recent/$', storage_view.recent, name='storage-recent'),
     url(r'^storage/upload/$', storage_view.upload, name='storage-upload'),
     url(r'^storage/delete/(?P<name>[\w|\W]+)/$', storage_view.delete, name='storage-delete'),
     url(r'^storage/(?P<name>[\w|\W]+)/$', storage_view.show, name='storage-show'),

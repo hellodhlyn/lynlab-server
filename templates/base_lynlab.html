@@ -40,9 +40,9 @@
         <li class="icon"><a target="_blank" href="https://github.com/HelloDHLyn"><i class="fab fa-github"></i></a></li>
         <li class="icon"><a target="_blank" href="https://www.linkedin.com/in/hoerin-do-13b065105/"><i class="fab fa-linkedin"></i></a></li>
         {% if user.is_authenticated %}
-          <li><a href="{% url 'auth_logout' %}"><button id="square-button" type="button">LOGOUT</button></a></li>
+          <li><a href="{% url 'auth_logout' %}"><button class="square-button" type="button">LOGOUT</button></a></li>
         {% else %}
-          <li><a href="{% url 'auth_login' %}"><button id="square-button" type="button">LOGIN</button></a></li>
+          <li><a href="{% url 'auth_login' %}"><button class="square-button" type="button">LOGIN</button></a></li>
         {% endif %}
       </ul>
     </div>
