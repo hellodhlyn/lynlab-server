@@ -28,4 +28,4 @@ def pre_object_save(sender, instance, *args, **kwargs):
 
 @receiver(pre_delete, sender=Object)
 def pre_object_delete(sender, instance, *args, **kwargs):
-    instance.file_obj.delete()
+    instance.file_obj.delete(save=False)
