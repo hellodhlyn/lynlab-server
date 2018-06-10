@@ -9,7 +9,6 @@ import blog.models as blog
 import blog.views as blog_view
 import moneybook.views as moneybook_view
 import storage.views as storage_view
-import wiki.services as wiki_service
 import wiki.views as wiki_view
 
 sitemaps = {
@@ -35,10 +34,11 @@ urlpatterns = [
 
     # wiki:
     url(r'^wiki/$', wiki_view.welcome, name='wiki'),
-    url(r'^wiki/search/$', wiki_service.search_document, name='wiki-search'),
+    url(r'^wiki/search/$', wiki_view.search_document, name='wiki-search'),
     url(r'^wiki/search/(?P<title>[\w|\W]+)/$', wiki_view.suggest_document, name='wiki-document-suggest'),
     url(r'^wiki/modify/(?P<title>[\w|\W]+)/$', wiki_view.modify_document, name='wiki-document-modify'),
     url(r'^wiki/history/(?P<title>[\w|\W]+)/$', wiki_view.list_revisions, name='wiki-document-history'),
+    url(r'^wiki/delete/(?P<title>[\w|\W]+)/$', wiki_view.delete_document, name='wiki-document-delete'),
     url(r'^wiki/history/$', wiki_view.list_revisions, name='wiki-history'),
     url(r'^wiki/(?P<title>[\w|\W]+)/$', wiki_view.get_document, name='wiki-document'),
 

@@ -53,6 +53,7 @@ a:hover {
   box-sizing: initial;
   background-color: #FAFAFA;
   border-bottom: 1px #E0E0E0 solid;
+  z-index: 100;
 }
 
 #navigation-bar ul {
@@ -81,6 +82,10 @@ a:hover {
 
 #navigation-bar ul li.icon {
   font-size: 20px;
+}
+
+#navigation-bar .menu.active {
+  font-weight: bold;
 }
 
 #navigation-bar .menu-button {

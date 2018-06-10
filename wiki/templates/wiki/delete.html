@@ -1,7 +1,7 @@
 {% extends 'base_lynlab.html' %}
 
 {% block head %}
-  <title>{% if document %}{{ document.title }} {% endif %}편집 역사 | LYnWiki</title>
+  <title>{% if document %}{{ document.title }} {% endif %}문서 삭제 | LYnWiki</title>
 {% endblock %}
 
 {% block style %}
@@ -63,36 +63,6 @@
     width: calc(100% - 241px);
     line-height: 2.0;
   }
-
-  #content a {
-    color: #1565C0;
-  }
-
-  #content table {
-    width: 100%;
-    text-align: left;
-  }
-  
-  #content table tr {
-    height: 50px;
-  }
-  
-  #content table th {
-    padding: 0 10px 0 10px;
-    border-bottom: 1px #E0E0E0 solid;
-  }
-  
-  #content table td {
-    padding: 0 10px 0 10px;
-  }
-  
-  #content table tbody tr:nth-child(2n) {
-    background-color: #fafafa;
-  }
-  
-  #content table .filename {
-    color: #1565C0;
-  }
 {% endblock %}
 
 {% block content %}
@@ -111,31 +81,11 @@
       </p>
     </div>
     <div id="content">
-      <table class="ui celled striped table">
-        <thead>
-          <tr>
-            <th>문서</th>
-            <th>리비전</th>
-            <th>편집자</th>
-            <th>편집시각</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for revision in revisions %}
-          <tr>
-            <td>
-              {% if revision.document.admin_required %}<span data-tooltip="관리자만 볼 수 있는 글" data-inverted=""><i class="lock icon"></i></span>
-              {% elif revision.document.login_required %}<span data-tooltip="로그인 유저만 볼 수 있는 글" data-inverted=""><i class="lock icon"></i></span>
-              {% endif %}
-              <a href="{% url 'wiki-document' revision.document.title %}"><b>{{ revision.document.title }}</b></a>
-            </td>
-            <td>{{ revision.revision }}</td>
-            <td><i class="user icon"></i>{{ revision.editor }}</td>
-            <td><i class="time icon"></i>{{ revision.timestamp }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <p>정말 '{{ document.title }}' 문서를 삭제하시겠습니까? 이 작업은 <strong>되돌릴 수 없습니다</strong>.</p>
+      <form action="#" method="post">
+        {% csrf_token %}
+        <button class="primary-button">삭제</button>
+      </form>
     </div>
   </div>
   
