@@ -1,58 +1,144 @@
-{% extends 'base.html' %}
-{% block style %}
-{% load staticfiles %}
-<title>{% if document %}{{ document.title }} {% endif %}편집 기록 | LYnWiki</title>
-<link rel="stylesheet" href="{% static 'wiki/css/history.css' %}">
+{% extends 'base_lynlab.html' %}
+
+{% block head %}
+  <title>{% if document %}{{ document.title }} {% endif %}편집 역사 | LYnWiki</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ title }} | LYnWiki">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
 {% endblock %}
+
+{% block style %}
+  #wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  #sidebar {
+    float: left;
+    width: 210px;
+    padding-right: 10px;
+    word-break: break-all;
+  }
+  
+  #sidebar h1, h2, h3, h4 {
+    font-weight: normal;
+    margin-bottom: 0px;
+  }
+
+  #sidebar p {
+    margin: 10px 0;
+    color: #616161;
+    line-height: 1.8;
+  }
+
+  #sidebar a:hover {
+    color: initial;
+    text-decoration: none;
+  }
+
+  #sidebar form {
+    border-bottom: #EEEEEE solid 1px;
+  }
+
+  #sidebar #search input {
+    width: calc(100% - 35px);
+    height: 30px;
+    border: none;
+    font-size: 16px;
+  }
+
+  #sidebar #search button {
+    margin: 0 -35px 0 0;
+    width: 35px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    font-size: 16px;
+  }
+  
+  #content {
+    min-height: 70vh;
+    float: right;
+    padding-left: 20px;
+    border-left: #EEEEEE solid 1px;
+    width: calc(100% - 241px);
+    line-height: 2.0;
+  }
+
+  #content a {
+    color: #1565C0;
+  }
+
+  #content table {
+    width: 100%;
+    text-align: left;
+  }
+  
+  #content table tr {
+    height: 50px;
+  }
+  
+  #content table th {
+    padding: 0 10px 0 10px;
+    border-bottom: 1px #E0E0E0 solid;
+  }
+  
+  #content table td {
+    padding: 0 10px 0 10px;
+  }
+  
+  #content table tbody tr:nth-child(2n) {
+    background-color: #fafafa;
+  }
+  
+  #content table .filename {
+    color: #1565C0;
+  }
+{% endblock %}
+
 {% block content %}
-<div class="ui inverted vertical masthead center aligned segment">
-    <div class="ui container">
-        <div class="ui large secondary inverted pointing menu">
-            <a class="active item" href="{% url 'wiki' %}">LYnWiki</a>
-            {% if document %}
-            <a class="item" href="{% url 'wiki-document' document.title %}">문서 보기</a>
-            <a class="item" href="{% url 'wiki-document-modify' document.title %}">편집</a>
-            <a class="item" href="{% url 'wiki-history' %}">최근 바뀜</a>
-            {% endif %}
-            <div class="right item" style="padding: 0">
-                <form class="ui form" method="post" action="{% url 'wiki-search' %}">
-                    {% csrf_token %}
-                    <div class="ui icon input">
-                        <input type="text" name="title" placeholder="검색어를 입력...">
-                        <i class="inverted circular search link icon"></i>
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div id="wrapper">
+    <div id="sidebar">
+      <h1>{{ document.title }}</h1>
+      <form method="post" action="{% url 'wiki-search' %}">
+        {% csrf_token %}
+        <p id="search">
+          <input type="text" name="title" placeholder="문서 검색...">
+          <button><i class="fas fa-search"></i></a></button>
+        </p>
+      </form>
+      <p>
+        <a href="{% url 'wiki-document' document.title %}"><i class="far fa-file-alt"></i> &nbsp;문서 읽기</a><br/>
+      </p>
     </div>
-</div>
-<div class="main">
-    <div class="ui container">
-        <table class="ui celled striped table">
-            <thead>
-                <tr>
-                    <th>문서</th>
-                    <th>리비전</th>
-                    <th>편집자</th>
-                    <th>편집시각</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for revision in revisions %}
-                <tr>
-                    <td>
-                        {% if revision.document.admin_required %}<span data-tooltip="관리자만 볼 수 있는 글" data-inverted=""><i class="lock icon"></i></span>
-                        {% elif revision.document.login_required %}<span data-tooltip="로그인 유저만 볼 수 있는 글" data-inverted=""><i class="lock icon"></i></span>
-                        {% endif %}
-                        <a href="{% url 'wiki-document' revision.document.title %}"><b>{{ revision.document.title }}</b></a>
-                    </td>
-                    <td>{{ revision.revision }}</td>
-                    <td><i class="user icon"></i>{{ revision.editor }}</td>
-                    <td><i class="time icon"></i>{{ revision.timestamp }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div id="content">
+      <table class="ui celled striped table">
+        <thead>
+          <tr>
+            <th>문서</th>
+            <th>리비전</th>
+            <th>편집자</th>
+            <th>편집시각</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for revision in revisions %}
+          <tr>
+            <td>
+              {% if revision.document.admin_required %}<span data-tooltip="관리자만 볼 수 있는 글" data-inverted=""><i class="lock icon"></i></span>
+              {% elif revision.document.login_required %}<span data-tooltip="로그인 유저만 볼 수 있는 글" data-inverted=""><i class="lock icon"></i></span>
+              {% endif %}
+              <a href="{% url 'wiki-document' revision.document.title %}"><b>{{ revision.document.title }}</b></a>
+            </td>
+            <td>{{ revision.revision }}</td>
+            <td><i class="user icon"></i>{{ revision.editor }}</td>
+            <td><i class="time icon"></i>{{ revision.timestamp }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-</div>
+  </div>
+  
 {% endblock %}

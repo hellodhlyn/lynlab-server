@@ -31,9 +31,9 @@
         <li class="menu primary"><a href="{% url 'home' %}">LYnLab</a></li>
       </ul>
       <ul class="items left">
-        <li class="menu"><a href="{% url 'blog' %}">Blog</a></li>
-        <li class="menu"><a href="{% url 'wiki' %}">Wiki</a></li>
-        <li class="menu"><a href="{% url 'storage' %}">Storage</a></li>
+        <li class="menu{% if request.path|slice:'5' == '/blog' %} active{% endif %}"><a href="{% url 'blog' %}">Blog</a></li>
+        <li class="menu{% if request.path|slice:'5' == '/wiki' %} active{% endif %}"><a href="{% url 'wiki' %}">Wiki</a></li>
+        <li class="menu{% if request.path|slice:'8' == '/storage' %} active{% endif %}"><a href="{% url 'storage' %}">Storage</a></li>
       </ul>
       <ul class="items right">
         <li class="icon"><a target="_blank" href="https://twitter.com/HelloDHLyn"><i class="fab fa-twitter"></i></a></li>
@@ -52,5 +52,10 @@
       {% block content %}
       {% endblock %}
     </div>
+
+    <script>
+      {% block script %}
+      {% endblock %}
+    </script>
   </body>
 </html>

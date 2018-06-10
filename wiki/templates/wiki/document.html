@@ -1,67 +1,155 @@
-{% extends 'base.html' %}
-{% block style %}
-{% load staticfiles %}
-<title>{{ document.title }} | LYnWiki</title>
-<meta property="og:type" content="article">
-<meta property="og:title" content="{{ document.title }} | LYnWiki">
-<meta property="og:url" content="{{ request.build_absolute_uri }}">
-<link rel="stylesheet" href="{% static 'wiki/css/document.css' %}">
-<script src="{% static 'wiki/js/document.js' %}"></script>
-{% endblock %}
-{% block content %}
-<div class="ui left demo vertical inverted sidebar labeled icon menu">
-    <a class="active item" href="{% url 'wiki' %}"><i class="home icon"></i>LYnWiki</a>
-    <a class="item" href="{% url 'wiki-document-modify' document.title %}"><i class="edit icon"></i>편집</a>
-    <a class="item" href="{% url 'wiki-document-history' document.title %}"><i class="history icon"></i>역사</a>
-    <a class="item" href="{% url 'wiki-history' %}"><i class="history icon"></i>최근 바뀜</a>
-</div>
-<div class="pusher">
-    <div class="ui inverted vertical masthead center aligned segment">
-        <div class="ui container">
-            <div class="ui large secondary inverted pointing menu">
-                <div class="mobile-visible item" id="menu-toggle">
-                    <i class="sidebar icon"></i>
-                </div>
-                <a class="active item" href="{% url 'wiki' %}">LYnWiki</a>
-                <a class="item" href="{% url 'wiki-document-modify' document.title %}">편집</a>
-                <a class="item" href="{% url 'wiki-document-history' document.title %}">역사</a>
-                <a class="item" href="{% url 'wiki-history' %}">최근 바뀜</a>
-                <div class="right mobile-visible search item">
-                    <form class="ui form" method="post" action="{% url 'wiki-search' %}">
-                        {% csrf_token %}
-                        <div class="ui icon input">
-                            <input type="text" name="title" placeholder="검색어를 입력...">
-                            <i class="inverted circular search link icon"></i>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="main">
-        <div class="ui text container">
-            <h1 class="title">{{ document.title }}</h1>
-            <p class="timestamp">
-                <i class="time icon"></i> {{ document.modified_at }}
-                {% if document.admin_required %}<span data-tooltip="관리자만 볼 수 있는 글" data-inverted=""> | <i class="lock icon"></i></span>
-                {% elif document.login_required %}<span data-tooltip="로그인 유저만 볼 수 있는 글" data-inverted=""> | <i class="lock icon"></i></span>
-                {% endif %}
-            </p>
-            <div class="ui divider"></div>
+{% extends 'base_lynlab.html' %}
 
-            <div class="content">
-            {% load markup_tags %}
-            {{ document.content | apply_markup:"markdown" }}
-            </div>
-        </div>
+{% block head %}
+  <title>{{ document.title }} | LYnWiki</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ document.title }} | LYnWiki">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+{% block style %}
+  #wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px;
+    overflow: hidden;
+    border-bottom: #E0E0E0 solid 1px;
+  }
+
+  #sidebar {
+    float: left;
+    width: 210px;
+    padding-right: 10px;
+  }
+  
+  #sidebar h1, h2, h3, h4 {
+    font-weight: normal;
+    margin-bottom: 0px;
+  }
+
+  #sidebar p {
+    margin: 10px 0;
+    color: #616161;
+    line-height: 1.8;
+  }
+
+  #sidebar a:hover {
+    color: initial;
+    text-decoration: none;
+  }
+
+  #sidebar form {
+    border-bottom: #EEEEEE solid 1px;
+  }
+
+  #sidebar #search input {
+    margin-top: 10px;
+    width: calc(100% - 35px);
+    height: 30px;
+    border: none;
+    font-size: 16px;
+  }
+
+  #sidebar #search button {
+    margin: 0 -35px 0 0;
+    width: 35px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    font-size: 16px;
+  }
+
+  #content h1, h2, h3, h4 {
+    margin: 0px;
+  }
+
+  #content {
+    min-height: 70vh;
+    float: right;
+    padding-left: 20px;
+    border-left: #EEEEEE solid 1px;
+    width: calc(100% - 241px);
+    line-height: 2.0;
+  }
+  
+  #content a {
+    color: #1565C0;
+  }
+  
+  #content blockquote {
+    margin: 0;
+    padding: 10px 20px;
+    background-color: #F5F5F5;
+    border-left: #E0E0E0 solid 10px;
+  }
+  
+  #content *:not(pre) code {
+    font-size: 16px;
+  }
+  
+  #content pre {
+    overflow-y: scroll;
+    padding: 10px 20px;
+    background-color: #F5F5F5;
+  }
+  
+  #content img {
+    display: block;
+    margin: 40px auto;
+    max-width: 600px;
+  }
+
+  #footer {
+    font-size: 80%;
+    padding: 20px 0;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #footer a {
+    color: #1565C0;
+  }
+
+  @media (max-width: 700px) {
+    #sidebar {
+      width: 100%;
+    }
+
+    #content {
+      width: 100%;
+    }
+  }
+{% endblock %}
+
+{% block content %}
+  <div id="wrapper">
+    <div id="sidebar">
+      <form method="post" action="{% url 'wiki-search' %}">
+        {% csrf_token %}
+        <p id="search">
+          <input type="text" name="title" placeholder="문서 검색...">
+          <button><i class="fas fa-search"></i></a></button>
+        </p>
+      </form>
+
+      <h1>{{ document.title }}</h1>
+      <p><i class="far fa-clock"></i>&nbsp;{{ document.modified_at }}</p>
+
+      <p>
+        <a href="{% url 'wiki-document-modify' document.title %}"><i class="far fa-edit"></i>&nbsp;이 문서를 편집</a><br/>
+        <a href="{% url 'wiki-document-history' document.title %}"><i class="fas fa-history"></i>&nbsp;편집 역사</a>
+      </p>
     </div>
-    <div class="ui text container">
-        <div class="ui divider"></div>
-        <footer>
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="크리에이티브 커먼즈 라이선스" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br/>
-            이 저작물은 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">크리에이티브 커먼즈 저작자표시-동일조건변경허락 4.0 국제 라이선스</a>에 따라 이용할 수 있습니다.<br/>
-            LYnWiki는 모두가 편집할 수 있는 위키위키입니다. 서술된 내용은 운영자의 견해와 다를 수 있습니다.
-        </footer>
+    <div id="content">
+      {% load markup_tags %}
+      {{ document.content | apply_markup:"markdown" }}
     </div>
-</div>
+  </div>
+
+  <div id="footer">
+    <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="크리에이티브 커먼즈 라이선스" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br/>
+    이 문서는 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">크리에이티브 커먼즈 저작자표시-동일조건변경허락 4.0 국제 라이선스</a>에 따라 이용할 수 있습니다.<br/>
+    LYnWiki는 모두가 편집할 수 있는 위키위키입니다. 서술된 내용은 운영자의 견해와 다를 수 있습니다.
+  </div>
+  
 {% endblock %}

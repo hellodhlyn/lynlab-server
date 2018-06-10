@@ -13,8 +13,7 @@ class LoginRequired(Exception):
 
 
 def welcome(request):
-    context = {'document_count': Document.objects.count()}
-    return render(request, 'wiki/welcome.html', context)
+    return get_document(request, 'LYnWiki:대문')
 
 
 def _get_document_item(request, title):

@@ -1,56 +1,61 @@
-{% extends 'base.html' %}
-{% block style %}
-{% load staticfiles %}
-<title>{{ document.title }} 편집 | LYnWiki</title>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-<link rel="stylesheet" href="{% static 'wiki/css/document.css' %}">
-<script src="{% static 'wiki/js/modify.js' %}"></script>
-<script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+{% extends 'base_lynlab.html' %}
+
+{% block head %}
+  <title>{{ document.title }} 편집 | LYnWiki</title>
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 {% endblock %}
+
+{% block style %}
+  .container h3 {
+    margin-bottom: 10px;
+    font-weight: normal;
+  }
+
+  .container textarea {
+    z-index: 0;
+  }
+
+  .container .permissions label {
+    margin-right: 10px;
+  }
+
+  .container #save-btn {
+    margin: 20px 0;
+  }
+{% endblock %}
+
+{% block script %}
+  new SimpleMDE({
+    element: $("#field-content")[0],
+    spellChecker: false,
+    toolbar: ["bold", "italic", "heading", "|", "code", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "preview", "fullscreen"]
+  });
+{% endblock %}
+
 {% block content %}
-<div class="ui inverted vertical masthead center aligned segment">
-    <div class="ui container">
-        <div class="ui large secondary inverted pointing menu">
-            <a class="active mobile-visible item" href="{% url 'wiki' %}">LYnWiki</a>
-            <a class="mobile-visible item" href="{% url 'wiki-document' document.title %}">본문 보기</a>
-        </div>
-    </div>
-</div>
-<div class="main">
-    <div class="ui text container">
-        <h1>편집 : {{ document.title }}</h1>
-        <form class="ui form" action="#" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="title" value="{{ document.title }}">
-            <div class="inline fields">
-                <label>문서보기 권한</label>
-                <div class="field">
-                    <div class="ui radio checkbox">
-                        <input name="permission" value="3" {% if document.public == 3 %}checked="checked"{% endif %} type="radio">
-                        <label>전체공개</label>
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui radio checkbox">
-                        <input name="permission" value="2" {% if document.login_required == 2 %}checked="checked"{% endif %} type="radio">
-                        <label>로그인 유저</label>
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui radio checkbox">
-                        <input name="permission" value="1" {% if document.admin_required == 1 %}checked="checked"{% endif %} type="radio">
-                        <label>관리자 유저</label>
-                    </div>
-                </div>
-            </div>
-            <div class="field">
-                <label>본문</label>
-                <textarea id="field-content" name="content" rows="25">{{ document.content }}</textarea>
-            </div>
-            <div class="field">
-                <input type="submit" name="save" value="저장" class="ui fluid blue submit button" />
-            </div>
-        </form>
-    </div>
-</div>
+  <div class="container">
+    <h1>{{ document.title }}</h1>
+    <form class="ui form" action="#" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="title" value="{{ document.title }}">
+
+      <h3>본문</h3>
+      <textarea id="field-content" name="content" rows="25">{{ document.content }}</textarea>
+
+      <h3>문서 권한</h3>
+      <div class="permissions">
+        <input name="permission" value="3" {% if document.public %}checked="checked"{% endif %} type="radio">
+        <label>전체공개</label>
+
+        <input name="permission" value="2" {% if not document.permission or document.login_required %}checked="checked"{% endif %} type="radio">
+        <label>로그인 유저만</label>
+
+        <input name="permission" value="1" {% if document.admin_required %}checked="checked"{% endif %} type="radio">
+        <label>관리자만</label>
+      </div>
+
+      <button class="primary-button" id="save-btn" >저장</button>
+    </form>
+  </div>
 {% endblock %}
