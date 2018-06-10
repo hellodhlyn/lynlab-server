@@ -49,6 +49,14 @@ def get_document(request, title):
     return render(request, 'wiki/document.html', context=context)
 
 
+def search_document(request):
+    """
+    문서 검색
+    """
+    title = request.POST['title']
+    return redirect(reverse('wiki-document', kwargs={'title': title}))
+
+
 def suggest_document(request, title):
     """
     문서 제안
@@ -124,3 +132,28 @@ def list_revisions(request, title=None):
     }
 
     return render(request, 'wiki/history.html', context=context)
+
+
+@login_required(login_url='/accounts/login/')
+def delete_document(request, title):
+    """
+    문서 삭제
+    """
+    try:
+        document = _get_document_item(request, title)
+    except LoginRequired:
+        return redirect('/accounts/login/?next=%s' % request.path)
+    except ObjectDoesNotExist:
+        raise Http404    
+
+    if request.method == 'GET':
+        context = {'document': document}
+        return render(request, 'wiki/delete.html', context=context)
+
+    elif request.method == 'POST':
+        revisions = DocumentRevision.objects.filter(document=document)
+        revisions.delete()
+
+        document.delete()
+
+        return redirect(reverse('wiki'))

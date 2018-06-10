@@ -2,9 +2,6 @@
 
 {% block head %}
   <title>{{ document.title }} | LYnWiki</title>
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="{{ title }} | LYnWiki">
-  <meta property="og:url" content="{{ request.build_absolute_uri }}">
 {% endblock %}
 
 {% block style %}
@@ -42,6 +39,7 @@
   }
 
   #sidebar #search input {
+    margin-top: 10px;
     width: calc(100% - 35px);
     height: 30px;
     border: none;
@@ -101,7 +99,6 @@
 {% block content %}
   <div id="wrapper">
     <div id="sidebar">
-      <h1>{{ title }}</h1>
       <form method="post" action="{% url 'wiki-search' %}">
         {% csrf_token %}
         <p id="search">
@@ -109,6 +106,7 @@
           <button><i class="fas fa-search"></i></a></button>
         </p>
       </form>
+      <h1>{{ title }}</h1>
       <p>
         <a href="{% url 'wiki-document-modify' title %}"><i class="far fa-edit"></i>&nbsp;이 문서를 만들기</a><br/>
       </p>
