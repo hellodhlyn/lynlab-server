@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^wiki/history/(?P<title>[\w|\W]+)/$', wiki_view.list_revisions, name='wiki-document-history'),
     url(r'^wiki/delete/(?P<title>[\w|\W]+)/$', wiki_view.delete_document, name='wiki-document-delete'),
     url(r'^wiki/history/$', wiki_view.list_revisions, name='wiki-history'),
+    url(r'^wiki/radmon/$', wiki_view.get_random, name='wiki-random'),
     url(r'^wiki/(?P<title>[\w|\W]+)/$', wiki_view.get_document, name='wiki-document'),
 
     # media:

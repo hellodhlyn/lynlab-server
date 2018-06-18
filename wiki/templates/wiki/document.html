@@ -29,8 +29,15 @@
 
   #sidebar p {
     margin: 10px 0;
+  }
+
+  #sidebar a {
     color: #616161;
     line-height: 1.8;
+  }
+
+  #sidebar a i {
+    width: 18px;
   }
 
   #sidebar a:hover {
@@ -39,6 +46,11 @@
   }
 
   #sidebar form {
+    border-bottom: #EEEEEE solid 1px;
+  }
+
+  #sidebar hr {
+    border: none;
     border-bottom: #EEEEEE solid 1px;
   }
 
@@ -136,9 +148,14 @@
       <p><i class="far fa-clock"></i>&nbsp;{{ document.modified_at }}</p>
 
       <p>
-        <a href="{% url 'wiki-document-modify' document.title %}"><i class="far fa-edit"></i>&nbsp;이 문서를 편집</a><br/>
-        <a href="{% url 'wiki-document-history' document.title %}"><i class="fas fa-history"></i>&nbsp;편집 역사</a><br/>
-        <a href="{% url 'wiki-document-delete' document.title %}"><i class="far fa-trash-alt"></i>&nbsp;문서 삭제</a>
+        <a href="{% url 'wiki-document-modify' document.title %}"><i class="far fa-edit"></i> 이 문서를 편집</a><br/>
+        <a href="{% url 'wiki-document-history' document.title %}"><i class="fas fa-history"></i> 편집 역사</a><br/>
+        <a href="{% url 'wiki-document-delete' document.title %}"><i class="far fa-trash-alt"></i> 문서 삭제</a>
+
+        <hr>
+
+        <a href="{% url 'wiki-history' %}"><i class="fas fa-align-justify"></i> 최근 편집</a><br/>
+        <a href="{% url 'wiki-random' %}"><i class="fas fa-random"></i> 무작위 문서</a>
       </p>
     </div>
     <div id="content">
