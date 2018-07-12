@@ -1,9 +1,10 @@
+boto3 == 1.7.*
 django==2.0.*
 djangoajax
 django-el-pagination
 django-markup
-django-minio-storage == 0.*
-django-registration
+django-storages == 1.6.*
+django-registration == 2.3.*
 twitter
 python-dateutil
 xmltodict==0.10.1
