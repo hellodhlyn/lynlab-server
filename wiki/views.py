@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.http import Http404
@@ -133,7 +135,6 @@ def list_revisions(request, title=None):
 
     return render(request, 'wiki/history.html', context=context)
 
-
 @login_required(login_url='/accounts/login/')
 def delete_document(request, title):
     """
@@ -157,3 +158,12 @@ def delete_document(request, title):
         document.delete()
 
         return redirect(reverse('wiki'))
+
+def get_random(request):
+    """
+    무작위 문서 조회
+    """
+    random_idx = random.randint(0, Document.objects.count() - 1)
+    document = Document.objects.all()[random_idx]
+
+    return redirect(reverse('wiki-document', kwargs={'title': document.title}))

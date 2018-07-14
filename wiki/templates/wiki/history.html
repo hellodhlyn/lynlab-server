@@ -25,8 +25,15 @@
 
   #sidebar p {
     margin: 10px 0;
+  }
+
+  #sidebar a {
     color: #616161;
     line-height: 1.8;
+  }
+
+  #sidebar a i {
+    width: 18px;
   }
 
   #sidebar a:hover {
@@ -105,10 +112,17 @@
           <button><i class="fas fa-search"></i></a></button>
         </p>
       </form>
+      {% if document %}
       <h1>{{ document.title }}</h1>
       <p>
         <a href="{% url 'wiki-document' document.title %}"><i class="far fa-file-alt"></i> &nbsp;문서 읽기</a><br/>
       </p>
+      {% else %}
+      <h1>최근 편집</h1>
+      <p>
+        <a href="{% url 'wiki' %}"><i class="fas fa-home"></i> 위키 홈</a>
+      </p>
+      {% endif %}
     </div>
     <div id="content">
       <table class="ui celled striped table">

@@ -31,7 +31,7 @@ INSTALLED_APPS = (
     'django_markup',
     'django_ajax',
     'el_pagination',
-    'minio_storage',
+    'storages',
     'blog',
     'moneybook',
     'wiki',
@@ -69,23 +69,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
-# Minio (Storage and Media)
-DEFAULT_FILE_STORAGE = 'minio_storage.storage.MinioMediaStorage'
+# File Storage Backend
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 if DEBUG:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 else:
-    STATICFILES_STORAGE = 'minio_storage.storage.MinioStaticStorage'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-MINIO_STORAGE_ENDPOINT = os.environ['MINIO_ENDPOINT']
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 
-MINIO_STORAGE_ACCESS_KEY = os.environ['MINIO_ACCESS_KEY']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 
-MINIO_STORAGE_SECRET_KEY = os.environ['MINIO_SECRET_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
 
-MINIO_STORAGE_MEDIA_BUCKET_NAME = os.environ['MINIO_MEDIA_BUCKET_NAME']
+AWS_S3_REGION_NAME = 'ap-northeast-2'
 
-MINIO_STORAGE_STATIC_BUCKET_NAME = os.environ['MINIO_STATIC_BUCKET_NAME']
+AWS_IS_GZIPPED = True
 
 
 # Database
@@ -97,7 +97,7 @@ DATABASES = {
         'USER': os.environ['DB_USERNAME'],
         'PASSWORD': os.environ['DB_PASSWORD'],
         'HOST': os.environ['DB_HOST'],
-        'PORT': '3306',
+        'PORT': os.environ.get('DB_PORT', 3306),
     }
 }
 
