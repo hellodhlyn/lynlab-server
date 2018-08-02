@@ -90,8 +90,10 @@
     </p>
 
     <div id="post-body">
-      {% load markup_tags %}
-      {{ post.content|apply_markup:"markdown" }}
+      {% load markdownify %}
+      {% autoescape off %}
+      {{ post.content | markdownify }}
+      {% endautoescape %}
     </div>
 
     <div class="addthis_inline_share_toolbox"></div>

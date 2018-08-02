@@ -159,8 +159,10 @@
       </p>
     </div>
     <div id="content">
-      {% load markup_tags %}
-      {{ document.content | apply_markup:"markdown" }}
+      {% load markdownify %}
+      {% autoescape off %}
+      {{ document.content | markdownify }}
+      {% endautoescape %}
     </div>
   </div>
 
