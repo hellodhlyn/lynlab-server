@@ -9,6 +9,7 @@
     <link href="https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet" type="text/css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css">
     <link href="{% static 'css/lynlab.css' %}" rel="stylesheet" type="text/css">
     <style>
       {% block style %}
@@ -18,6 +19,7 @@
     <script type="text/javascript" src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5a8713a8c30b87b5"></script>
     <script type="text/javascript" src="{% static 'js/lynlab.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/analytics.js' %}"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <meta property="og:site_name" content="LYnLab" />
     <meta property="og:locale" content="ko_KR" />
     {% block head %}
@@ -56,6 +58,8 @@
     <script>
       {% block script %}
       {% endblock %}
+      
+      hljs.initHighlightingOnLoad();
     </script>
   </body>
 </html>
