@@ -11,6 +11,15 @@ h1 {
   font-weight: normal;
 }
 
+pre {
+  overflow-y: scroll;
+}
+
+pre code.hljs {
+  padding: 20px;
+  line-height: 1.6;
+}
+
 code {
   font-family: 'Hack', monospace;
   font-size: 14px;

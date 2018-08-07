@@ -10,7 +10,6 @@
 ```
 # Install required libraries.
 pip install -r requirements.txt
-pip install git+https://github.com/HelloDHLyn/Python-Markdown@multimarkdown
 
 # Migrate database schema.
 python manage.py migrate

@@ -28,7 +28,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
-    'django_markup',
     'django_ajax',
     'el_pagination',
     'storages',

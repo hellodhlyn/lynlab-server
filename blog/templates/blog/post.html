@@ -39,12 +39,6 @@
   font-size: 16px;
 }
 
-#post-body pre {
-  overflow-y: scroll;
-  padding: 10px 20px;
-  background-color: #F5F5F5;
-}
-
 #post-body img {
   display: block;
   margin: 40px auto;
@@ -90,8 +84,10 @@
     </p>
 
     <div id="post-body">
-      {% load markup_tags %}
-      {{ post.content|apply_markup:"markdown" }}
+      {% load markdownify %}
+      {% autoescape off %}
+      {{ post.content | markdownify }}
+      {% endautoescape %}
     </div>
 
     <div class="addthis_inline_share_toolbox"></div>
