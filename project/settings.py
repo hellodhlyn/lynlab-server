@@ -1,9 +1,6 @@
 import os
 from django.utils.translation import ugettext_lazy as _
 
-import pymysql
-
-pymysql.install_as_MySQLdb()
 
 DEBUG = (os.environ.get('DJANGO_ENV', '') != 'prod')
 
@@ -91,12 +88,12 @@ AWS_IS_GZIPPED = True
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ['DB_NAME'],
         'USER': os.environ['DB_USERNAME'],
         'PASSWORD': os.environ['DB_PASSWORD'],
         'HOST': os.environ['DB_HOST'],
-        'PORT': os.environ.get('DB_PORT', 3306),
+        'PORT': os.environ.get('DB_PORT', 5432),
     }
 }
 
