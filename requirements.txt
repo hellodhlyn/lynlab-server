@@ -10,7 +10,7 @@ xmltodict==0.10.1
 urllib3
 certifi
 python-magic==0.*
-pymysql
+psycopg2-binary == 2.7.*
 newrelic==3.2.*
 
 git+https://github.com/HelloDHLyn/Python-Markdown.git@multimarkdown
