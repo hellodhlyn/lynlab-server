@@ -1,79 +1,37 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
 
-# C extensions
+# Created by https://www.gitignore.io/api/go,visualstudiocode
+# Edit at https://www.gitignore.io/?templates=go,visualstudiocode
+
+### Go ###
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
 *.so
+*.dylib
 
-# Distribution / packaging
-.Python
-env/
-bin/
-include/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
+# Test binary, built with `go test -c`
+*.test
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*,cover
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
+# Output of the go coverage tool, specifically when used with LiteIDE
 *.out
-settings_var.py
 
-# Static / Databases
-*.sqlite3
-storage/objects/*
+### Go Patch ###
+/vendor/
+/Godeps/
 
-# Sphinx documentation
-docs/_build/
+### VisualStudioCode ###
+.vscode
 
-# PyBuilder
-target/
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
 
-# Develop environments
-.idea/
-.vscode/
-run.sh
-migrate.sh
-sftp-config.json
-pip-selfcheck.json
+### Intellij ###
+.idea
 
-categories.json
-confusables.json
+# End of https://www.gitignore.io/api/go,visualstudiocode
 
-# Sensitive stuffs
+
+### Secrets ###
 .envrc
