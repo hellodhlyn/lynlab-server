@@ -18,7 +18,12 @@ func testMutation(t *testing.T, mutationName, mutation string, args ...interface
 		t.FailNow()
 		return nil
 	}
-	return result.Data.(map[string]interface{})[mutationName].(map[string]interface{})
+
+	mutationData := result.Data.(map[string]interface{})[mutationName]
+	if mutationData == nil {
+		return nil
+	}
+	return mutationData.(map[string]interface{})
 }
 
 func TestCreatePostMutation(t *testing.T) {

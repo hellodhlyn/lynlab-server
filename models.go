@@ -18,6 +18,11 @@ type Post struct {
 	UpdatedAt    time.Time
 }
 
+type PostPage struct {
+	Items    []Post
+	PageInfo pageInfo
+}
+
 // PostTag is a model for tag of the posts.
 type PostTag struct {
 	ID        int

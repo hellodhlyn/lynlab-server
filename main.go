@@ -14,8 +14,11 @@ var schema graphql.Schema
 func init() {
 	schema, _ = graphql.NewSchema(graphql.SchemaConfig{
 		Query: graphql.NewObject(graphql.ObjectConfig{
-			Name:   "RootQuery",
-			Fields: graphql.Fields{},
+			Name: "RootQuery",
+			Fields: graphql.Fields{
+				"post":     PostQuery,
+				"postList": PostListQuery,
+			},
 		}),
 		Mutation: graphql.NewObject(graphql.ObjectConfig{
 			Name: "RootMutation",
