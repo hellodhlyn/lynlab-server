@@ -1,8 +1,27 @@
 package main
 
 import (
+	"context"
+
 	"github.com/graphql-go/graphql"
 )
+
+func CheckAdminPermission(ctx context.Context) bool {
+	if token := ctx.Value(ctxAuthToken); token != nil {
+		auth, err := Authenticate(token.(string))
+		if err != nil {
+			return false
+		}
+
+		var user User
+		db.Where(&User{ID: auth.UUID}).First(&user)
+		if user.ID == "" {
+			return false
+		}
+		return user.IsAdmin
+	}
+	return false
+}
 
 var CreatePostMutation = &graphql.Field{
 	Type: graphql.NewNonNull(PostType),
@@ -21,7 +40,9 @@ var CreatePostMutation = &graphql.Field{
 		},
 	},
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-		// TODO - Authentication
+		if !CheckAdminPermission(p.Context) {
+			return nil, ErrForbidden
+		}
 
 		input := p.Args["input"].(map[string]interface{})
 
@@ -67,7 +88,9 @@ var UpdatePostMutation = &graphql.Field{
 		},
 	},
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-		// TODO - Authentication
+		if !CheckAdminPermission(p.Context) {
+			return nil, ErrForbidden
+		}
 
 		postID := p.Args["id"].(int)
 		var post Post
@@ -122,7 +145,9 @@ var CreateSnippetMutation = &graphql.Field{
 		},
 	},
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-		// TODO - Authentication
+		if !CheckAdminPermission(p.Context) {
+			return nil, ErrForbidden
+		}
 
 		input := p.Args["input"].(map[string]interface{})
 		snippet := Snippet{
@@ -153,7 +178,9 @@ var UpdateSnippetMutation = &graphql.Field{
 		},
 	},
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-		// TODO - Authentication
+		if !CheckAdminPermission(p.Context) {
+			return nil, ErrForbidden
+		}
 
 		snippetID := p.Args["id"].(int)
 		var snippet Snippet

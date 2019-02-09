@@ -6,6 +6,16 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
+// User is a model stands for each logged-in user.
+// Authentication mehtod uses LYnLab Auth service (https://auth.lynlab.co.kr).
+type User struct {
+	ID        string `gorm:"type:varchar(40)"`
+	Username  string `gorm:"type:varchar(255)"`
+	IsAdmin   bool   `gorm:"default:false"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}
+
 // Post is a model for blog post.
 type Post struct {
 	ID           int
@@ -115,6 +125,17 @@ func migrateModels() {
 		PostTag{},
 		PostTagRelation{},
 		Snippet{},
+		User{},
+	)
+}
+
+func cleanModels() {
+	db.DropTable(
+		Post{},
+		PostTag{},
+		PostTagRelation{},
+		Snippet{},
+		User{},
 	)
 }
 

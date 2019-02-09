@@ -12,6 +12,7 @@ func testMutation(mutationName, mutation string, args ...interface{}) (data map[
 	result := graphql.Do(graphql.Params{
 		Schema:        schema,
 		RequestString: fmt.Sprintf(mutation, args...),
+		Context:       mockContext,
 	})
 
 	if result.HasErrors() {

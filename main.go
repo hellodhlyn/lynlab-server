@@ -2,11 +2,19 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"net/http"
+	"strings"
 
 	"github.com/graphql-go/graphql"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+)
+
+type ctxKey uint8
+
+const (
+	ctxAuthToken ctxKey = iota
 )
 
 var schema graphql.Schema
@@ -46,10 +54,17 @@ func main() {
 			req = buf.String()
 		}
 
+		// Parse context for request.
+		ctx := context.Background()
+		if token := c.Request().Header.Get("Authorization"); strings.HasPrefix(token, "Bearer ") {
+			ctx = context.WithValue(ctx, ctxAuthToken, token)
+		}
+
 		// Run query and return the result.
 		result := graphql.Do(graphql.Params{
 			Schema:        schema,
 			RequestString: req,
+			Context:       ctx,
 		})
 
 		return c.JSON(http.StatusOK, result)
