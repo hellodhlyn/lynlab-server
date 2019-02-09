@@ -69,11 +69,7 @@ var UpdatePostMutation = &graphql.Field{
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 		// TODO - Authentication
 
-		postID, ok := p.Args["id"].(int)
-		if !ok {
-			return nil, ErrBadRequest
-		}
-
+		postID := p.Args["id"].(int)
 		var post Post
 		db.Where(&Post{ID: postID}).First(&post)
 		if post.ID != postID {
@@ -108,5 +104,73 @@ var UpdatePostMutation = &graphql.Field{
 			}
 		}
 		return &post, nil
+	},
+}
+
+var CreateSnippetMutation = &graphql.Field{
+	Type: graphql.NewNonNull(SnippetType),
+	Args: graphql.FieldConfigArgument{
+		"input": &graphql.ArgumentConfig{
+			Type: graphql.NewInputObject(graphql.InputObjectConfig{
+				Name: "CreateSnippetInput",
+				Fields: graphql.InputObjectConfigFieldMap{
+					"title":    &graphql.InputObjectFieldConfig{Type: graphql.NewNonNull(graphql.String)},
+					"body":     &graphql.InputObjectFieldConfig{Type: graphql.NewNonNull(graphql.String)},
+					"isPublic": &graphql.InputObjectFieldConfig{Type: graphql.NewNonNull(graphql.Boolean)},
+				},
+			}),
+		},
+	},
+	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+		// TODO - Authentication
+
+		input := p.Args["input"].(map[string]interface{})
+		snippet := Snippet{
+			Title:    input["title"].(string),
+			Body:     input["body"].(string),
+			IsPublic: input["isPublic"].(bool),
+		}
+
+		errs := db.Save(&snippet).GetErrors()
+		if len(errs) > 0 {
+			return nil, ErrInternalServer
+		}
+		return &snippet, nil
+	},
+}
+
+var UpdateSnippetMutation = &graphql.Field{
+	Type: graphql.NewNonNull(SnippetType),
+	Args: graphql.FieldConfigArgument{
+		"id": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
+		"input": &graphql.ArgumentConfig{
+			Type: graphql.NewInputObject(graphql.InputObjectConfig{
+				Name: "SnippetInput",
+				Fields: graphql.InputObjectConfigFieldMap{
+					"body": &graphql.InputObjectFieldConfig{Type: graphql.String},
+				},
+			}),
+		},
+	},
+	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+		// TODO - Authentication
+
+		snippetID := p.Args["id"].(int)
+		var snippet Snippet
+		db.Where(snippetID).First(&snippet)
+		if snippet.ID != snippetID {
+			return nil, ErrBadRequest
+		}
+
+		input := p.Args["input"].(map[string]interface{})
+		if b := input["body"]; b != nil {
+			snippet.Body = b.(string)
+		}
+
+		errs := db.Save(&snippet).GetErrors()
+		if len(errs) > 0 {
+			return nil, ErrInternalServer
+		}
+		return &snippet, nil
 	},
 }

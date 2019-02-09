@@ -105,4 +105,50 @@ var _ = Describe("Mutation", func() {
 			Expect(post.Description).To(Equal(testDescription))
 		})
 	})
+
+	Describe("createSnippet", func() {
+		testTitle := "Awesome snippet 😎"
+		testBody := "This is my awesome snippet."
+
+		It("create new snippet should success", func() {
+			data := testMutation("createSnippet", `
+			mutation {
+				createSnippet(input: {
+					title: "%s"
+					body: "%s"
+					isPublic: true
+				}) {
+					id
+					title
+					body
+				}
+			}`, testTitle, testBody)
+
+			var snippet Snippet
+			db.Where(&Snippet{ID: data["id"].(int)}).First(&snippet)
+			Expect(snippet.Title).To(Equal(testTitle))
+			Expect(data["title"].(string)).To(Equal(testTitle))
+		})
+	})
+
+	Describe("updateSnippet", func() {
+		It("Update snippet should success", func() {
+			testBody := "This is my awesome updated snippet."
+
+			var snippet Snippet
+			db.First(&snippet)
+
+			testMutation("updateSnippet", `
+			mutation {
+				updateSnippet(id: %d, input: {
+					body: "%s"
+				}) {
+					id
+				}
+			}`, snippet.ID, testBody)
+
+			db.Where(&Snippet{ID: snippet.ID}).First(&snippet)
+			Expect(snippet.Body).To(Equal(testBody))
+		})
+	})
 })

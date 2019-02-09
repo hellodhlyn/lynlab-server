@@ -12,6 +12,7 @@ func cleanModels() {
 		Post{},
 		PostTag{},
 		PostTagRelation{},
+		Snippet{},
 	)
 }
 

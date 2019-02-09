@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/google/uuid"
 	"github.com/graphql-go/graphql"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -92,6 +93,98 @@ var _ = Describe("Query", func() {
 			data := testQuery("postList", `
 			query {
 				postList(page: {count: 10}) {
+					items { title }
+					pageInfo { hasNext, hasBefore }
+				}
+			}`)
+
+			Expect(len(data["items"].([]interface{})) > 0).To(BeTrue())
+		})
+	})
+})
+
+var _ = Describe("Snippet", func() {
+	Describe("snippet", func() {
+		var snippet Snippet
+
+		BeforeEach(func() {
+			id, _ := uuid.NewUUID()
+			snippet = Snippet{
+				Title: id.String(),
+				Body:  "This is my awesome snippet.",
+			}
+			db.Save(&snippet)
+		})
+
+		It("get a snippet by id should success", func() {
+			data := testQuery("snippet", `
+			query {
+				snippet(id: %d) {
+					title
+					body
+				}
+			}`, snippet.ID)
+
+			Expect(data["title"].(string)).To(Equal(snippet.Title))
+			Expect(data["body"].(string)).To(Equal(snippet.Body))
+		})
+
+		It("get a snippet by title should success", func() {
+			data := testQuery("snippet", `
+			query {
+				snippet(title: "%s") {
+					title
+					body
+				}
+			}`, snippet.Title)
+
+			Expect(data["title"].(string)).To(Equal(snippet.Title))
+			Expect(data["body"].(string)).To(Equal(snippet.Body))
+		})
+
+		It("get a snippet with invalid id should return nil", func() {
+			data := testQuery("snippet", `
+			query {
+				snippet(id : %d) {
+					title
+				}
+			}`, -1)
+
+			Expect(data).To(BeNil())
+		})
+
+		It("get a snippet with invalid title should  return nil", func() {
+			data := testQuery("snippet", `
+			query {
+				snippet(title: "%s") {
+					title
+				}
+			}`, snippet.Title+" invalid")
+
+			Expect(data).To(BeNil())
+		})
+	})
+
+	Describe("snippetList", func() {
+		var snippets []Snippet
+
+		BeforeEach(func() {
+			for range []int{0, 1, 2, 3, 4} {
+				id, _ := uuid.NewUUID()
+				p := Snippet{
+					Title: id.String(),
+					Body:  "This is my awesome snippet.",
+				}
+
+				db.Save(&p)
+				snippets = append(snippets, p)
+			}
+		})
+
+		It("get snippet list should success", func() {
+			data := testQuery("snippetList", `
+			query {
+				snippetList(page: {count: 10}) {
 					items { title }
 					pageInfo { hasNext, hasBefore }
 				}

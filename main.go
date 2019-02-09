@@ -16,15 +16,19 @@ func init() {
 		Query: graphql.NewObject(graphql.ObjectConfig{
 			Name: "RootQuery",
 			Fields: graphql.Fields{
-				"post":     PostQuery,
-				"postList": PostListQuery,
+				"post":        PostQuery,
+				"postList":    PostListQuery,
+				"snippet":     SnippetQuery,
+				"snippetList": SnippetListQuery,
 			},
 		}),
 		Mutation: graphql.NewObject(graphql.ObjectConfig{
 			Name: "RootMutation",
 			Fields: graphql.Fields{
-				"createPost": CreatePostMutation,
-				"updatePost": UpdatePostMutation,
+				"createPost":    CreatePostMutation,
+				"updatePost":    UpdatePostMutation,
+				"createSnippet": CreateSnippetMutation,
+				"updateSnippet": UpdateSnippetMutation,
 			},
 		}),
 	})
