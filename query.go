@@ -40,7 +40,7 @@ var PostListQuery = &graphql.Field{
 		switch pageArgs["sortDirection"].(string) {
 		case "ASC":
 			query = query.Order("id asc")
-		case "DESC":
+		default:
 			query = query.Order("id desc")
 		}
 

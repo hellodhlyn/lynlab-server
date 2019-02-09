@@ -23,8 +23,8 @@ func init() {
 		Mutation: graphql.NewObject(graphql.ObjectConfig{
 			Name: "RootMutation",
 			Fields: graphql.Fields{
-				"createPost":    CreatePostMutation,
-				"createPostTag": CreatePostTagMutation,
+				"createPost": CreatePostMutation,
+				"updatePost": UpdatePostMutation,
 			},
 		}),
 	})

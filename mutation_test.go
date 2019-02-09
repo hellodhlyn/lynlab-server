@@ -14,7 +14,10 @@ func testMutation(mutationName, mutation string, args ...interface{}) (data map[
 		RequestString: fmt.Sprintf(mutation, args...),
 	})
 
-	Expect(result.HasErrors()).To(BeFalse())
+	if result.HasErrors() {
+		fmt.Println(result.Errors)
+		Fail("Failed to execute mutation.")
+	}
 
 	mutationData := result.Data.(map[string]interface{})[mutationName]
 	if mutationData == nil {
@@ -64,11 +67,11 @@ var _ = Describe("Mutation", func() {
 					title: "%s"
 					body: "%s"
 					description: "%s"
-					tagIDList: [%d, %d]
+					tagNameList: ["%s", "%s"]
 				}) {
 					id
 				}
-			}`, testTitle, testBody, testDescription, tag1.ID, tag2.ID)
+			}`, testTitle, testBody, testDescription, tag1.Name, tag2.Name)
 
 			var rels []PostTagRelation
 			db.Where(&PostTagRelation{PostID: data["id"].(int)}).Find(&rels)
@@ -76,18 +79,30 @@ var _ = Describe("Mutation", func() {
 		})
 	})
 
-	Describe("createPostTag", func() {
-		It("create post tag should success", func() {
-			testMutation("createPostTag", `
-			mutation {
-				createPostTag(input: { name: "awesome" }) {
-					name
-				}
-			}`)
+	Describe("updatePost", func() {
+		It("Update post should success", func() {
+			testTitle := "Awesome updated post 😎"
+			testBody := "This is my awesome updated post."
+			testDescription := "This is my awesome updated description."
 
-			var tag PostTag
-			db.Where(&PostTag{Name: "awesome"}).First(&tag)
-			Expect(tag.Name).To(Equal("awesome"))
+			var post Post
+			db.First(&post)
+
+			testMutation("updatePost", `
+			mutation {
+				updatePost(id: %d, input: {
+					title: "%s"
+					body: "%s"
+					description: "%s"
+				}) {
+					id
+				}
+			}`, post.ID, testTitle, testBody, testDescription)
+
+			db.Where(&Post{ID: post.ID}).First(&post)
+			Expect(post.Title).To(Equal(testTitle))
+			Expect(post.Body).To(Equal(testBody))
+			Expect(post.Description).To(Equal(testDescription))
 		})
 	})
 })

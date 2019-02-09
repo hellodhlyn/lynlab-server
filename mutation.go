@@ -15,7 +15,7 @@ var CreatePostMutation = &graphql.Field{
 					"description":  &graphql.InputObjectFieldConfig{Type: graphql.NewNonNull(graphql.String)},
 					"body":         &graphql.InputObjectFieldConfig{Type: graphql.NewNonNull(graphql.String)},
 					"thumbnailURL": &graphql.InputObjectFieldConfig{Type: graphql.String},
-					"tagIDList":    &graphql.InputObjectFieldConfig{Type: graphql.NewList(graphql.NewNonNull(graphql.Int))},
+					"tagNameList":  &graphql.InputObjectFieldConfig{Type: graphql.NewList(graphql.NewNonNull(graphql.String))},
 				},
 			}),
 		},
@@ -38,13 +38,10 @@ var CreatePostMutation = &graphql.Field{
 			return nil, ErrInternalServer
 		}
 
-		if tagIDList := input["tagIDList"]; tagIDList != nil {
-			for _, id := range tagIDList.([]interface{}) {
+		if tagNameList := input["tagNameList"]; tagNameList != nil {
+			for _, name := range tagNameList.([]interface{}) {
 				var tag PostTag
-				db.Where(&PostTag{ID: id.(int)}).First(&tag)
-				if tag.ID == 0 {
-					continue
-				}
+				db.Where(&PostTag{Name: name.(string)}).FirstOrCreate(&tag)
 				db.Save(&PostTagRelation{PostID: post.ID, TagID: tag.ID})
 			}
 		}
@@ -52,14 +49,19 @@ var CreatePostMutation = &graphql.Field{
 	},
 }
 
-var CreatePostTagMutation = &graphql.Field{
-	Type: graphql.NewNonNull(PostTagType),
+var UpdatePostMutation = &graphql.Field{
+	Type: graphql.NewNonNull(PostType),
 	Args: graphql.FieldConfigArgument{
+		"id": &graphql.ArgumentConfig{Type: graphql.NewNonNull(graphql.Int)},
 		"input": &graphql.ArgumentConfig{
 			Type: graphql.NewInputObject(graphql.InputObjectConfig{
-				Name: "CreatePostTagInput",
+				Name: "UpdatePostInput",
 				Fields: graphql.InputObjectConfigFieldMap{
-					"name": &graphql.InputObjectFieldConfig{Type: graphql.NewNonNull(graphql.String)},
+					"title":        &graphql.InputObjectFieldConfig{Type: graphql.String},
+					"description":  &graphql.InputObjectFieldConfig{Type: graphql.String},
+					"body":         &graphql.InputObjectFieldConfig{Type: graphql.String},
+					"thumbnailURL": &graphql.InputObjectFieldConfig{Type: graphql.String},
+					"tagNameList":  &graphql.InputObjectFieldConfig{Type: graphql.NewList(graphql.NewNonNull(graphql.String))},
 				},
 			}),
 		},
@@ -67,16 +69,44 @@ var CreatePostTagMutation = &graphql.Field{
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 		// TODO - Authentication
 
-		tagName := p.Args["input"].(map[string]interface{})["name"].(string)
-
-		var tag PostTag
-		db.Where(&PostTag{Name: tagName}).First(&tag)
-		if tag.Name == tagName {
-			return nil, ErrPostTagDuplicated
+		postID, ok := p.Args["id"].(int)
+		if !ok {
+			return nil, ErrBadRequest
 		}
 
-		tag = PostTag{Name: tagName}
-		db.Save(&tag)
-		return &tag, nil
+		var post Post
+		db.Where(&Post{ID: postID}).First(&post)
+		if post.ID != postID {
+			return nil, ErrBadRequest
+		}
+
+		input := p.Args["input"].(map[string]interface{})
+		if t := input["title"]; t != nil {
+			post.Title = t.(string)
+		}
+		if d := input["description"]; d != nil {
+			post.Description = d.(string)
+		}
+		if b := input["body"]; b != nil {
+			post.Body = b.(string)
+		}
+		if t := input["thumbnailURL"]; t != nil {
+			post.ThumbnailURL = t.(string)
+		}
+		errs := db.Save(&post).GetErrors()
+		if len(errs) > 0 {
+			return nil, ErrInternalServer
+		}
+
+		if tagNameList := input["tagNameList"]; tagNameList != nil {
+			db.Where(&PostTagRelation{PostID: post.ID}).Delete(&PostTagRelation{})
+
+			for _, name := range tagNameList.([]interface{}) {
+				var tag PostTag
+				db.Where(&PostTag{Name: name.(string)}).FirstOrCreate(&tag)
+				db.Save(&PostTagRelation{PostID: post.ID, TagID: tag.ID})
+			}
+		}
+		return &post, nil
 	},
 }
