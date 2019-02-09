@@ -1,6 +1,11 @@
 package main
 
-import "testing"
+import (
+	"testing"
+
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+)
 
 func cleanModels() {
 	db.DropTable(
@@ -13,8 +18,12 @@ func cleanModels() {
 func TestMain(m *testing.M) {
 	cleanModels()
 	migrateModels()
+	defer cleanModels()
 
 	m.Run()
+}
 
-	defer cleanModels()
+func TestAll(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "All Suite")
 }

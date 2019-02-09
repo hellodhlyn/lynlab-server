@@ -2,22 +2,19 @@ package main
 
 import (
 	"fmt"
-	"testing"
 
 	"github.com/graphql-go/graphql"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func testMutation(t *testing.T, mutationName, mutation string, args ...interface{}) (data map[string]interface{}) {
+func testMutation(mutationName, mutation string, args ...interface{}) (data map[string]interface{}) {
 	result := graphql.Do(graphql.Params{
 		Schema:        schema,
 		RequestString: fmt.Sprintf(mutation, args...),
 	})
 
-	if result.HasErrors() {
-		fmt.Printf("%s mutation return error(s): %v\n", mutationName, result.Errors)
-		t.FailNow()
-		return nil
-	}
+	Expect(result.HasErrors()).To(BeFalse())
 
 	mutationData := result.Data.(map[string]interface{})[mutationName]
 	if mutationData == nil {
@@ -26,78 +23,71 @@ func testMutation(t *testing.T, mutationName, mutation string, args ...interface
 	return mutationData.(map[string]interface{})
 }
 
-func TestCreatePostMutation(t *testing.T) {
-	testTitle := "Awesome post 😎"
-	testBody := "This is my awesome post."
-	testDescription := "This is my awesome description."
+var _ = Describe("Mutation", func() {
+	Describe("createPost", func() {
+		testTitle := "Awesome post 😎"
+		testBody := "This is my awesome post."
+		testDescription := "This is my awesome description."
 
-	// Create new post
-	data := testMutation(t, "createPost", `
-	mutation {
-		createPost(input: {
-			title: "%s"
-			body: "%s"
-			description: "%s"
-		}) {
-			id
-			title
-			body
-			description
-		}
-	}`, testTitle, testBody, testDescription)
+		It("create new post should success", func() {
+			data := testMutation("createPost", `
+			mutation {
+				createPost(input: {
+					title: "%s"
+					body: "%s"
+					description: "%s"
+				}) {
+					id
+					title
+					body
+					description
+				}
+			}`, testTitle, testBody, testDescription)
 
-	var post Post
-	db.Where(&Post{ID: data["id"].(int)}).First(&post)
-	if post.Title != testTitle || data["title"].(string) != testTitle ||
-		post.Body != testBody || data["body"].(string) != testBody ||
-		post.Description != testDescription || data["description"].(string) != testDescription {
-		fmt.Printf("createPost failed: %v\n", post)
-		t.FailNow()
-		return
-	}
+			var post Post
+			db.Where(&Post{ID: data["id"].(int)}).First(&post)
+			Expect(post.Title).To(Equal(testTitle))
+			Expect(data["title"].(string)).To(Equal(testTitle))
+			Expect(post.Description).To(Equal(testDescription))
+			Expect(data["description"].(string)).To(Equal(testDescription))
+		})
 
-	// Create new post with tags
-	db.Save(&PostTag{Name: "my_tag_1"})
-	db.Save(&PostTag{Name: "my_tag_2"})
-	var tag1 PostTag
-	var tag2 PostTag
-	db.Where(&PostTag{Name: "my_tag_1"}).First(&tag1)
-	db.Where(&PostTag{Name: "my_tag_2"}).First(&tag2)
+		It("create new post with tags should success", func() {
+			tag1 := PostTag{Name: "my_tag_1"}
+			tag2 := PostTag{Name: "my_tag_2"}
+			db.Save(&tag1)
+			db.Save(&tag2)
 
-	data = testMutation(t, "createPost", `
-	mutation {
-		createPost(input: {
-			title: "%s"
-			body: "%s"
-			description: "%s"
-			tagIDList: [%d, %d]
-		}) {
-			id
-		}
-	}`, testTitle, testBody, testDescription, tag1.ID, tag2.ID)
+			data := testMutation("createPost", `
+			mutation {
+				createPost(input: {
+					title: "%s"
+					body: "%s"
+					description: "%s"
+					tagIDList: [%d, %d]
+				}) {
+					id
+				}
+			}`, testTitle, testBody, testDescription, tag1.ID, tag2.ID)
 
-	var rels []PostTagRelation
-	db.Where(&PostTagRelation{PostID: data["id"].(int)}).Find(&rels)
-	if len(rels) != 2 {
-		fmt.Printf("createPost failed\n")
-		t.FailNow()
-		return
-	}
-}
+			var rels []PostTagRelation
+			db.Where(&PostTagRelation{PostID: data["id"].(int)}).Find(&rels)
+			Expect(len(rels)).To(Equal(2))
+		})
+	})
 
-func TestCreatePostTagMutation(t *testing.T) {
-	testMutation(t, "createPostTag", `
-	mutation {
-		createPostTag(input: { name: "awesome" }) {
-			name
-		}
-	}`)
+	Describe("createPostTag", func() {
+		It("create post tag should success", func() {
+			testMutation("createPostTag", `
+			mutation {
+				createPostTag(input: { name: "awesome" }) {
+					name
+				}
+			}`)
 
-	var tag PostTag
-	db.Where(&PostTag{Name: "awesome"}).First(&tag)
-	if tag.Name != "awesome" {
-		fmt.Printf("createPostTag failed\n")
-		t.FailNow()
-		return
-	}
-}
+			var tag PostTag
+			db.Where(&PostTag{Name: "awesome"}).First(&tag)
+			Expect(tag.Name).To(Equal("awesome"))
+		})
+	})
+})

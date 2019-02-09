@@ -2,22 +2,19 @@ package main
 
 import (
 	"fmt"
-	"testing"
 
 	"github.com/graphql-go/graphql"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func testQuery(t *testing.T, queryName, query string, args ...interface{}) (data map[string]interface{}) {
+func testQuery(queryName, query string, args ...interface{}) (data map[string]interface{}) {
 	result := graphql.Do(graphql.Params{
 		Schema:        schema,
 		RequestString: fmt.Sprintf(query, args...),
 	})
 
-	if result.HasErrors() {
-		fmt.Printf("%s query return error(s): %v\n", queryName, result.Errors)
-		t.FailNow()
-		return nil
-	}
+	Expect(result.HasErrors()).To(BeFalse())
 
 	queryData := result.Data.(map[string]interface{})[queryName]
 	if queryData == nil {
@@ -26,80 +23,81 @@ func testQuery(t *testing.T, queryName, query string, args ...interface{}) (data
 	return queryData.(map[string]interface{})
 }
 
-func TestPostQuery(t *testing.T) {
-	testTitle := "Awesome post 😎"
-	testBody := "This is my awesome post."
-	testDescription := "This is my awesome description."
+var _ = Describe("Query", func() {
+	Describe("post", func() {
+		testTitle := "Awesome post 😎"
+		testBody := "This is my awesome post."
+		testDescription := "This is my awesome description."
 
-	post := Post{
-		Title:       testTitle,
-		Body:        testBody,
-		Description: testDescription,
-	}
-	db.Save(&post)
+		var post Post
 
-	// Get a post
-	data := testQuery(t, "post", `
-	query {
-		post(id: %d) {
-			title
-			body
-			description
-		}
-	}`, post.ID)
+		BeforeEach(func() {
+			post = Post{
+				Title:       testTitle,
+				Body:        testBody,
+				Description: testDescription,
+			}
+			db.Save(&post)
+		})
 
-	if data["title"].(string) != testTitle ||
-		data["body"].(string) != testBody ||
-		data["description"].(string) != testDescription {
-		fmt.Printf("post query failed: %v\n", data)
-		t.Fail()
-		return
-	}
+		It("get a post should success", func() {
+			data := testQuery("post", `
+			query {
+				post(id: %d) {
+					title
+					body
+					description
+				}
+			}`, post.ID)
 
-	// Try to get a post with invalid id
-	data = testQuery(t, "post", `
-	query {
-		post(id : %d) {
-			title
-		}
-	}
-	`, -1)
+			Expect(data["title"].(string)).To(Equal(testTitle))
+			Expect(data["body"].(string)).To(Equal(testBody))
+			Expect(data["description"].(string)).To(Equal(testDescription))
+		})
 
-	if data != nil {
-		fmt.Printf("post query failed: %v\n", data)
-		t.Fail()
-		return
-	}
-}
+		It("get a post with invalid id should fail", func() {
+			data := testQuery("post", `
+			query {
+				post(id : %d) {
+					title
+				}
+			}
+			`, -1)
 
-func TestPostList(t *testing.T) {
-	testTitle := "Awesome post 😎"
-	testBody := "This is my awesome post."
-	testDescription := "This is my awesome description."
+			Expect(data).To(BeNil())
+		})
+	})
 
-	var posts []Post
-	for range []int{0, 1, 2, 3, 4} {
-		p := Post{
-			Title:       testTitle,
-			Body:        testBody,
-			Description: testDescription,
-		}
+	Describe("postList", func() {
+		testTitle := "Awesome post 😎"
+		testBody := "This is my awesome post."
+		testDescription := "This is my awesome description."
 
-		db.Save(&p)
-		posts = append(posts, p)
-	}
+		var posts []Post
 
-	// Get posts
-	data := testQuery(t, "postList", `
-	query {
-		postList(page: {count: 10}) {
-			items { title }
-			pageInfo { hasNext, hasBefore }
-		}
-	}`)
-	if len(data["items"].([]interface{})) == 0 {
-		fmt.Printf("postList query failed: %v\n", data)
-		t.Fail()
-		return
-	}
-}
+		BeforeEach(func() {
+			for range []int{0, 1, 2, 3, 4} {
+				p := Post{
+					Title:       testTitle,
+					Body:        testBody,
+					Description: testDescription,
+				}
+
+				db.Save(&p)
+				posts = append(posts, p)
+			}
+		})
+
+		It("get post list should success", func() {
+			data := testQuery("postList", `
+			query {
+				postList(page: {count: 10}) {
+					items { title }
+					pageInfo { hasNext, hasBefore }
+				}
+			}`)
+
+			Expect(len(data["items"].([]interface{})) > 0).To(BeTrue())
+		})
+	})
+})
