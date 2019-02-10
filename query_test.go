@@ -115,7 +115,7 @@ var _ = Describe("Query", func() {
 			data := testQuery("postList", `
 			query {
 				postList(page: {count: 10}) {
-					items { title }
+					items { title tagList { name } }
 					pageInfo { hasNext, hasBefore }
 				}
 			}`)

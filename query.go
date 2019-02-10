@@ -41,7 +41,7 @@ var PostListQuery = &graphql.Field{
 	},
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 		pageArgs := p.Args["page"].(map[string]interface{})
-		var items []Post
+		var items []*Post
 
 		query := db
 		if before, ok := pageArgs["before"].(int); ok {
@@ -124,7 +124,7 @@ var SnippetListQuery = &graphql.Field{
 	},
 	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 		pageArgs := p.Args["page"].(map[string]interface{})
-		var items []Snippet
+		var items []*Snippet
 
 		query := db
 		if before, ok := pageArgs["before"].(int); ok {

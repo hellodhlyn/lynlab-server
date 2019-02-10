@@ -30,7 +30,7 @@ type Post struct {
 }
 
 type PostPage struct {
-	Items    []Post
+	Items    []*Post
 	PageInfo pageInfo
 }
 
@@ -104,7 +104,7 @@ type Snippet struct {
 }
 
 type SnippetPage struct {
-	Items    []Snippet
+	Items    []*Snippet
 	PageInfo pageInfo
 }
 
