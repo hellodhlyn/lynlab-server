@@ -16,6 +16,7 @@ var pageArguments = graphql.ArgumentConfig{
 	Type: graphql.NewInputObject(graphql.InputObjectConfig{
 		Name: "PageInput",
 		Fields: graphql.InputObjectConfigFieldMap{
+			"after":         &graphql.InputObjectFieldConfig{Type: graphql.Int},
 			"before":        &graphql.InputObjectFieldConfig{Type: graphql.Int},
 			"count":         &graphql.InputObjectFieldConfig{Type: graphql.Int, DefaultValue: 20},
 			"sortDirection": &graphql.InputObjectFieldConfig{Type: pageSortDirectionEnum, DefaultValue: "DESC"},

@@ -46,6 +46,8 @@ var PostListQuery = &graphql.Field{
 		query := db
 		if before, ok := pageArgs["before"].(int); ok {
 			query = query.Where("id < ?", before)
+		} else if after, ok := pageArgs["after"].(int); ok {
+			query = query.Where("id > ?", after)
 		}
 		query = query.Where(&Post{IsPublic: true})
 
@@ -129,6 +131,9 @@ var SnippetListQuery = &graphql.Field{
 		query := db
 		if before, ok := pageArgs["before"].(int); ok {
 			query = query.Where("id < ?", before)
+		}
+		if after, ok := pageArgs["after"].(int); ok {
+			query = query.Where("id > ?", after)
 		}
 
 		switch pageArgs["sortDirection"].(string) {
