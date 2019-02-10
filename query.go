@@ -2,6 +2,8 @@ package main
 
 import (
 	"math"
+	"strconv"
+	"time"
 
 	"github.com/graphql-go/graphql"
 )
@@ -19,6 +21,15 @@ var PostQuery = &graphql.Field{
 		if post.ID != id || !post.IsPublic {
 			return nil, nil
 		}
+
+		cacheKey := "post.readcount." + strconv.Itoa(id) + "." + p.Context.Value(ctxClientIP).(string)
+		if _, ok := cache.Get(cacheKey); !ok {
+			post.ReadCount = post.ReadCount + 1
+			db.Save(&post)
+
+			cache.Set(cacheKey, true, 24*time.Hour)
+		}
+
 		return &post, nil
 	},
 }
@@ -36,6 +47,7 @@ var PostListQuery = &graphql.Field{
 		if before, ok := pageArgs["before"].(int); ok {
 			query = query.Where("id < ?", before)
 		}
+		query = query.Where(&Post{IsPublic: true})
 
 		switch pageArgs["sortDirection"].(string) {
 		case "ASC":
@@ -64,11 +76,11 @@ var PostListQuery = &graphql.Field{
 		var nextCount int
 		switch pageArgs["sortDirection"].(string) {
 		case "ASC":
-			db.Model(&Post{}).Where("id < ?", minID).Count(&beforeCount)
-			db.Model(&Post{}).Where("id > ?", maxID).Count(&nextCount)
+			db.Model(&Post{}).Where("id < ?", minID).Where(&Post{IsPublic: true}).Count(&beforeCount)
+			db.Model(&Post{}).Where("id > ?", maxID).Where(&Post{IsPublic: true}).Count(&nextCount)
 		case "DESC":
-			db.Model(&Post{}).Where("id < ?", minID).Count(&nextCount)
-			db.Model(&Post{}).Where("id > ?", maxID).Count(&beforeCount)
+			db.Model(&Post{}).Where("id < ?", minID).Where(&Post{IsPublic: true}).Count(&nextCount)
+			db.Model(&Post{}).Where("id > ?", maxID).Where(&Post{IsPublic: true}).Count(&beforeCount)
 		}
 
 		return &PostPage{

@@ -13,9 +13,13 @@ func testQuery(queryName, query string, args ...interface{}) (data map[string]in
 	result := graphql.Do(graphql.Params{
 		Schema:        schema,
 		RequestString: fmt.Sprintf(query, args...),
+		Context:       mockContext,
 	})
 
-	Expect(result.HasErrors()).To(BeFalse())
+	if result.HasErrors() {
+		fmt.Println(result.Errors)
+		Fail("Failed to execute query.")
+	}
 
 	queryData := result.Data.(map[string]interface{})[queryName]
 	if queryData == nil {

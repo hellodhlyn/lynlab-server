@@ -15,6 +15,7 @@ type ctxKey uint8
 
 const (
 	ctxAuthToken ctxKey = iota
+	ctxClientIP  ctxKey = iota
 )
 
 var schema graphql.Schema
@@ -56,6 +57,7 @@ func main() {
 
 		// Parse context for request.
 		ctx := context.Background()
+		ctx = context.WithValue(ctx, ctxClientIP, c.RealIP())
 		if token := c.Request().Header.Get("Authorization"); strings.HasPrefix(token, "Bearer ") {
 			ctx = context.WithValue(ctx, ctxAuthToken, token)
 		}

@@ -38,7 +38,9 @@ func TestMain(m *testing.M) {
 	mockServers()
 	defer cleanModels()
 
-	mockContext = context.WithValue(context.Background(), ctxAuthToken, "Bearer valid_token")
+	mockContext = context.Background()
+	mockContext = context.WithValue(mockContext, ctxAuthToken, "Bearer valid_token")
+	mockContext = context.WithValue(mockContext, ctxClientIP, "127.0.0.1")
 
 	m.Run()
 }
