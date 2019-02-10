@@ -35,6 +35,7 @@ var CreatePostMutation = &graphql.Field{
 					"body":         &graphql.InputObjectFieldConfig{Type: graphql.NewNonNull(graphql.String)},
 					"thumbnailURL": &graphql.InputObjectFieldConfig{Type: graphql.String},
 					"tagNameList":  &graphql.InputObjectFieldConfig{Type: graphql.NewList(graphql.NewNonNull(graphql.String))},
+					"isPublic":     &graphql.InputObjectFieldConfig{Type: graphql.NewNonNull(graphql.Boolean)},
 				},
 			}),
 		},
@@ -50,6 +51,7 @@ var CreatePostMutation = &graphql.Field{
 			Title:       input["title"].(string),
 			Description: input["description"].(string),
 			Body:        input["body"].(string),
+			IsPublic:    input["isPublic"].(bool),
 		}
 		if t := input["thumbnailURL"]; t != nil {
 			post.ThumbnailURL = t.(string)
@@ -83,6 +85,7 @@ var UpdatePostMutation = &graphql.Field{
 					"body":         &graphql.InputObjectFieldConfig{Type: graphql.String},
 					"thumbnailURL": &graphql.InputObjectFieldConfig{Type: graphql.String},
 					"tagNameList":  &graphql.InputObjectFieldConfig{Type: graphql.NewList(graphql.NewNonNull(graphql.String))},
+					"isPublic":     &graphql.InputObjectFieldConfig{Type: graphql.Boolean},
 				},
 			}),
 		},
@@ -111,6 +114,9 @@ var UpdatePostMutation = &graphql.Field{
 		}
 		if t := input["thumbnailURL"]; t != nil {
 			post.ThumbnailURL = t.(string)
+		}
+		if p := input["isPublic"]; p != nil {
+			post.IsPublic = p.(bool)
 		}
 		errs := db.Save(&post).GetErrors()
 		if len(errs) > 0 {

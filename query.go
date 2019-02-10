@@ -16,7 +16,7 @@ var PostQuery = &graphql.Field{
 		var post Post
 		db.Where(id).First(&post)
 
-		if post.ID != id {
+		if post.ID != id || !post.IsPublic {
 			return nil, nil
 		}
 		return &post, nil

@@ -24,6 +24,7 @@ type Post struct {
 	Body         string `gorm:"type:text;not null"`
 	ThumbnailURL string `gorm:"type:varchar(255);nullable"`
 	ReadCount    int    `gorm:"default:0"`
+	IsPublic     bool   `gorm:"default:false"`
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 }
@@ -62,6 +63,7 @@ var PostType = graphql.NewObject(graphql.ObjectConfig{
 			},
 		},
 		"readCount": &graphql.Field{Type: graphql.NewNonNull(graphql.Int)},
+		"isPublic":  &graphql.Field{Type: graphql.NewNonNull(graphql.Boolean)},
 		"createdAt": &graphql.Field{Type: graphql.NewNonNull(graphql.DateTime)},
 		"updatedAt": &graphql.Field{Type: graphql.NewNonNull(graphql.DateTime)},
 	},

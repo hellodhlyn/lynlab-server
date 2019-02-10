@@ -40,6 +40,7 @@ var _ = Describe("Mutation", func() {
 					title: "%s"
 					body: "%s"
 					description: "%s"
+					isPublic: true
 				}) {
 					id
 					title
@@ -69,6 +70,7 @@ var _ = Describe("Mutation", func() {
 					body: "%s"
 					description: "%s"
 					tagNameList: ["%s", "%s"]
+					isPublic: true
 				}) {
 					id
 				}

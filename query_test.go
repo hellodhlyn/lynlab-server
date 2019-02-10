@@ -37,6 +37,7 @@ var _ = Describe("Query", func() {
 				Title:       testTitle,
 				Body:        testBody,
 				Description: testDescription,
+				IsPublic:    true,
 			}
 			db.Save(&post)
 		})
@@ -51,9 +52,26 @@ var _ = Describe("Query", func() {
 				}
 			}`, post.ID)
 
+			Expect(data).NotTo(BeNil())
 			Expect(data["title"].(string)).To(Equal(testTitle))
 			Expect(data["body"].(string)).To(Equal(testBody))
 			Expect(data["description"].(string)).To(Equal(testDescription))
+		})
+
+		It("get a private post should return nil", func() {
+			post.IsPublic = false
+			db.Save(&post)
+
+			data := testQuery("post", `
+			query {
+				post(id: %d) {
+					title
+					body
+					description
+				}
+			}`, post.ID)
+
+			Expect(data).To(BeNil())
 		})
 
 		It("get a post with invalid id should fail", func() {
