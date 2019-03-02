@@ -4,11 +4,16 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
+const (
+	enumSortDirectionAsc = iota
+	enumSortDirectionDesc
+)
+
 var pageSortDirectionEnum = graphql.NewEnum(graphql.EnumConfig{
 	Name: "SortDirection",
 	Values: graphql.EnumValueConfigMap{
-		"ASC":  &graphql.EnumValueConfig{Value: 0},
-		"DESC": &graphql.EnumValueConfig{Value: 1},
+		"ASC":  &graphql.EnumValueConfig{Value: enumSortDirectionAsc},
+		"DESC": &graphql.EnumValueConfig{Value: enumSortDirectionDesc},
 	},
 })
 
@@ -19,7 +24,7 @@ var pageArguments = graphql.ArgumentConfig{
 			"after":         &graphql.InputObjectFieldConfig{Type: graphql.Int},
 			"before":        &graphql.InputObjectFieldConfig{Type: graphql.Int},
 			"count":         &graphql.InputObjectFieldConfig{Type: graphql.Int, DefaultValue: 20},
-			"sortDirection": &graphql.InputObjectFieldConfig{Type: pageSortDirectionEnum, DefaultValue: "DESC"},
+			"sortDirection": &graphql.InputObjectFieldConfig{Type: pageSortDirectionEnum, DefaultValue: enumSortDirectionDesc},
 		},
 	}),
 	DefaultValue: map[string]interface{}{

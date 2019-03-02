@@ -51,8 +51,8 @@ var PostListQuery = &graphql.Field{
 		}
 		query = query.Where(&Post{IsPublic: true})
 
-		switch pageArgs["sortDirection"].(string) {
-		case "ASC":
+		switch pageArgs["sortDirection"].(int) {
+		case enumSortDirectionAsc:
 			query = query.Order("id asc")
 		default:
 			query = query.Order("id desc")
@@ -76,11 +76,11 @@ var PostListQuery = &graphql.Field{
 
 		var beforeCount int
 		var nextCount int
-		switch pageArgs["sortDirection"].(string) {
-		case "ASC":
+		switch pageArgs["sortDirection"].(int) {
+		case enumSortDirectionAsc:
 			db.Model(&Post{}).Where("id < ?", minID).Where(&Post{IsPublic: true}).Count(&beforeCount)
 			db.Model(&Post{}).Where("id > ?", maxID).Where(&Post{IsPublic: true}).Count(&nextCount)
-		case "DESC":
+		default:
 			db.Model(&Post{}).Where("id < ?", minID).Where(&Post{IsPublic: true}).Count(&nextCount)
 			db.Model(&Post{}).Where("id > ?", maxID).Where(&Post{IsPublic: true}).Count(&beforeCount)
 		}
@@ -136,8 +136,8 @@ var SnippetListQuery = &graphql.Field{
 			query = query.Where("id > ?", after)
 		}
 
-		switch pageArgs["sortDirection"].(string) {
-		case "ASC":
+		switch pageArgs["sortDirection"].(int) {
+		case enumSortDirectionAsc:
 			query = query.Order("id asc")
 		default:
 			query = query.Order("id desc")
@@ -161,11 +161,11 @@ var SnippetListQuery = &graphql.Field{
 
 		var beforeCount int
 		var nextCount int
-		switch pageArgs["sortDirection"].(string) {
-		case "ASC":
+		switch pageArgs["sortDirection"].(int) {
+		case enumSortDirectionAsc:
 			db.Model(&Snippet{}).Where("id < ?", minID).Count(&beforeCount)
 			db.Model(&Snippet{}).Where("id > ?", maxID).Count(&nextCount)
-		case "DESC":
+		default:
 			db.Model(&Snippet{}).Where("id < ?", minID).Count(&nextCount)
 			db.Model(&Snippet{}).Where("id > ?", maxID).Count(&beforeCount)
 		}
