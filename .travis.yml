@@ -1,0 +1,35 @@
+language: go
+go:
+  - "1.11"
+
+sudo: required
+
+services:
+  - docker
+  - postgresql
+
+env:
+  - GO111MODULE=on DB_HOST=127.0.0.1 DB_USERNAME=postgres DB_PASSWORD='' DB_NAME=lynlab_test
+
+before_script:
+  - psql -c 'create database lynlab_test;' -U postgres
+
+install:
+  - go mod download
+
+script:
+  - go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+  - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
+      docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+
+      docker build -t lynlab/lynlab:latest .;
+      docker push lynlab/lynlab:latest;
+
+      if [ -n "${TRAVIS_TAG}" ]; then
+        docker build -t lynlab/lynlab:${TRAVIS_TAG} .;
+        docker push lynlab/lynlab:${TRAVIS_TAG};
+      fi
+    fi
