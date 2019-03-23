@@ -1,6 +1,6 @@
 # lynlab
 
-[![](https://img.shields.io/circleci/project/github/lynlab/lynlab.svg?style=for-the-badge&logo=circleci&maxAge=3600)](https://circleci.com/gh/lynlab/lynlab)
+[![](https://img.shields.io/travis/lynlab/lynlab.svg?style=for-the-badge&maxAge=3600)](https://travis-ci.org/lynlab/lynlab)
 [![](https://img.shields.io/codecov/c/github/lynlab/lynlab.svg?style=for-the-badge&maxAge=3600)](https://codecov.io/gh/lynlab/lynlab)
 [![](https://img.shields.io/github/languages/top/lynlab/lynlab.svg?style=for-the-badge&colorB=375eab&maxAge=3600)](#)
 
