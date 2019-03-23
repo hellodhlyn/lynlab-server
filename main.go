@@ -25,6 +25,7 @@ func init() {
 		Query: graphql.NewObject(graphql.ObjectConfig{
 			Name: "RootQuery",
 			Fields: graphql.Fields{
+				"me":          MeQuery,
 				"post":        PostQuery,
 				"postList":    PostListQuery,
 				"snippet":     SnippetQuery,

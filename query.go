@@ -8,6 +8,29 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
+var MeQuery = &graphql.Field{
+	Type: UserType,
+	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+		token, ok := p.Context.Value(ctxAuthToken).(string)
+		if !ok {
+			return nil, nil
+		}
+
+		auth, err := Authenticate(token)
+		if err != nil {
+			return nil, nil
+		}
+
+		var user User
+		db.Where(&User{Username: auth.Username}).First(&user)
+		if user.Username == "" {
+			return nil, nil
+		}
+
+		return &user, nil
+	},
+}
+
 var PostQuery = &graphql.Field{
 	Type: PostType,
 	Args: graphql.FieldConfigArgument{

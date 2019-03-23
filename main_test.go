@@ -30,7 +30,7 @@ func mockServers() {
 	)
 
 	os.Setenv("LYNLAB_AUTH_HOST", mockAuthServer.URL)
-	db.Save(&User{ID: "00000000-0000-0000-0000-000000000000", IsAdmin: true})
+	db.Save(&User{ID: "00000000-0000-0000-0000-000000000000", Username: "TestUsername", IsAdmin: true})
 }
 
 func TestMain(m *testing.M) {

@@ -16,6 +16,17 @@ type User struct {
 	UpdatedAt time.Time
 }
 
+// UserType represents a GraphQL object for user accounts.
+var UserType = graphql.NewObject(graphql.ObjectConfig{
+	Name: "User",
+	Fields: graphql.Fields{
+		"username":  &graphql.Field{Type: graphql.NewNonNull(graphql.String)},
+		"isAdmin":   &graphql.Field{Type: graphql.NewNonNull(graphql.Boolean)},
+		"createdAt": &graphql.Field{Type: graphql.NewNonNull(graphql.DateTime)},
+		"updatedAt": &graphql.Field{Type: graphql.NewNonNull(graphql.DateTime)},
+	},
+})
+
 // Post is a model for blog post.
 type Post struct {
 	ID           int

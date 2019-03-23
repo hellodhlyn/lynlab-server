@@ -30,6 +30,18 @@ func testQuery(ctx context.Context, queryName, query string, args ...interface{}
 }
 
 var _ = Describe("Query", func() {
+	Describe("me", func() {
+		It("should success for logged in suer", func() {
+			data := testQuery(mockAuthContext, "me", `query { me { username } }`)
+			Expect(data).NotTo(BeNil())
+		})
+
+		It("should return nil for not logged in user", func() {
+			data := testQuery(mockContext, "me", `query { me { username } }`)
+			Expect(data).To(BeNil())
+		})
+	})
+
 	Describe("post", func() {
 		testTitle := "Awesome post 😎"
 		testBody := "This is my awesome post."
