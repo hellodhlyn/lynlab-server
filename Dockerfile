@@ -1,17 +1,22 @@
-FROM python:3.6
-ENV PYTHONUNBUFFERED 1
+### Builder
+FROM golang:1.11-alpine as builder
 
-RUN mkdir -p /usr/src/app
+RUN apk update && apk add git && apk add ca-certificates
+
 WORKDIR /usr/src/app
+COPY . .
 
-# Add requirements
-ADD ./requirements.txt ./requirements.txt
-RUN pip install -r requirements.txt
+ENV GO11MODULE on
 
-# Add application
-ADD . /usr/src/app
+RUN go mod download
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -ldflags '-s' -o main .
 
-ENV NEW_RELIC_CONFIG_FILE newrelic.ini
 
-ENTRYPOINT [ "./docker-entrypoint.sh" ]
-CMD [ "newrelic-admin", "run-program", "python", "manage.py", "runserver", "0.0.0.0:8080" ]
+### Make executable image
+FROM scratch
+
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=builder /etc/passwd /etc/passwd
+COPY --from=builder /usr/src/app/main /main
+
+ENTRYPOINT [ "/main" ]
