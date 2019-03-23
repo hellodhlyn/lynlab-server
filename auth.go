@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"os"
@@ -42,4 +43,21 @@ func Authenticate(token string) (*AuthResponse, error) {
 		return nil, err
 	}
 	return &body, nil
+}
+
+func CheckAdminPermission(ctx context.Context) bool {
+	if token, ok := ctx.Value(ctxAuthToken).(string); ok {
+		auth, err := Authenticate(token)
+		if err != nil {
+			return false
+		}
+
+		var user User
+		db.Where(&User{ID: auth.UUID}).First(&user)
+		if user.ID == "" {
+			return false
+		}
+		return user.IsAdmin
+	}
+	return false
 }

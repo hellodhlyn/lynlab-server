@@ -18,7 +18,7 @@ var PostQuery = &graphql.Field{
 		var post Post
 		db.Where(id).First(&post)
 
-		if post.ID != id || !post.IsPublic {
+		if post.ID != id || (!post.IsPublic && !CheckAdminPermission(p.Context)) {
 			return nil, nil
 		}
 
@@ -49,7 +49,10 @@ var PostListQuery = &graphql.Field{
 		} else if after, ok := pageArgs["after"].(int); ok {
 			query = query.Where("id > ?", after)
 		}
-		query = query.Where(&Post{IsPublic: true})
+
+		if !CheckAdminPermission(p.Context) {
+			query = query.Where(&Post{IsPublic: true})
+		}
 
 		switch pageArgs["sortDirection"].(int) {
 		case enumSortDirectionAsc:

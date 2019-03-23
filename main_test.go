@@ -13,6 +13,7 @@ import (
 
 var mockAuthServer *httptest.Server
 var mockContext context.Context
+var mockAuthContext context.Context
 
 func mockServers() {
 	mockAuthServer = httptest.NewServer(
@@ -39,8 +40,8 @@ func TestMain(m *testing.M) {
 	defer cleanModels()
 
 	mockContext = context.Background()
-	mockContext = context.WithValue(mockContext, ctxAuthToken, "Bearer valid_token")
 	mockContext = context.WithValue(mockContext, ctxClientIP, "127.0.0.1")
+	mockAuthContext = context.WithValue(mockContext, ctxAuthToken, "Bearer valid_token")
 
 	m.Run()
 }

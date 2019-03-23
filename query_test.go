@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -9,11 +10,11 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func testQuery(queryName, query string, args ...interface{}) (data map[string]interface{}) {
+func testQuery(ctx context.Context, queryName, query string, args ...interface{}) (data map[string]interface{}) {
 	result := graphql.Do(graphql.Params{
 		Schema:        schema,
 		RequestString: fmt.Sprintf(query, args...),
-		Context:       mockContext,
+		Context:       ctx,
 	})
 
 	if result.HasErrors() {
@@ -46,8 +47,12 @@ var _ = Describe("Query", func() {
 			db.Save(&post)
 		})
 
+		AfterEach(func() {
+			db.Delete(&Post{})
+		})
+
 		It("get a post should success", func() {
-			data := testQuery("post", `
+			data := testQuery(mockContext, "post", `
 			query {
 				post(id: %d) {
 					title
@@ -62,24 +67,41 @@ var _ = Describe("Query", func() {
 			Expect(data["description"].(string)).To(Equal(testDescription))
 		})
 
-		It("get a private post should return nil", func() {
-			post.IsPublic = false
-			db.Save(&post)
+		Context("get a private post", func() {
+			BeforeEach(func() {
+				post.IsPublic = false
+				db.Save(&post)
+			})
 
-			data := testQuery("post", `
-			query {
-				post(id: %d) {
-					title
-					body
-					description
-				}
-			}`, post.ID)
+			It("without permission should return nil", func() {
+				data := testQuery(mockContext, "post", `
+				query {
+					post(id: %d) {
+						title
+						body
+						description
+					}
+				}`, post.ID)
 
-			Expect(data).To(BeNil())
+				Expect(data).To(BeNil())
+			})
+
+			It("with permission should success", func() {
+				data := testQuery(mockAuthContext, "post", `
+				query {
+					post(id: %d) {
+						title
+						body
+						description
+					}
+				}`, post.ID)
+
+				Expect(data).NotTo(BeNil())
+			})
 		})
 
 		It("get a post with invalid id should fail", func() {
-			data := testQuery("post", `
+			data := testQuery(mockContext, "post", `
 			query {
 				post(id : %d) {
 					title
@@ -96,32 +118,52 @@ var _ = Describe("Query", func() {
 		testBody := "This is my awesome post."
 		testDescription := "This is my awesome description."
 
-		var posts []Post
-
 		BeforeEach(func() {
+			db.Delete(&Post{})
+
 			for range []int{0, 1, 2, 3, 4} {
-				p := Post{
+				publicPost := Post{
 					Title:       testTitle,
 					Body:        testBody,
 					Description: testDescription,
+					IsPublic:    true,
+				}
+				privatePost := Post{
+					Title:       testTitle,
+					Body:        testBody,
+					Description: testDescription,
+					IsPublic:    false,
 				}
 
-				db.Save(&p)
-				posts = append(posts, p)
+				db.Save(&publicPost)
+				db.Save(&privatePost)
 			}
 		})
 
-		It("get post list should success", func() {
-			data := testQuery("postList", `
-			query {
-				postList(page: {count: 10}) {
-					items { title tagList { name } }
-					pageInfo { hasNext, hasBefore }
-				}
-			}`)
+		Context("get posts", func() {
+			It("should success for admin user", func() {
+				data := testQuery(mockAuthContext, "postList", `
+				query {
+					postList(page: {count: 10}) {
+						items { id }
+					}
+				}`)
 
-			Expect(len(data["items"].([]interface{})) > 0).To(BeTrue())
+				Expect(len(data["items"].([]interface{}))).To(Equal(10))
+			})
+
+			It("should return only public posts for non-admin user", func() {
+				data := testQuery(mockContext, "postList", `
+				query {
+					postList(page: {count: 10}) {
+						items { id }
+					}
+				}`)
+
+				Expect(len(data["items"].([]interface{}))).To(Equal(5))
+			})
 		})
+
 	})
 })
 
@@ -139,7 +181,7 @@ var _ = Describe("Snippet", func() {
 		})
 
 		It("get a snippet by id should success", func() {
-			data := testQuery("snippet", `
+			data := testQuery(mockContext, "snippet", `
 			query {
 				snippet(id: %d) {
 					title
@@ -152,7 +194,7 @@ var _ = Describe("Snippet", func() {
 		})
 
 		It("get a snippet by title should success", func() {
-			data := testQuery("snippet", `
+			data := testQuery(mockContext, "snippet", `
 			query {
 				snippet(title: "%s") {
 					title
@@ -165,7 +207,7 @@ var _ = Describe("Snippet", func() {
 		})
 
 		It("get a snippet with invalid id should return nil", func() {
-			data := testQuery("snippet", `
+			data := testQuery(mockContext, "snippet", `
 			query {
 				snippet(id : %d) {
 					title
@@ -176,7 +218,7 @@ var _ = Describe("Snippet", func() {
 		})
 
 		It("get a snippet with invalid title should  return nil", func() {
-			data := testQuery("snippet", `
+			data := testQuery(mockContext, "snippet", `
 			query {
 				snippet(title: "%s") {
 					title
@@ -204,7 +246,7 @@ var _ = Describe("Snippet", func() {
 		})
 
 		It("get snippet list should success", func() {
-			data := testQuery("snippetList", `
+			data := testQuery(mockContext, "snippetList", `
 			query {
 				snippetList(page: {count: 10}) {
 					items { title }

@@ -1,27 +1,8 @@
 package main
 
 import (
-	"context"
-
 	"github.com/graphql-go/graphql"
 )
-
-func CheckAdminPermission(ctx context.Context) bool {
-	if token := ctx.Value(ctxAuthToken); token != nil {
-		auth, err := Authenticate(token.(string))
-		if err != nil {
-			return false
-		}
-
-		var user User
-		db.Where(&User{ID: auth.UUID}).First(&user)
-		if user.ID == "" {
-			return false
-		}
-		return user.IsAdmin
-	}
-	return false
-}
 
 var CreatePostMutation = &graphql.Field{
 	Type: graphql.NewNonNull(PostType),
