@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /wiki/
-Disallow: /wiki/history/
-Disallow: /static/
-Disallow: /api/
