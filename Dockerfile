@@ -1,5 +1,5 @@
 ### Builder
-FROM golang:1.11-alpine as builder
+FROM golang:1.13-alpine as builder
 
 RUN apk update && apk add git && apk add ca-certificates
 
