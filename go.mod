@@ -1,13 +1,11 @@
 module github.com/hellodhlyn/lynlab
 
 require (
-	cloud.google.com/go v0.34.0 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20190111225525-2fea367d496d // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5 // indirect
 	github.com/go-sql-driver/mysql v1.4.1 // indirect
 	github.com/gofrs/uuid v3.2.0+incompatible // indirect
-	github.com/google/go-cmp v0.2.0 // indirect
 	github.com/google/uuid v1.1.0
 	github.com/graphql-go/graphql v0.7.7
 	github.com/jinzhu/gorm v1.9.2
@@ -26,6 +24,5 @@ require (
 	github.com/stretchr/testify v1.3.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v0.0.0-20170224212429-dcecefd839c4 // indirect
-	golang.org/x/crypto v0.0.0-20190103213133-ff983b9c42bc // indirect
-	google.golang.org/appengine v1.3.0 // indirect
+	google.golang.org/api v0.11.0
 )
