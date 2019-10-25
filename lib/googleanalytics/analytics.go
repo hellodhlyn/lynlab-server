@@ -14,6 +14,12 @@ import (
 var service *analyticsreporting.Service
 
 func GetPageView(pagePath string) (int, error) {
+	svc, err := getService()
+	if err != nil {
+		fmt.Println(err)
+		return -1, err
+	}
+
 	req := analyticsreporting.GetReportsRequest{
 		ReportRequests: []*analyticsreporting.ReportRequest{
 			&analyticsreporting.ReportRequest{
@@ -39,7 +45,7 @@ func GetPageView(pagePath string) (int, error) {
 		},
 	}
 
-	res, err := service.Reports.BatchGet(&req).Do()
+	res, err := svc.Reports.BatchGet(&req).Do()
 	if err != nil {
 		fmt.Println(err)
 		return -1, err
@@ -52,17 +58,21 @@ func GetPageView(pagePath string) (int, error) {
 	return value, nil
 }
 
-func init() {
+func getService() (*analyticsreporting.Service, error) {
+	if service != nil {
+		return service, nil
+	}
+
 	credEncoded := os.Getenv("GOOGLE_SERVICE_ACCOUNTS")
 	cred, err := base64.StdEncoding.DecodeString(credEncoded)
 	if err != nil {
-		panic(err)
+		return nil, err
+	}
+	newService, err := analyticsreporting.NewService(context.Background(), option.WithCredentialsJSON(cred))
+	if err != nil {
+		return nil, err
 	}
 
-	ctx := context.Background()
-	newService, err := analyticsreporting.NewService(ctx, option.WithCredentialsJSON(cred))
-	if err != nil {
-		panic(err)
-	}
 	service = newService
+	return newService, nil
 }
