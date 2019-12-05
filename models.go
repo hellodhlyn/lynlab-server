@@ -1,11 +1,9 @@
 package main
 
 import (
-	"strconv"
 	"time"
 
 	"github.com/graphql-go/graphql"
-	"github.com/hellodhlyn/lynlab/lib/googleanalytics"
 )
 
 // User is a model stands for each logged-in user.
@@ -75,23 +73,7 @@ var PostType = graphql.NewObject(graphql.ObjectConfig{
 				return tags, nil
 			},
 		},
-		"readCount": &graphql.Field{
-			Type: graphql.NewNonNull(graphql.Int),
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				postID := strconv.Itoa(p.Source.(*Post).ID)
-				cacheKey := "post.pageview." + postID
-				if pv, ok := cache.Get(cacheKey); ok {
-					return pv.(int), nil
-				}
-
-				pv, err := googleanalytics.GetPageView("/blog/" + postID)
-				if err != nil {
-					return -1, nil
-				}
-				cache.Set(cacheKey, pv, 1*time.Hour)
-				return pv, nil
-			},
-		},
+		"readCount": &graphql.Field{Type: graphql.NewNonNull(graphql.Int)},
 		"isPublic":  &graphql.Field{Type: graphql.NewNonNull(graphql.Boolean)},
 		"createdAt": &graphql.Field{Type: graphql.NewNonNull(graphql.DateTime)},
 		"updatedAt": &graphql.Field{Type: graphql.NewNonNull(graphql.DateTime)},

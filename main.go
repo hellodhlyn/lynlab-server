@@ -56,9 +56,15 @@ func main() {
 			req = buf.String()
 		}
 
+		// Get client IP
+		clientIP := c.Request().Header.Get("CF-Connecting-IP")
+		if clientIP == "" {
+			clientIP = c.RealIP()
+		}
+
 		// Parse context for request.
 		ctx := context.Background()
-		ctx = context.WithValue(ctx, ctxClientIP, c.RealIP())
+		ctx = context.WithValue(ctx, ctxClientIP, clientIP)
 		if token := c.Request().Header.Get("Authorization"); strings.HasPrefix(token, "Bearer ") {
 			ctx = context.WithValue(ctx, ctxAuthToken, token)
 		}
