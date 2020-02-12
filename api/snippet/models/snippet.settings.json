@@ -1,0 +1,32 @@
+{
+  "connection": "default",
+  "collectionName": "snippets",
+  "info": {
+    "name": "Snippet"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "body": {
+      "type": "text"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "draft",
+        "published",
+        "archived"
+      ],
+      "private": false,
+      "required": true,
+      "default": "draft"
+    }
+  }
+}

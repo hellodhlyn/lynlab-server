@@ -1,7 +1,7 @@
 version: '3'
 services:
   luppiter-db:
-    image: postgres:9.6
+    image: postgres:10.11
     container_name: lynlab-db
     environment:
       POSTGRES_DB: lynlab
