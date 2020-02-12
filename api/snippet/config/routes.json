@@ -25,6 +25,14 @@
       }
     },
     {
+      "method": "GET",
+      "path": "/snippets/raw/:title",
+      "handler": "snippet.findOneRaw",
+      "config": {
+        "policies": []
+      }
+    },
+    {
       "method": "POST",
       "path": "/snippets",
       "handler": "snippet.create",
