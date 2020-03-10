@@ -33,9 +33,13 @@
       "required": true
     },
     "tags": {
-      "type": "component",
-      "repeatable": true,
-      "component": "tags.post-tags"
+      "collection": "post-tag",
+      "via": "posts",
+      "dominant": true
+    },
+    "series": {
+      "model": "post-series",
+      "via": "posts"
     }
   }
 }
