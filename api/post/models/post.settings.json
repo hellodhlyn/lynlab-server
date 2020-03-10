@@ -1,0 +1,45 @@
+{
+  "connection": "default",
+  "collectionName": "posts",
+  "info": {
+    "name": "Post"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "body": {
+      "type": "text"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "draft",
+        "published",
+        "archived"
+      ],
+      "default": "draft",
+      "required": true
+    },
+    "tags": {
+      "collection": "post-tag",
+      "via": "posts",
+      "dominant": true
+    },
+    "series": {
+      "model": "post-series",
+      "via": "posts"
+    }
+  }
+}

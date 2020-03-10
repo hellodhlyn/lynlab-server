@@ -1,0 +1,19 @@
+{
+  "defaultConnection": "default",
+  "connections": {
+    "default": {
+      "connector": "bookshelf",
+      "settings": {
+        "client": "postgres",
+        "host": "127.0.0.1",
+        "port": "5432",
+        "database": "lynlab",
+        "username": "postgres",
+        "password": "rootpass"
+      },
+      "options": {
+        "useNullAsDefault": true
+      }
+    }
+  }
+}
