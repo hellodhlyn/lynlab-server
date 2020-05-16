@@ -40,6 +40,19 @@
     "series": {
       "model": "post-series",
       "via": "posts"
+    },
+    "language_group": {
+      "model": "post-language-group",
+      "via": "posts"
+    },
+    "language": {
+      "type": "enumeration",
+      "enum": [
+        "ko",
+        "en",
+        "ja"
+      ],
+      "default": "ko"
     }
   }
 }
