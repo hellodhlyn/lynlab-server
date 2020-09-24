@@ -1,25 +1,36 @@
-# lynlab
-
-> CMS server for LYnLab services.
-
+# lynlab-server
 ## Prerequisites
-
-- NodeJS v12 (or greater)
-- PostgreSQL
+* NodeJS 12.X or later
+* yarn
 
 ## Development
-
-### Environment Variables
-
-- `DB_HOST`
-- `DB_PORT`
-- `DB_NAME`
-- `DB_USERNAME`
-- `DB_PASSWORD`
-
-You can use [direnv](https://direnv.net/) to set environment variables easily.
-
+### Setup
 ```sh
-cp .envrc.template .envrc
-vim .envrc
+# Install requirements
+yarn
+```
+
+### Test
+```sh
+# Run lint
+yarn lint
+
+# Run unit tests
+yarn test
+```
+
+### Run
+```sh
+yarn debug
+```
+
+## Deployment
+```bash
+# Run using native nodejs
+yarn build
+yarn start
+
+# Run using docker
+docker build -t ghcr.io/hellodhlyn/lynlab-server .
+docker run ghcr.io/hellodhlyn/lynlab-server
 ```

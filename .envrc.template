@@ -1,6 +1,0 @@
-export DB_HOST=
-export DB_USERNAME=
-export DB_PASSWORD=
-export DB_NAME=
-
-export GOOGLE_SERVICE_ACCOUNTS=
