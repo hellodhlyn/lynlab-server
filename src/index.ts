@@ -1,4 +1,11 @@
-import { Console } from 'console';
+import { createConnection } from 'typeorm';
 
-const console = new Console(process.stdout, process.stderr);
-console.log('Hello, world!');
+import ormconfig from './ormconfig';
+import { createServer } from './server';
+
+(async () => {
+  await createConnection(ormconfig);
+
+  const server = createServer();
+  server.listen(process.env.PORT || '8080');
+})();
