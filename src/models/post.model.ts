@@ -21,6 +21,9 @@ export class Post {
   thumbnailUrl: string;
 
   @Column()
+  isPublic: boolean;
+
+  @Column()
   seriesId: number;
 
   @ManyToOne(() => PostSeries)

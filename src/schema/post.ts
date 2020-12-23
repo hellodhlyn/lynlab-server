@@ -1,5 +1,7 @@
 import { GraphQLObjectType } from 'graphql';
-import { GraphQLString, GraphQLNonNull, GraphQLList } from 'graphql/type';
+import {
+  GraphQLString, GraphQLNonNull, GraphQLList, GraphQLInt, GraphQLBoolean,
+} from 'graphql/type';
 import {
   Connection, ConnectionArguments, connectionDefinitions, cursorToOffset, globalIdField, offsetToCursor,
 } from 'graphql-relay';
@@ -12,6 +14,7 @@ import { postBlobType } from './post-blob';
 import { postSeriesType } from './post-series';
 import { postTagType } from './post-tag';
 import { Post } from '../models/post.model';
+import { PostBlob } from '../models/post-blob.model';
 
 export const postTypeName = 'Post';
 
@@ -20,12 +23,20 @@ export const postType: GraphQLObjectType = new GraphQLObjectType({
   interfaces: [nodeInterface],
   fields: () => ({
     id: globalIdField(postTypeName, (src: Post) => src.id.toString()),
+    postId: { type: new GraphQLNonNull(GraphQLInt), resolve: (post) => post.id },
     title: { type: new GraphQLNonNull(GraphQLString) },
     description: { type: GraphQLString },
     thumbnailUrl: { type: GraphQLString },
+    isPublic: { type: new GraphQLNonNull(GraphQLBoolean) },
     series: { type: postSeriesType },
     tags: { type: new GraphQLList(new GraphQLNonNull(postTagType)) },
-    blobs: { type: new GraphQLList(new GraphQLNonNull(postBlobType)) },
+    blobs: {
+      type: new GraphQLList(new GraphQLNonNull(postBlobType)),
+      resolve: async (post) => {
+        const repo = getRepository<PostBlob>('PostBlob');
+        return repo.find({ where: { post }, order: { order: 'ASC' } });
+      },
+    },
     createdAt: { type: new GraphQLNonNull(GraphQLDateTime) },
     updatedAt: { type: new GraphQLNonNull(GraphQLDateTime) },
   }),
@@ -37,7 +48,7 @@ export class PostResolver {
   async posts(_: undefined, args: ConnectionArguments): Promise<Connection<Post>> {
     const repo = getRepository<Post>('Post');
 
-    const where: FindConditions<Post> = {};
+    const where: FindConditions<Post> = { isPublic: true };
     if (args.after) {
       where.id = LessThan(cursorToOffset(args.after));
     } else if (args.before) {
@@ -47,7 +58,7 @@ export class PostResolver {
     const order: { id: 'ASC' | 'DESC' } = { id: (args.last ? 'ASC' : 'DESC') };
     const take = args.last || args.first || 20;
     const result = await repo.find({ where, order, take });
-    result.sort((r) => r.id);
+    result.sort((a, b) => b.id - a.id);
 
     return {
       edges: result.map((node) => ({ cursor: offsetToCursor(node.id), node })),
@@ -63,5 +74,10 @@ export class PostResolver {
         hasNextPage: await repo.count({ id: LessThan(result[result.length - 1].id) }) > 0,
       },
     };
+  }
+
+  async post(_: undefined, args: { postId: number }): Promise<Post> {
+    const repo = getRepository<Post>('Post');
+    return repo.findOne({ id: args.postId });
   }
 }

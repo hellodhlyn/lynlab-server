@@ -1,7 +1,7 @@
 import { GraphQLObjectType } from 'graphql';
-import { GraphQLNonNull, GraphQLID } from 'graphql/type';
+import { GraphQLNonNull, GraphQLID, GraphQLInt } from 'graphql/type';
 import { connectionArgs } from 'graphql-relay';
-import { postConnectionType, PostResolver } from './post';
+import { postConnectionType, PostResolver, postType } from './post';
 
 // `nodeInterface` should be loaded at last to avoid cyclic dependency.
 import { nodeInterface, NodeResolver } from './node';
@@ -22,6 +22,11 @@ export function buildQueryType(): GraphQLObjectType {
         type: new GraphQLNonNull(postConnectionType),
         args: connectionArgs,
         resolve: (_, args) => postResolver.posts(_, args),
+      },
+      post: {
+        type: new GraphQLNonNull(postType),
+        args: { postId: { type: new GraphQLNonNull(GraphQLInt) } },
+        resolve: (_, args: { postId: number }) => postResolver.post(_, args),
       },
     }),
   });
