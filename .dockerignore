@@ -110,12 +110,8 @@ temp/
 
 # End of https://www.gitignore.io/api/node
 
+dist/
+test/
+
 .idea/
 .code/
-
-.envrc
-
-exports/
-build/
-.cache/
-.tmp/

@@ -1,17 +1,20 @@
-name: Build Docker Image
+name: Build and publish a docker image
 
 on:
   push:
-    tags:
-    - v*
+    tags: [ 'v*' ]
 
 jobs:
-  build:
-    runs-on: ubuntu-18.04
+  docker:
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Build and push the docker image
+    - uses: actions/checkout@v2
+    - name: Build and push
       run: |
-        docker login --username hellodhlyn --password ${{ secrets.DOCKER_ACCESS_TOKEN }}
-        docker build -t lynlab/lynlab:${GITHUB_REF##*/} .
-        docker push lynlab/lynlab:${GITHUB_REF##*/}
+        docker login ghcr.io --username hellodhlyn --password ${{ secrets.GH_ACCESS_TOKEN }}
+
+        docker build -t ghcr.io/hellodhlyn/lynlab-server:latest .
+        docker tag ghcr.io/hellodhlyn/lynlab-server:latest ghcr.io/hellodhlyn/lynlab-server:${GITHUB_REF##*/}
+
+        docker push ghcr.io/hellodhlyn/lynlab-server:latest
+        docker push ghcr.io/hellodhlyn/lynlab-server:${GITHUB_REF##*/}

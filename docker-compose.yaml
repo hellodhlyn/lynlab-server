@@ -1,10 +1,10 @@
 version: '3'
 services:
-  luppiter-db:
-    image: postgres:10.11
+  db:
+    image: postgres:10
     container_name: lynlab-db
     environment:
       POSTGRES_DB: lynlab
       POSTGRES_PASSWORD: rootpass
     ports:
-      - 5432:5432
+    - 5432:5432
