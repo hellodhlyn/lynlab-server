@@ -16,4 +16,6 @@ export = {
   namingStrategy: new SnakeNamingStrategy(),
   synchronize: false,
   migrationsRun: true,
+
+  logging: process.env.NODE_ENV !== 'production',
 } as ConnectionOptions;
