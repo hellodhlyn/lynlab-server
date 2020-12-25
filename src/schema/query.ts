@@ -24,7 +24,7 @@ export function buildQueryType(): GraphQLObjectType {
         resolve: (_, args) => postResolver.posts(_, args),
       },
       post: {
-        type: new GraphQLNonNull(postType),
+        type: postType,
         args: { postId: { type: new GraphQLNonNull(GraphQLInt) } },
         resolve: (_, args: { postId: number }) => postResolver.post(_, args),
       },

@@ -26,6 +26,8 @@ async function findPostConnection(where: FindConditions<Post>[], args: Connectio
     whereQuery = where.map((each) => ({ ...each, id: MoreThan(cursorToOffset(args.before)) }));
   }
 
+  whereQuery = whereQuery.map((each) => ({ ...each, isPublic: true }));
+
   const order: { id: 'ASC' | 'DESC' } = { id: (args.last ? 'ASC' : 'DESC') };
   const take = args.last || args.first || 20;
   const result = await repo.find({ where: whereQuery, order, take });
@@ -111,6 +113,6 @@ export class PostResolver {
 
   async post(_: undefined, args: { postId: number }): Promise<Post> {
     const repo = getRepository<Post>('Post');
-    return repo.findOne({ id: args.postId });
+    return repo.findOne({ id: args.postId, isPublic: true });
   }
 }
