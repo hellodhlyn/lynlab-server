@@ -1,20 +1,20 @@
-import { GraphQLObjectType } from 'graphql';
+import { GraphQLInputObjectType, GraphQLObjectType } from 'graphql';
 import {
-  GraphQLString, GraphQLNonNull, GraphQLList, GraphQLInt, GraphQLBoolean,
+  GraphQLBoolean, GraphQLInt, GraphQLList, GraphQLNonNull, GraphQLString,
 } from 'graphql/type';
 import {
   Connection, connectionArgs, ConnectionArguments, connectionDefinitions, cursorToOffset, globalIdField, offsetToCursor,
 } from 'graphql-relay';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import {
-  FindConditions, getRepository, In, LessThan, MoreThan, Not,
+  FindConditions, getManager, getRepository, In, LessThan, MoreThan, Not,
 } from 'typeorm';
 import { nodeInterface } from './node';
-import { postBlobType } from './post-blob';
+import { createPostBlobInputType, postBlobType } from './post-blob';
 import { postSeriesType } from './post-series';
 import { postTagType } from './post-tag';
 import { Post } from '../models/post.model';
-import { PostBlob } from '../models/post-blob.model';
+import { BlobType, PostBlob } from '../models/post-blob.model';
 
 async function findPostConnection(where: FindConditions<Post>[], args: ConnectionArguments): Promise<Connection<Post>> {
   const repo = getRepository<Post>('Post');
@@ -67,7 +67,7 @@ export const postType: GraphQLObjectType = new GraphQLObjectType({
       type: new GraphQLList(new GraphQLNonNull(postBlobType)),
       resolve: async (post) => {
         const repo = getRepository<PostBlob>('PostBlob');
-        return repo.find({ where: { post }, order: { order: 'ASC' } });
+        return repo.find({ where: { postId: post.id }, order: { order: 'ASC' } });
       },
     },
     relatedPosts: {
@@ -106,6 +106,30 @@ export const postType: GraphQLObjectType = new GraphQLObjectType({
 
 export const postConnectionType: GraphQLObjectType = connectionDefinitions({ nodeType: postType }).connectionType;
 
+export const createPostInputType = new GraphQLInputObjectType({
+  name: 'CreatePostInput',
+  fields: () => ({
+    title: { type: new GraphQLNonNull(GraphQLString) },
+    description: { type: new GraphQLNonNull(GraphQLString) },
+    thumbnailUrl: { type: GraphQLString },
+    isPublic: { type: new GraphQLNonNull(GraphQLBoolean) },
+    seriesId: { type: GraphQLInt },
+    blobs: { type: new GraphQLList(new GraphQLNonNull(createPostBlobInputType)) },
+  }),
+});
+
+export type CreatePostInputType = {
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  isPublic: boolean;
+  seriesId: number;
+  blobs: {
+    blobType: string;
+    content: string;
+  }[];
+}
+
 export class PostResolver {
   async posts(_: undefined, args: ConnectionArguments): Promise<Connection<Post>> {
     return findPostConnection([{}], args);
@@ -114,5 +138,29 @@ export class PostResolver {
   async post(_: undefined, args: { postId: number }): Promise<Post> {
     const repo = getRepository<Post>('Post');
     return repo.findOne({ id: args.postId, isPublic: true });
+  }
+
+  async createPost(_: undefined, args: { input: CreatePostInputType }): Promise<Post> {
+    const { input } = args;
+    const post = new Post();
+    post.title = input.title;
+    post.description = input.description;
+    post.thumbnailUrl = input.thumbnailUrl || null;
+    post.isPublic = input.isPublic || false;
+    post.seriesId = input.seriesId || null;
+
+    await getManager().transaction(async (em) => {
+      await em.save(post);
+      await Promise.all(input.blobs.map((blobInput, idx) => {
+        const blob = new PostBlob();
+        blob.blobType = BlobType.MARKDOWN;
+        blob.content = blobInput.content;
+        blob.postId = post.id;
+        blob.order = idx;
+        return em.save(blob);
+      }));
+    });
+
+    return post;
   }
 }

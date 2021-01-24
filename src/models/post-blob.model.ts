@@ -1,6 +1,8 @@
 import {
+  BeforeInsert,
   Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn,
 } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 import { Post } from './post.model';
 
 export enum BlobType {
@@ -21,6 +23,9 @@ export class PostBlob {
   @Column()
   blobType: BlobType;
 
+  @Column()
+  postId: number;
+
   @ManyToOne(() => Post, (post) => post.blobs)
   post: Promise<Post>;
 
@@ -32,4 +37,9 @@ export class PostBlob {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @BeforeInsert()
+  private beforeInsert() {
+    this.uuid = uuidv4();
+  }
 }

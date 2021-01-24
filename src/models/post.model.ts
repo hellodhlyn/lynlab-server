@@ -30,7 +30,7 @@ export class Post {
   series: Promise<PostSeries>;
 
   @OneToMany(() => PostBlob, (blob) => blob.post)
-  blobs: Promise<PostBlob>;
+  blobs: Promise<PostBlob>[];
 
   @ManyToMany(() => PostTag, (tag) => tag.posts)
   @JoinTable({ name: 'post_tag_relations', joinColumn: { name: 'post_id' }, inverseJoinColumn: { name: 'tag_id' } })

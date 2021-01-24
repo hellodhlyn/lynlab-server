@@ -4,11 +4,15 @@ import Koa from 'koa';
 import mount from 'koa-mount';
 import graphqlHTTP from 'koa-graphql';
 import { buildQueryType } from './schema/query';
+import { buildMutationType } from './schema/mutation';
 
 const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS?.split(',');
 
 export function createServer(): Koa {
-  const schema = new GraphQLSchema({ query: buildQueryType() });
+  const schema = new GraphQLSchema({
+    query: buildQueryType(),
+    mutation: buildMutationType(),
+  });
 
   const app = new Koa();
   app.use(cors({

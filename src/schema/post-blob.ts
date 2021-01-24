@@ -1,4 +1,4 @@
-import { GraphQLObjectType } from 'graphql';
+import { GraphQLInputObjectType, GraphQLObjectType } from 'graphql';
 import {
   GraphQLNonNull, GraphQLString, GraphQLInt, GraphQLEnumType,
 } from 'graphql/type';
@@ -24,5 +24,13 @@ export const postBlobType: GraphQLObjectType = new GraphQLObjectType({
     post: { type: new GraphQLNonNull(postType) },
     createdAt: { type: new GraphQLNonNull(GraphQLDateTime) },
     updatedAt: { type: new GraphQLNonNull(GraphQLDateTime) },
+  }),
+});
+
+export const createPostBlobInputType = new GraphQLInputObjectType({
+  name: 'CreatePostBlobInput',
+  fields: () => ({
+    blobType: { type: GraphQLString },
+    content: { type: GraphQLString },
   }),
 });
